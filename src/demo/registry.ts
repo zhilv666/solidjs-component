@@ -10,6 +10,7 @@ import { SelectDemo } from "@/components/Select/Select.demo";
 import { FormFieldDemo } from "@/components/FormField/FormField.demo";
 import { BadgeDemo } from "@/components/Badge/Badge.demo";
 import { TagDemo } from "@/components/Tag/Tag.demo";
+import { CardDemo } from "@/components/Card/Card.demo";
 
 export interface DemoEntry {
   readonly id: string;
@@ -78,6 +79,12 @@ export const demos: readonly DemoEntry[] = [
     name: "Tag",
     description: "3 种变体、3 种尺寸，支持命名关闭按钮、禁用和受控移除。",
     component: TagDemo,
+  },
+  {
+    id: "card",
+    name: "Card",
+    description: "2 种变体、3 种尺寸的非交互内容容器，支持语义化内容组合。",
+    component: CardDemo,
   },
   {
     id: "theme",

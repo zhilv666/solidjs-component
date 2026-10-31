@@ -20,3 +20,5 @@ export { Badge } from "./Badge";
 export type { BadgeProps } from "./Badge";
 export { Tag } from "./Tag";
 export type { TagProps } from "./Tag";
+export { Card } from "./Card";
+export type { CardProps } from "./Card";
