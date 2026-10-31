@@ -9,6 +9,7 @@ import { SwitchDemo } from "@/components/Switch/Switch.demo";
 import { SelectDemo } from "@/components/Select/Select.demo";
 import { FormFieldDemo } from "@/components/FormField/FormField.demo";
 import { BadgeDemo } from "@/components/Badge/Badge.demo";
+import { TagDemo } from "@/components/Tag/Tag.demo";
 
 export interface DemoEntry {
   readonly id: string;
@@ -71,6 +72,12 @@ export const demos: readonly DemoEntry[] = [
     name: "Badge",
     description: "3 种变体、3 种尺寸的纯展示标签，支持计数与 class 透传。",
     component: BadgeDemo,
+  },
+  {
+    id: "tag",
+    name: "Tag",
+    description: "3 种变体、3 种尺寸，支持命名关闭按钮、禁用和受控移除。",
+    component: TagDemo,
   },
   {
     id: "theme",

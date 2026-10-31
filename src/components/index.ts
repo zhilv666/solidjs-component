@@ -18,3 +18,5 @@ export { FormField } from "./FormField";
 export type { FormFieldControlProps, FormFieldProps } from "./FormField";
 export { Badge } from "./Badge";
 export type { BadgeProps } from "./Badge";
+export { Tag } from "./Tag";
+export type { TagProps } from "./Tag";

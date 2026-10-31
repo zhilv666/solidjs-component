@@ -121,7 +121,8 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 
 - [x] 4.1 Badge
   备注：纯展示 span，提供 solid/outline/neutral 与三种尺寸，支持原生属性/ref/class 透传、数字零值和内容换行；不模拟按钮，也不引入 hover/active 或 Tab 停靠点。90 项测试及 typecheck/lint/check:tokens/build 通过；真实浏览器验收全部 9 种组合、键盘计数、零值、明暗主题和 390px 长标签换行，最低对比度 6.70:1，截图已查看。仅使用现有 token，无阴影、额外依赖或已完成组件改动。
-- [ ] 4.2 Tag（可关闭）
+- [x] 4.2 Tag（可关闭）
+  备注：提供 solid/outline/neutral 与三种尺寸，默认纯展示；closable 时类型要求 closeLabel 与 onClose，Kobalte 关闭按钮固定 type=button 和 24px 点击区域，由调用方负责移除。支持原生属性/ref/class、数字零值、长内容换行与动态禁用；禁用文字和按钮分别降低透明度，避免叠乘。95 项测试及 typecheck/lint/check:tokens/build 通过；真实浏览器验收 27 个矩阵示例、15 个 Tab 停靠点、鼠标/Enter/空格单次请求、禁用跳过、受控删除/恢复、表单安全与原生事件冒泡、响应式 props 和控件身份保留、明暗 hover/active/focus 及 390px 窄屏。最低对比度 5.26:1，明暗与移动截图已查看；使用带背景间隔的 token 焦点环，未新增 token、依赖或修改已完成组件。
 - [ ] 4.3 Card
 - [ ] 4.4 Alert（info / success / warning / danger）
 - [ ] 4.5 Spinner
