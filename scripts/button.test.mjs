@@ -1,4 +1,7 @@
 import assert from "node:assert/strict";
+import { mkdtemp, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { basename, dirname, join, resolve } from "node:path";
 import { after, before, test } from "node:test";
 import { renderToString } from "solid-js/web";
 import { createGenerator } from "unocss";
@@ -9,10 +12,15 @@ import unoConfig from "../uno.config.ts";
 let server;
 let Button;
 let ButtonDemo;
+let cacheDirectory;
+const cacheRoot = resolve(tmpdir());
+const cachePrefix = "solidjs-button-cache-";
 
 before(async () => {
+  cacheDirectory = await mkdtemp(join(cacheRoot, cachePrefix));
   server = await createServer({
     configFile: false,
+    cacheDir: cacheDirectory,
     plugins: [solid({ dev: false })],
     optimizeDeps: { noDiscovery: true, include: [] },
     server: { middlewareMode: true, watch: null },
@@ -26,7 +34,15 @@ before(async () => {
 });
 
 after(async () => {
-  await server?.close();
+  try {
+    await server?.close();
+  } finally {
+    if (cacheDirectory) {
+      assert.equal(dirname(cacheDirectory), cacheRoot);
+      assert.ok(basename(cacheDirectory).startsWith(cachePrefix));
+      await rm(cacheDirectory, { recursive: true, force: true });
+    }
+  }
 });
 
 function renderButton(props = {}) {
@@ -38,6 +54,15 @@ function openingTag(html) {
   assert.ok(tag, "Expected a native button");
   return tag;
 }
+
+test("SSR test server keeps its Vite cache outside the project", () => {
+  assert.equal(resolve(server.config.cacheDir), cacheDirectory);
+  assert.equal(dirname(resolve(server.config.cacheDir)), cacheRoot);
+  assert.notEqual(
+    resolve(server.config.cacheDir),
+    resolve(server.config.root, "node_modules/.vite"),
+  );
+});
 
 test("default button is safe in forms and forwards native props and class", () => {
   const html = renderButton({
