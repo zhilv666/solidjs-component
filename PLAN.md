@@ -68,7 +68,7 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
   验收：在 demo 页面肉眼检查中英文混排清晰。
   备注：基础样式、token 字体与字体渲染设置已接入，lint/typecheck/build 通过；按用户选择，中英文视觉验收并入 Button 人工关卡。
 
-- [ ] **1.5 token 检查脚本**
+- [x] **1.5 token 检查脚本**
   添加 `pnpm check:tokens`，扫描 `src/components/**`，出现以下任一即报错并输出文件与行号：
   - 十六进制颜色：`#[0-9a-fA-F]{3,8}\b`
   - `rgb(` / `rgba(` / `hsl(`
@@ -76,6 +76,7 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
   - 禁用的圆角：`rounded-(xl|2xl|3xl|full)`（允许通过注释 `/* allow-token-bypass: 原因 */` 豁免）
   - 内联 `style=` 中的颜色和尺寸字面量
   验收：故意写入违规代码，脚本能报错；正常代码通过。
+  备注：13 项工具链/主题测试、typecheck、lint、check:tokens 通过；CLI 违规样例在临时目录中验证，豁免只影响相邻且写明原因的圆角，组件目录尚无文件时明确报告 0 files。
 
 - [ ] **1.6 主题切换与 Demo 骨架**
   实现 `ThemeProvider`（或简单函数）切换 `data-theme`；创建 demo 页面骨架（左侧组件列表，右侧展示区，顶部有明暗切换）。

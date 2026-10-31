@@ -16,7 +16,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "node --test scripts/*.test.mjs",
-    "theme:build": "node src/theme/generate.ts"
+    "theme:build": "node src/theme/generate.ts",
+    "check:tokens": "node scripts/check-tokens.mjs"
   },
   "dependencies": {
     "@kobalte/core": "^0.13.14",
