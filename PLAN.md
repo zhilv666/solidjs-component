@@ -90,7 +90,7 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 - [x] **2.1 Button** 🛑
   variant：`solid` / `outline` / `ghost` / `danger`，另有经用户授权的 `mahjong` 实验变体；size：`sm` / `md` / `lg`；支持 `loading`、`disabled`、`as` 渲染为链接（可选）。
   验收：满足完成定义。
-  备注：基于 Kobalte，保留 36 个旧矩阵组合，新增 18 个键帽/麻将并排对比组合及麻将计数、保存示例。原有四个变体、默认样式和键帽 token 已由回归测试锁定；仅新增用户授权的两个麻将阴影 token。30 项测试及 typecheck/lint/check:tokens/build 通过；真实浏览器已验证鼠标、键盘、明暗主题三态与移动端布局。可选 as 链接未实现；两套立体样式均留在 Button 人工外观审核关卡，尚未成为已审核标准样例。
+  备注：基于 Kobalte，保留 36 个旧矩阵组合，新增 18 个键帽/麻将并排对比组合及麻将计数、保存示例。原有四个变体、默认样式和键帽 token 已由回归测试锁定；仅新增用户授权的两个麻将阴影 token。30 项测试及 typecheck/check:tokens/build 通过；真实浏览器已验证鼠标、键盘、明暗主题三态与移动端布局。后续已仅修正 Button 测试的换行格式，完整 lint 复核通过，断言与组件实现未改。可选 as 链接未实现；按用户“继续下一个”的确认，Button 外观审核关卡已通过，现有实现与风格冻结。麻将仍是独立可选实验变体，其他组件不继承 Button 的立体阴影例外。
 
   **agent 完成后停止，等待我审核并手动修改。** 我确认后，该组件即成为后续所有组件的"标准样例"，之后不得再改动其风格。
 
@@ -100,7 +100,8 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 
 > 全部基于 Kobalte，参考 `Button` 的代码风格。
 
-- [ ] 3.1 Input（含 `invalid` 状态、前后缀插槽）
+- [x] 3.1 Input（含 `invalid` 状态、前后缀插槽）
+  备注：基于 Kobalte TextField，支持三种尺寸、错误/禁用/只读状态、文本与 JSX 前后缀、受控/非受控值、原生属性/事件及 class 透传；已导出并注册完整 demo。42 项测试及 typecheck/lint/check:tokens/build 通过，真实浏览器完成键盘、表单提交/重置、明暗主题与 390px 窄屏验收；未新增依赖或 token，未修改 Button 实现或风格。
 - [ ] 3.2 Textarea
 - [ ] 3.3 Checkbox
 - [ ] 3.4 Radio / RadioGroup
@@ -159,4 +160,7 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 - [2.1] 浏览器连接已恢复；SSR 测试使用独立临时缓存，开发服务运行测试后缓存不变、预览正常。新增阴影 token 后已重启开发服务，使 UnoCSS 重新加载主题映射。
 - [2.1] 用户已确认键帽方向及 `shadow.keycap` / `shadow.keycapPressed` 两个 token；Button 的阴影例外仅限本组件。预览中底座阴影从 3px 收短到 1px，disabled / loading 使用 `shadow-sm`，未新增依赖或修改其他组件。
 - [2.1] 用户已授权新增 `shadow.mahjong` / `shadow.mahjongPressed` 两个 token 及独立 `variant="mahjong"` 实验；瓷质牌面跟随现有背景 token，绿色厚底跟随 `success`，按下厚底从 6px 收短到 2px。保留旧版的 3px → 1px 键帽效果，不新增颜色、依赖、位移或渐变。
-- [2.1] 真实浏览器键盘验收覆盖 54 个展示组合、28 个 Tab 停靠点（跳过 36 个禁用/加载按钮）、Enter / Space 单次激活、两种样式共享的动态禁用与 loading；明暗主题 hover / active 和实际焦点环通过，麻将文字最低对比度为 11.2:1，键帽为 5.26:1。1280×900 与 390×844 无横向溢出或按钮裁切；浅色、深色、移动端截图已查看并保存在 `.playwright-mcp/`（不提交）。仍停在 Button 人工外观审核关卡，未进入 Phase 3。
+- [2.1] 真实浏览器键盘验收覆盖 54 个展示组合、28 个 Tab 停靠点（跳过 36 个禁用/加载按钮）、Enter / Space 单次激活、两种样式共享的动态禁用与 loading；明暗主题 hover / active 和实际焦点环通过，麻将文字最低对比度为 11.2:1，键帽为 5.26:1。1280×900 与 390×844 无横向溢出或按钮裁切；浅色、深色、移动端截图已查看并保存在 `.playwright-mcp/`（不提交）。用户已确认继续后续组件，Button 现有版本作为标准样例冻结。
+- [3.1] 前后缀为非交互旁置插槽，以 aria-hidden 避免污染控件名称；单位与含义由使用方的 label/帮助文字说明，FormField 留待 3.7。保留原生 onInput/onChange，新增 onValueChange 对接受控值；适配 Solid 与 Kobalte 的输入事件类型，并同步原生 defaultValue，确保非受控、受控和固定值字段的原生 reset 行为一致。
+- [3.1] 新增 12 项 SSR/UnoCSS 回归测试，测试服务器使用独立临时缓存并关闭 HMR/WebSocket，不影响预览。真实浏览器验证 22 个 Tab 停靠点（含 14 个可用输入框，跳过 3 个禁用字段）、readonly 选择且不可编辑、动态值/尺寸/插槽/class/name/状态、原生 ref 与绑定事件、Enter 提交及必填校验。明暗模式正文对比度为 16.97:1，占位文字最低为 7.41:1；1280×900 和 390×844 无横向溢出、输入框或插槽裁切。明暗及窄屏截图已查看并保存在 `.playwright-mcp/`（不提交）。Input 验收已完成，后续按计划推进。
+- [3.1] pnpm lint 的过滤输出曾误报通过；完整复核定位到 Button 测试链式调用未换行。按用户继续整个 PLAN 的指示，仅修正该处测试格式并单独提交，未改变组件、样式或断言；`rtk proxy pnpm lint` 现已通过。后续对链式检查命令继续复核完整输出，避免误报完成。
