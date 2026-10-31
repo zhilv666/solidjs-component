@@ -20,9 +20,10 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
   验收：页面中使用 `p-4` 等类名生效。
   备注：presetUno 与 Vite 插件已接入；类型检查、构建通过，产物包含 .p-4 的 padding 规则。
 
-- [ ] **0.3 Lint 与格式化**
+- [x] **0.3 Lint 与格式化**
   配置 ESLint（含 `eslint-plugin-solid`）和 Prettier，添加 `pnpm lint` 脚本。
   验收：`pnpm lint` 通过，故意写 `const { a } = props` 能被 lint 报错。
+  备注：lint、strict 类型检查和 2 项工具链测试通过；验证了函数体/参数中的 props 解构、className 与显式 any 会被拒绝。
 
 - [ ] **0.4 安装依赖**
   安装 `@kobalte/core`、`clsx`。
