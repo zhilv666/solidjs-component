@@ -15,9 +15,10 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
   验收：`pnpm dev` 能启动，`pnpm typecheck` 通过。
   备注：已初始化 main 分支；strict 类型检查、生产构建和 dev HTTP 200 通过，lint 与 token 检查按后续任务建立。
 
-- [ ] **0.2 UnoCSS**
+- [x] **0.2 UnoCSS**
   安装并配置 UnoCSS（presetUno），在入口引入。
   验收：页面中使用 `p-4` 等类名生效。
+  备注：presetUno 与 Vite 插件已接入；类型检查、构建通过，产物包含 .p-4 的 padding 规则。
 
 - [ ] **0.3 Lint 与格式化**
   配置 ESLint（含 `eslint-plugin-solid`）和 Prettier，添加 `pnpm lint` 脚本。
