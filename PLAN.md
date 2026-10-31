@@ -34,7 +34,7 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 
 ## Phase 1：主题系统（整个项目的地基）
 
-- [ ] **1.1 tokens.ts**
+- [x] **1.1 tokens.ts**
   创建 `src/theme/tokens.ts`，在初始 token 基础上补全：
   - 颜色：`primary`、`primaryFg`（主色上的文字色）、`danger`、`dangerFg`、`success`、`warning`、`bg`、`surface`、`fg`、`fgMuted`、`border`、`ring`
     （注意用 `fg` / `fgMuted` 代替 `text` / `textMuted`，避免出现 `text-text` 这种类名）
@@ -44,6 +44,7 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
   - 过渡：`duration: 150ms`
   - 暗色模式的覆盖值单独放在 `darkColor`
   验收：类型完整，所有颜色对比度（fg 对 bg、primaryFg 对 primary）不低于 WCAG AA（4.5:1）。
+  备注：无已有初始 token，按本任务创建蓝色主色与中性背景的明暗主题；正文、次要文字、主色/危险色文字等 9 组配色在两种主题中均通过 AA 对比度测试。
 
 - [ ] **1.2 generate.ts**
   把 tokens 转成 CSS 变量（`--color-primary`、`--radius-md`、`--font-size-md` 等），输出到 `src/theme/theme.css`。
