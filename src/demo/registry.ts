@@ -7,6 +7,7 @@ import { CheckboxDemo } from "@/components/Checkbox/Checkbox.demo";
 import { RadioGroupDemo } from "@/components/RadioGroup/RadioGroup.demo";
 import { SwitchDemo } from "@/components/Switch/Switch.demo";
 import { SelectDemo } from "@/components/Select/Select.demo";
+import { FormFieldDemo } from "@/components/FormField/FormField.demo";
 
 export interface DemoEntry {
   readonly id: string;
@@ -57,6 +58,12 @@ export const demos: readonly DemoEntry[] = [
     name: "Select",
     description: "3 种尺寸，支持单选、占位、禁用选项、错误状态与原生表单。",
     component: SelectDemo,
+  },
+  {
+    id: "form-field",
+    name: "FormField",
+    description: "组合标签、帮助与错误文字，提供响应式关联属性和分组控件支持。",
+    component: FormFieldDemo,
   },
   {
     id: "theme",

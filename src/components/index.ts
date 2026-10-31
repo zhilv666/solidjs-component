@@ -14,3 +14,5 @@ export { Switch } from "./Switch";
 export type { SwitchProps } from "./Switch";
 export { Select } from "./Select";
 export type { SelectOption, SelectProps } from "./Select";
+export { FormField } from "./FormField";
+export type { FormFieldControlProps, FormFieldProps } from "./FormField";
