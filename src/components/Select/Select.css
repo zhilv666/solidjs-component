@@ -1,0 +1,20 @@
+.solid-select-option[data-highlighted]:not([data-disabled]) {
+  background-color: var(--color-surface-hover);
+}
+
+.solid-select-option:not([data-disabled]):active {
+  background-color: var(--color-surface-active);
+}
+
+.solid-select-option[data-selected] {
+  color: var(--color-primary-fg);
+  background-color: var(--color-primary);
+}
+
+.solid-select-option[data-selected][data-highlighted]:not([data-disabled]) {
+  background-color: var(--color-primary-hover);
+}
+
+.solid-select-option[data-selected]:not([data-disabled]):active {
+  background-color: var(--color-primary-active);
+}

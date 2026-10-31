@@ -12,3 +12,5 @@ export { RadioGroup } from "./RadioGroup";
 export type { RadioGroupProps } from "./RadioGroup";
 export { Switch } from "./Switch";
 export type { SwitchProps } from "./Switch";
+export { Select } from "./Select";
+export type { SelectOption, SelectProps } from "./Select";
