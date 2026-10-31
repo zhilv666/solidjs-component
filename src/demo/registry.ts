@@ -5,6 +5,7 @@ import { InputDemo } from "@/components/Input/Input.demo";
 import { TextareaDemo } from "@/components/Textarea/Textarea.demo";
 import { CheckboxDemo } from "@/components/Checkbox/Checkbox.demo";
 import { RadioGroupDemo } from "@/components/RadioGroup/RadioGroup.demo";
+import { SwitchDemo } from "@/components/Switch/Switch.demo";
 
 export interface DemoEntry {
   readonly id: string;
@@ -43,6 +44,12 @@ export const demos: readonly DemoEntry[] = [
     name: "Radio / RadioGroup",
     description: "3 种尺寸，支持互斥选择、横纵布局、错误/禁用/只读状态与表单。",
     component: RadioGroupDemo,
+  },
+  {
+    id: "switch",
+    name: "Switch",
+    description: "3 种尺寸，支持开启/关闭、错误/禁用/只读状态与原生表单。",
+    component: SwitchDemo,
   },
   {
     id: "theme",
