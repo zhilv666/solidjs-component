@@ -102,7 +102,8 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 
 - [x] 3.1 Input（含 `invalid` 状态、前后缀插槽）
   备注：基于 Kobalte TextField，支持三种尺寸、错误/禁用/只读状态、文本与 JSX 前后缀、受控/非受控值、原生属性/事件及 class 透传；已导出并注册完整 demo。42 项测试及 typecheck/lint/check:tokens/build 通过，真实浏览器完成键盘、表单提交/重置、明暗主题与 390px 窄屏验收；未新增依赖或 token，未修改 Button 实现或风格。
-- [ ] 3.2 Textarea
+- [x] 3.2 Textarea
+  备注：基于 Kobalte TextField，支持三种尺寸、错误/禁用/只读状态、受控/非受控值、原生属性/事件与 class 透传；默认 Enter 换行，可纵向手动调整或启用自动增高。50 项测试及 typecheck/lint/check:tokens/build 通过，真实浏览器完成键盘、原生事件计数、表单提交/重置、明暗主题和 390px 窄屏验收；SSR 首行换行与特殊字符经浏览器解析复核。未新增依赖或 token，未修改已完成组件。
 - [ ] 3.3 Checkbox
 - [ ] 3.4 Radio / RadioGroup
 - [ ] 3.5 Switch
