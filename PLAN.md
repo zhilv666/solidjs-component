@@ -104,7 +104,8 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
   备注：基于 Kobalte TextField，支持三种尺寸、错误/禁用/只读状态、文本与 JSX 前后缀、受控/非受控值、原生属性/事件及 class 透传；已导出并注册完整 demo。42 项测试及 typecheck/lint/check:tokens/build 通过，真实浏览器完成键盘、表单提交/重置、明暗主题与 390px 窄屏验收；未新增依赖或 token，未修改 Button 实现或风格。
 - [x] 3.2 Textarea
   备注：基于 Kobalte TextField，支持三种尺寸、错误/禁用/只读状态、受控/非受控值、原生属性/事件与 class 透传；默认 Enter 换行，可纵向手动调整或启用自动增高。50 项测试及 typecheck/lint/check:tokens/build 通过，真实浏览器完成键盘、原生事件计数、表单提交/重置、明暗主题和 390px 窄屏验收；SSR 首行换行与特殊字符经浏览器解析复核。未新增依赖或 token，未修改已完成组件。
-- [ ] 3.3 Checkbox
+- [x] 3.3 Checkbox
+  备注：基于 Kobalte，支持三种尺寸、选中/半选、错误/禁用/只读状态、受控/非受控值、原生事件/ref/属性与 class 透传；半选为独立展示状态。57 项测试及 typecheck/lint/check:tokens/build 通过，真实浏览器验收 26 个示例、20 个可用输入框的 Tab/空格与可见焦点环、单次状态回调、表单必填/提交/重置、明暗主题和 390px 窄屏；选中/半选与错误组合的边框无冲突。隐藏输入框通过 peer-focus-visible 将 2px token 焦点环映射到可见方框，未新增 token、依赖或改动已完成组件。
 - [ ] 3.4 Radio / RadioGroup
 - [ ] 3.5 Switch
 - [ ] 3.6 Select
