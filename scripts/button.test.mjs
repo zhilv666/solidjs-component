@@ -191,7 +191,12 @@ test("legacy variants and the default keep their existing class strings", () => 
 
 test("mahjong is an independent tokenized variant with pressed and disabled states", async () => {
   const tag = openingTag(renderButton({ variant: "mahjong" }));
-  const classes = new Set(tag.match(/\sclass="([^"]*)"/)[1].trim().split(/\s+/));
+  const classes = new Set(
+    tag
+      .match(/\sclass="([^"]*)"/)[1]
+      .trim()
+      .split(/\s+/),
+  );
   for (const name of [
     "shadow-mahjong",
     "enabled:active:shadow-mahjong-pressed",
