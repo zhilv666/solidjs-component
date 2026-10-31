@@ -22,3 +22,5 @@ export { Tag } from "./Tag";
 export type { TagProps } from "./Tag";
 export { Card } from "./Card";
 export type { CardProps } from "./Card";
+export { Alert } from "./Alert";
+export type { AlertProps } from "./Alert";

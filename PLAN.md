@@ -125,7 +125,8 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
   备注：提供 solid/outline/neutral 与三种尺寸，默认纯展示；closable 时类型要求 closeLabel 与 onClose，Kobalte 关闭按钮固定 type=button 和 24px 点击区域，由调用方负责移除。支持原生属性/ref/class、数字零值、长内容换行与动态禁用；禁用文字和按钮分别降低透明度，避免叠乘。95 项测试及 typecheck/lint/check:tokens/build 通过；真实浏览器验收 27 个矩阵示例、15 个 Tab 停靠点、鼠标/Enter/空格单次请求、禁用跳过、受控删除/恢复、表单安全与原生事件冒泡、响应式 props 和控件身份保留、明暗 hover/active/focus 及 390px 窄屏。最低对比度 5.26:1，明暗与移动截图已查看；使用带背景间隔的 token 焦点环，未新增 token、依赖或修改已完成组件。
 - [x] 4.3 Card
   备注：纯展示 section 容器，提供 outline/elevated 与三种尺寸，默认 outline；尺寸使用默认间距刻度，elevated 仅增加 shadow-sm。通过 children 组合语义化标题/header/footer/内部操作，支持原生属性/ref/事件/class、数字零值和长内容换行；区域名称由调用方的 aria-labelledby 或 aria-label 提供，不模拟按钮、不增加 Tab 停靠点。100 项测试及 typecheck/lint/check:tokens/build 通过；真实浏览器验收全部 6 个组合、4 个内部按钮的键盘操作与焦点、动态尺寸/变体/内容、控件身份与计数保留、原生属性和事件、明暗主题和 390px 无间断长文本。最低文字对比度 7.73:1，截图已查看；未新增 token、依赖或修改已完成组件。
-- [ ] 4.4 Alert（info / success / warning / danger）
+- [x] 4.4 Alert（info / success / warning / danger）
+  备注：基于 Kobalte Alert，提供四种状态与三种尺寸、可选 heading；原生 title/属性/事件/ref/class 与 ARIA 覆盖保持透传，可用 role=status 提供普通反馈语义。状态只使用现有语义色边框和不同装饰符号，正文 text-fg；支持空标题、数字零值、动态内容和长消息换行，无关闭交互或额外 Tab 停靠点。106 项测试及 typecheck/lint/check:tokens/build 通过；真实浏览器验收全部 12 个组合、3 个操作按钮的 Tab/Enter/空格与焦点、单次消息更新且不抢焦点、动态尺寸/状态/标题/原生 role、组件身份保留、装饰符号从无障碍文本中隐藏、明暗主题和 390px 窄屏。正文最低对比度 14.27:1、符号最低 6.47:1，截图已查看；预览矩阵 aria-live=off，动态提示保留 alert 语义。未新增 token、依赖或修改已完成组件；未进行实际屏幕阅读器朗读测试。
 - [ ] 4.5 Spinner
 - [ ] 4.6 Skeleton
 - [ ] 4.7 Avatar（圆形例外，需在备注中说明）
