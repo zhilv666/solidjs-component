@@ -106,7 +106,8 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
   备注：基于 Kobalte TextField，支持三种尺寸、错误/禁用/只读状态、受控/非受控值、原生属性/事件与 class 透传；默认 Enter 换行，可纵向手动调整或启用自动增高。50 项测试及 typecheck/lint/check:tokens/build 通过，真实浏览器完成键盘、原生事件计数、表单提交/重置、明暗主题和 390px 窄屏验收；SSR 首行换行与特殊字符经浏览器解析复核。未新增依赖或 token，未修改已完成组件。
 - [x] 3.3 Checkbox
   备注：基于 Kobalte，支持三种尺寸、选中/半选、错误/禁用/只读状态、受控/非受控值、原生事件/ref/属性与 class 透传；半选为独立展示状态。57 项测试及 typecheck/lint/check:tokens/build 通过，真实浏览器验收 26 个示例、20 个可用输入框的 Tab/空格与可见焦点环、单次状态回调、表单必填/提交/重置、明暗主题和 390px 窄屏；选中/半选与错误组合的边框无冲突。隐藏输入框通过 peer-focus-visible 将 2px token 焦点环映射到可见方框，未新增 token、依赖或改动已完成组件。
-- [ ] 3.4 Radio / RadioGroup
+- [x] 3.4 Radio / RadioGroup
+  备注：基于 Kobalte，组统一提供尺寸、横纵布局、受控/非受控值、错误/禁用/只读与必选状态；Radio 支持独立尺寸、原生事件/ref/属性和 class 透传。65 项测试及 typecheck/lint/check:tokens/build 通过，真实浏览器验收 52 个示例、15 个单选组 Tab 停靠点、方向键循环/禁用跳过、互斥选择、单次回调、原生表单与三种受控方式重置、明暗主题和 390px 窄屏。圆形控件与中心点属于必要圆形例外，均有局部 token 豁免注释；未新增 token 或依赖。未传 name 时沿用 Kobalte 自动生成的隔离分组名，表单场景须显式命名。补齐 Kobalte 拒绝只读变更后遗漏的原生 checked 回写，状态、焦点和键盘导航仍由 Kobalte/原生控件负责；未修改已完成组件。
 - [ ] 3.5 Switch
 - [ ] 3.6 Select
 - [ ] 3.7 FormField（label + 控件 + 帮助文字 + 错误文字，提供 `aria-describedby` 关联）
