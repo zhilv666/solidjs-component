@@ -60,12 +60,13 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
   验收：`bg-primary` 生效；`bg-red-500` 与 `rounded-2xl` 不再生效。
   备注：已替换默认颜色、字号、字重、阴影与圆角映射；9 项测试、lint 与构建通过，圆形类仅保留给后续带豁免注释的 Avatar/Switch 例外。
 
-- [ ] **1.4 全局基础样式**
+- [x] **1.4 全局基础样式**
   创建 `src/theme/base.css`：
   - 简单 reset
   - `body` 使用 `--font-family`、`--font-size-md`、`color: var(--color-fg)`
   - `-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility;`
   验收：在 demo 页面肉眼检查中英文混排清晰。
+  备注：基础样式、token 字体与字体渲染设置已接入，lint/typecheck/build 通过；按用户选择，中英文视觉验收并入 Button 人工关卡。
 
 - [ ] **1.5 token 检查脚本**
   添加 `pnpm check:tokens`，扫描 `src/components/**`，出现以下任一即报错并输出文件与行号：

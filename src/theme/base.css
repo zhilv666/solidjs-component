@@ -1,0 +1,43 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-normal);
+  color: var(--color-fg);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+:where(h1, h2, h3, h4, h5, h6, p, pre, ul, ol, dl) {
+  margin: 0;
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+  font-size: inherit;
+  font-weight: var(--font-weight-medium);
+}
+
+:where(button, input, textarea, select) {
+  font: inherit;
+  color: inherit;
+}
+
+:where(button) {
+  background: none;
+}
+
+:where(a) {
+  color: inherit;
+}
+
+:where(img, svg) {
+  display: block;
+}
