@@ -46,12 +46,13 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
   验收：类型完整，所有颜色对比度（fg 对 bg、primaryFg 对 primary）不低于 WCAG AA（4.5:1）。
   备注：无已有初始 token，按本任务创建蓝色主色与中性背景的明暗主题；正文、次要文字、主色/危险色文字等 9 组配色在两种主题中均通过 AA 对比度测试。
 
-- [ ] **1.2 generate.ts**
+- [x] **1.2 generate.ts**
   把 tokens 转成 CSS 变量（`--color-primary`、`--radius-md`、`--font-size-md` 等），输出到 `src/theme/theme.css`。
   `hover` / `active` 色用 `color-mix(in srgb, var(--color-primary) 90%, black)` 之类的方式从主色派生，不单独写死。
   暗色模式输出到 `[data-theme="dark"]`。
   添加脚本 `pnpm theme:build`，并在 `dev` / `build` 前自动执行。
   验收：只改 `primary` 的值，重新生成后全局主色（含 hover / active）同步变化。
+  备注：theme:build 已接入 dev/build 的前置命令；7 项工具链/主题测试、lint 与生产构建通过，测试使用内存副本修改主色，未改动 tokens.ts。
 
 - [ ] **1.3 UnoCSS 主题映射**
   在 `uno.config.ts` 中把 tokens 映射为类名：`bg-primary`、`text-primary-fg`、`text-fg`、`text-fg-muted`、`border-border`、`rounded-md`、`text-md`、`shadow-sm`、`ring-ring` 等。
