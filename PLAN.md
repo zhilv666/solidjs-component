@@ -54,10 +54,11 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
   验收：只改 `primary` 的值，重新生成后全局主色（含 hover / active）同步变化。
   备注：theme:build 已接入 dev/build 的前置命令；7 项工具链/主题测试、lint 与生产构建通过，测试使用内存副本修改主色，未改动 tokens.ts。
 
-- [ ] **1.3 UnoCSS 主题映射**
+- [x] **1.3 UnoCSS 主题映射**
   在 `uno.config.ts` 中把 tokens 映射为类名：`bg-primary`、`text-primary-fg`、`text-fg`、`text-fg-muted`、`border-border`、`rounded-md`、`text-md`、`shadow-sm`、`ring-ring` 等。
   同时移除默认调色板与不允许的圆角档位（`rounded-xl` 及以上不应生成）。
   验收：`bg-primary` 生效；`bg-red-500` 与 `rounded-2xl` 不再生效。
+  备注：已替换默认颜色、字号、字重、阴影与圆角映射；9 项测试、lint 与构建通过，圆形类仅保留给后续带豁免注释的 Avatar/Switch 例外。
 
 - [ ] **1.4 全局基础样式**
   创建 `src/theme/base.css`：
