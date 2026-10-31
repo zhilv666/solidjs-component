@@ -108,6 +108,51 @@ test("loading disables activation and preserves the accessible label", () => {
   );
 });
 
+test("hover styles exclude the pressed state", async () => {
+  const classes = new Set();
+  for (const variant of ["solid", "outline", "ghost", "danger"]) {
+    const tag = openingTag(renderButton({ variant }));
+    for (const name of tag.match(/\sclass="([^"]*)"/)[1].split(/\s+/)) {
+      classes.add(name);
+    }
+  }
+  const uno = await createGenerator(unoConfig);
+  const { css } = await uno.generate([...classes].join(" "));
+  const hoverRules = css
+    .split("\n")
+    .filter((rule) => rule.includes("\\:hover\\:"));
+  assert.equal(hoverRules.length, 5);
+  for (const rule of hoverRules) {
+    assert.ok(
+      rule.includes(":not(:active)"),
+      `Hover can override active: ${rule}`,
+    );
+  }
+});
+
+test("keycap variants use token shadows without movement", () => {
+  for (const variant of ["solid", "outline", "danger"]) {
+    const tag = openingTag(renderButton({ variant }));
+    const classes = new Set(tag.match(/\sclass="([^"]*)"/)[1].split(/\s+/));
+    for (const name of [
+      "shadow-keycap",
+      "enabled:active:shadow-keycap-pressed",
+      "disabled:shadow-sm",
+      "transition-shadow",
+      "duration-token",
+    ]) {
+      assert.ok(classes.has(name), `${variant} is missing ${name}`);
+    }
+    assert.ok(
+      [...classes].every((name) => !/(?:translate|scale|transform)/.test(name)),
+    );
+  }
+  assert.doesNotMatch(
+    openingTag(renderButton({ variant: "ghost" })),
+    /shadow-keycap/,
+  );
+});
+
 test("every variant, size and state emits valid UnoCSS utilities", async () => {
   const classes = new Set();
   for (const variant of ["solid", "outline", "ghost", "danger"]) {

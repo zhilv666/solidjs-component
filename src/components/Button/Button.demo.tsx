@@ -32,6 +32,10 @@ export function ButtonDemo() {
 
   return (
     <div class="space-y-8">
+      <p class="text-md text-fg-muted">
+        solid、outline、danger 使用键帽式底座，按住鼠标或空格时阴影收短；ghost
+        保持轻量。按钮本身不做位移或缩放。
+      </p>
       <For each={states}>
         {(state) => (
           <section

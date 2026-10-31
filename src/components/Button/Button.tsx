@@ -8,15 +8,15 @@ export interface ButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement>
   loading?: boolean;
 }
 
+const keycapClasses =
+  "shadow-keycap transition-shadow enabled:active:shadow-keycap-pressed disabled:shadow-sm";
+
 const variants = {
-  solid:
-    "border border-primary bg-primary text-primary-fg enabled:hover:border-primary-hover enabled:hover:bg-primary-hover enabled:active:border-primary-active enabled:active:bg-primary-active",
-  outline:
-    "border border-primary text-primary enabled:hover:bg-surface-hover enabled:active:bg-surface-active",
+  solid: `${keycapClasses} border border-primary bg-primary text-primary-fg enabled:hover:not-active:border-primary-hover enabled:hover:not-active:bg-primary-hover enabled:active:border-primary-active enabled:active:bg-primary-active`,
+  outline: `${keycapClasses} border border-primary bg-surface text-primary enabled:hover:not-active:bg-surface-hover enabled:active:bg-surface-active`,
   ghost:
-    "border-0 text-fg enabled:hover:bg-surface-hover enabled:active:bg-surface-active",
-  danger:
-    "border border-danger bg-danger text-danger-fg enabled:hover:border-danger-hover enabled:hover:bg-danger-hover enabled:active:border-danger-active enabled:active:bg-danger-active",
+    "border-0 text-fg transition-colors enabled:hover:not-active:bg-surface-hover enabled:active:bg-surface-active",
+  danger: `${keycapClasses} border border-danger bg-danger text-danger-fg enabled:hover:not-active:border-danger-hover enabled:hover:not-active:bg-danger-hover enabled:active:border-danger-active enabled:active:bg-danger-active`,
 } as const;
 
 const sizes = {
@@ -55,7 +55,7 @@ export function Button(props: ButtonProps) {
       disabled={local.disabled || local.loading}
       aria-busy={local.loading || local["aria-busy"]}
       class={clsx(
-        "inline-flex items-center justify-center gap-2 rounded-md font-medium cursor-pointer select-none whitespace-nowrap transition-colors duration-token focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:cursor-not-allowed",
+        "inline-flex items-center justify-center gap-2 rounded-md font-medium cursor-pointer select-none whitespace-nowrap duration-token focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:cursor-not-allowed",
         variants[local.variant],
         sizes[local.size],
         local.class,

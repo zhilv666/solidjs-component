@@ -90,7 +90,7 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 - [x] **2.1 Button** 🛑
   variant：`solid` / `outline` / `ghost` / `danger`；size：`sm` / `md` / `lg`；支持 `loading`、`disabled`、`as` 渲染为链接（可选）。
   验收：满足完成定义。
-  备注：Kobalte 样式封装、36 个演示组合与交互示例已实现；typecheck/lint/check:tokens/build 和 22 项测试通过。可选 as 链接未实现；浏览器视觉、明暗可读性与键盘操作按用户选择待人工验收，尚未成为已审核标准样例。
+  备注：Kobalte 样式封装、36 个演示组合与交互示例已实现；经用户确认新增键帽阴影 token，solid / outline / danger 使用凸起底座，ghost 保持轻量，按下只收短阴影、不做位移或缩放。26 项测试及 typecheck/lint/check:tokens/build 通过；真实浏览器已验证鼠标与键盘、明暗主题三态（最低文字对比度 5.26:1）和移动端布局。可选 as 链接未实现；仍等待用户人工审核外观，尚未成为已审核标准样例。
 
   **agent 完成后停止，等待我审核并手动修改。** 我确认后，该组件即成为后续所有组件的"标准样例"，之后不得再改动其风格。
 
@@ -156,4 +156,6 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 
 <!-- 格式：- [任务编号] 问题描述 / 需要我决定的事项 -->
 
-- [2.1] 浏览器连接已恢复，SSR 测试已使用独立临时缓存；23 项测试与 typecheck/lint/check:tokens/build 通过，开发服务运行测试后缓存不变、预览正常。Button 样式仍待进一步调整与审核，未进入 Phase 3。
+- [2.1] 浏览器连接已恢复；SSR 测试使用独立临时缓存，开发服务运行测试后缓存不变、预览正常。新增阴影 token 后已重启开发服务，使 UnoCSS 重新加载主题映射。
+- [2.1] 用户已确认键帽方向及 `shadow.keycap` / `shadow.keycapPressed` 两个 token；Button 的阴影例外仅限本组件。预览中底座阴影从 3px 收短到 1px，disabled / loading 使用 `shadow-sm`，未新增依赖或修改其他组件。
+- [2.1] 真实浏览器键盘验收覆盖 36 个矩阵组合、20 个 Tab 停靠点、Enter / Space 单次激活、动态禁用与 loading；两种主题的 hover / active、焦点环及文字对比度通过，1280×900 与 390×844 无横向溢出。浅色、深色、移动端截图已查看并保存在 `.playwright-mcp/`（不提交）；仍停在 Button 人工审核关卡，未进入 Phase 3。

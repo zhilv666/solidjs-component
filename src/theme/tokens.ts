@@ -39,6 +39,8 @@ export interface ThemeTokens {
   readonly shadow: {
     readonly sm: string;
     readonly md: string;
+    readonly keycap: string;
+    readonly keycapPressed: string;
   };
   readonly transition: {
     readonly duration: string;
@@ -96,6 +98,8 @@ export const tokens = {
   shadow: {
     sm: "0 1px 2px rgb(0 0 0 / 0.06)",
     md: "0 2px 6px rgb(0 0 0 / 0.08)",
+    keycap: "0 3px 0 var(--color-border), var(--shadow-sm)",
+    keycapPressed: "0 1px 0 var(--color-border), var(--shadow-sm)",
   },
   transition: {
     duration: "150ms",

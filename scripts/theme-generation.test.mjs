@@ -55,6 +55,16 @@ test("changing primary leaves hover and active dependent on that CSS variable", 
   }
 });
 
+test("keycap shadows generate variables and follow the theme border color", () => {
+  const css = generateThemeCss();
+  for (const name of ["keycap", "keycapPressed"]) {
+    const shadow = tokens.shadow[name];
+    assert.equal(typeof shadow, "string");
+    assert.ok(shadow.includes("var(--color-border)"));
+    assert.ok(css.includes(`--shadow-${toKebabCase(name)}: ${shadow};`));
+  }
+});
+
 test("generated stylesheet stays in sync with tokens and formatting", async () => {
   const output = new URL("../src/theme/theme.css", import.meta.url);
   const options = await resolveConfig(fileURLToPath(output));
