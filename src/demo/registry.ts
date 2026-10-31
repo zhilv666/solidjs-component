@@ -13,7 +13,7 @@ export const demos: readonly DemoEntry[] = [
   {
     id: "button",
     name: "Button",
-    description: "4 种变体、3 种尺寸，支持禁用与加载状态。",
+    description: "5 种变体（含麻将实验）、3 种尺寸，支持禁用与加载状态。",
     component: ButtonDemo,
   },
   {

@@ -65,6 +65,31 @@ test("keycap shadows generate variables and follow the theme border color", () =
   }
 });
 
+test("mahjong shadows layer theme colors and preserve existing keycap tokens", () => {
+  const css = generateThemeCss();
+  for (const name of ["mahjong", "mahjongPressed"]) {
+    const shadow = tokens.shadow[name];
+    assert.equal(typeof shadow, "string");
+    for (const color of ["surface", "surface-active", "success", "border"]) {
+      assert.ok(shadow.includes(`var(--color-${color})`));
+    }
+    assert.ok(shadow.includes("inset"));
+    assert.ok(css.includes(`--shadow-${toKebabCase(name)}: ${shadow};`));
+  }
+  assert.ok(tokens.shadow.mahjong.includes("0 6px 0 var(--color-success)"));
+  assert.ok(
+    tokens.shadow.mahjongPressed.includes("0 2px 0 var(--color-success)"),
+  );
+  assert.equal(
+    tokens.shadow.keycap,
+    "0 3px 0 var(--color-border), var(--shadow-sm)",
+  );
+  assert.equal(
+    tokens.shadow.keycapPressed,
+    "0 1px 0 var(--color-border), var(--shadow-sm)",
+  );
+});
+
 test("generated stylesheet stays in sync with tokens and formatting", async () => {
   const output = new URL("../src/theme/theme.css", import.meta.url);
   const options = await resolveConfig(fileURLToPath(output));

@@ -41,6 +41,8 @@ export interface ThemeTokens {
     readonly md: string;
     readonly keycap: string;
     readonly keycapPressed: string;
+    readonly mahjong: string;
+    readonly mahjongPressed: string;
   };
   readonly transition: {
     readonly duration: string;
@@ -100,6 +102,10 @@ export const tokens = {
     md: "0 2px 6px rgb(0 0 0 / 0.08)",
     keycap: "0 3px 0 var(--color-border), var(--shadow-sm)",
     keycapPressed: "0 1px 0 var(--color-border), var(--shadow-sm)",
+    mahjong:
+      "inset 0 1px 0 var(--color-surface), inset 0 -2px 0 var(--color-surface-active), 0 2px 0 var(--color-surface-active), 0 6px 0 var(--color-success), 0 7px 0 var(--color-border), var(--shadow-md)",
+    mahjongPressed:
+      "inset 0 1px 0 var(--color-surface), inset 0 -2px 0 var(--color-surface-active), 0 1px 0 var(--color-surface-active), 0 2px 0 var(--color-success), 0 3px 0 var(--color-border), var(--shadow-md)",
   },
   transition: {
     duration: "150ms",

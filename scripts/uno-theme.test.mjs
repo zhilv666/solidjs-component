@@ -23,6 +23,9 @@ test("approved utilities resolve to theme variables and preserve spacing", async
     "shadow-keycap",
     "shadow-keycap-pressed",
     "enabled:active:shadow-keycap-pressed",
+    "shadow-mahjong",
+    "shadow-mahjong-pressed",
+    "enabled:active:shadow-mahjong-pressed",
     "focus-visible:ring-2",
     "focus-visible:ring-ring",
     "enabled:hover:bg-primary-hover",
@@ -49,6 +52,8 @@ test("approved utilities resolve to theme variables and preserve spacing", async
     "shadow-sm",
     "shadow-keycap",
     "shadow-keycap-pressed",
+    "shadow-mahjong",
+    "shadow-mahjong-pressed",
     "color-ring",
     "transition-duration",
   ]) {

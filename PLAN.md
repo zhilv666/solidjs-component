@@ -88,9 +88,9 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 ## Phase 2：标准样例 🛑
 
 - [x] **2.1 Button** 🛑
-  variant：`solid` / `outline` / `ghost` / `danger`；size：`sm` / `md` / `lg`；支持 `loading`、`disabled`、`as` 渲染为链接（可选）。
+  variant：`solid` / `outline` / `ghost` / `danger`，另有经用户授权的 `mahjong` 实验变体；size：`sm` / `md` / `lg`；支持 `loading`、`disabled`、`as` 渲染为链接（可选）。
   验收：满足完成定义。
-  备注：Kobalte 样式封装、36 个演示组合与交互示例已实现；经用户确认新增键帽阴影 token，solid / outline / danger 使用凸起底座，ghost 保持轻量，按下只收短阴影、不做位移或缩放。26 项测试及 typecheck/lint/check:tokens/build 通过；真实浏览器已验证鼠标与键盘、明暗主题三态（最低文字对比度 5.26:1）和移动端布局。可选 as 链接未实现；仍等待用户人工审核外观，尚未成为已审核标准样例。
+  备注：基于 Kobalte，保留 36 个旧矩阵组合，新增 18 个键帽/麻将并排对比组合及麻将计数、保存示例。原有四个变体、默认样式和键帽 token 已由回归测试锁定；仅新增用户授权的两个麻将阴影 token。30 项测试及 typecheck/lint/check:tokens/build 通过；真实浏览器已验证鼠标、键盘、明暗主题三态与移动端布局。可选 as 链接未实现；两套立体样式均留在 Button 人工外观审核关卡，尚未成为已审核标准样例。
 
   **agent 完成后停止，等待我审核并手动修改。** 我确认后，该组件即成为后续所有组件的"标准样例"，之后不得再改动其风格。
 
@@ -158,4 +158,5 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 
 - [2.1] 浏览器连接已恢复；SSR 测试使用独立临时缓存，开发服务运行测试后缓存不变、预览正常。新增阴影 token 后已重启开发服务，使 UnoCSS 重新加载主题映射。
 - [2.1] 用户已确认键帽方向及 `shadow.keycap` / `shadow.keycapPressed` 两个 token；Button 的阴影例外仅限本组件。预览中底座阴影从 3px 收短到 1px，disabled / loading 使用 `shadow-sm`，未新增依赖或修改其他组件。
-- [2.1] 真实浏览器键盘验收覆盖 36 个矩阵组合、20 个 Tab 停靠点、Enter / Space 单次激活、动态禁用与 loading；两种主题的 hover / active、焦点环及文字对比度通过，1280×900 与 390×844 无横向溢出。浅色、深色、移动端截图已查看并保存在 `.playwright-mcp/`（不提交）；仍停在 Button 人工审核关卡，未进入 Phase 3。
+- [2.1] 用户已授权新增 `shadow.mahjong` / `shadow.mahjongPressed` 两个 token 及独立 `variant="mahjong"` 实验；瓷质牌面跟随现有背景 token，绿色厚底跟随 `success`，按下厚底从 6px 收短到 2px。保留旧版的 3px → 1px 键帽效果，不新增颜色、依赖、位移或渐变。
+- [2.1] 真实浏览器键盘验收覆盖 54 个展示组合、28 个 Tab 停靠点（跳过 36 个禁用/加载按钮）、Enter / Space 单次激活、两种样式共享的动态禁用与 loading；明暗主题 hover / active 和实际焦点环通过，麻将文字最低对比度为 11.2:1，键帽为 5.26:1。1280×900 与 390×844 无横向溢出或按钮裁切；浅色、深色、移动端截图已查看并保存在 `.playwright-mcp/`（不提交）。仍停在 Button 人工外观审核关卡，未进入 Phase 3。

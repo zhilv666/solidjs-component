@@ -19,7 +19,7 @@
 
 - **小圆角**：只使用 `rounded-sm`（2px）、`rounded-md`（4px）、`rounded-lg`（6px）。默认 `rounded-md`。禁止 `rounded-xl` 及以上，禁止 `rounded-full`（Avatar、Switch 滑块等确需圆形的例外，须在 PR 说明中标注）。
 - **字体清晰**：正文使用 `text-fg`（深色），次要文字使用 `text-fg-muted`，禁止用更浅的灰色。正文不小于 14px，字重只用 400 / 500，禁止 300 及以下。
-- **风格克制**：扁平为主，边框清晰，阴影只用 token 中的 `shadow-sm` / `shadow-md`，不做渐变、不做大面积模糊。Button 经用户确认的键帽样式是例外，可使用 `shadow-keycap` / `shadow-keycap-pressed`；其他组件不沿用此例外。
+- **风格克制**：扁平为主，边框清晰，阴影只用 token 中的 `shadow-sm` / `shadow-md`，不做渐变、不做大面积模糊。Button 经用户确认的键帽样式是例外，可使用 `shadow-keycap` / `shadow-keycap-pressed`；经用户授权的 `mahjong` 实验变体另可使用 `shadow-mahjong` / `shadow-mahjong-pressed`，仅用于该变体。其他组件不沿用上述例外。
 
 ## 3. 硬性规则（违反即视为任务失败）
 

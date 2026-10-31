@@ -153,9 +153,84 @@ test("keycap variants use token shadows without movement", () => {
   );
 });
 
+test("legacy variants and the default keep their existing class strings", () => {
+  const base =
+    "inline-flex items-center justify-center gap-2 rounded-md font-medium cursor-pointer select-none whitespace-nowrap duration-token focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:cursor-not-allowed";
+  const keycap =
+    "shadow-keycap transition-shadow enabled:active:shadow-keycap-pressed disabled:shadow-sm";
+  const legacy = {
+    solid: `${keycap} border border-primary bg-primary text-primary-fg enabled:hover:not-active:border-primary-hover enabled:hover:not-active:bg-primary-hover enabled:active:border-primary-active enabled:active:bg-primary-active`,
+    outline: `${keycap} border border-primary bg-surface text-primary enabled:hover:not-active:bg-surface-hover enabled:active:bg-surface-active`,
+    ghost:
+      "border-0 text-fg transition-colors enabled:hover:not-active:bg-surface-hover enabled:active:bg-surface-active",
+    danger: `${keycap} border border-danger bg-danger text-danger-fg enabled:hover:not-active:border-danger-hover enabled:hover:not-active:bg-danger-hover enabled:active:border-danger-active enabled:active:bg-danger-active`,
+  };
+  const sizes = {
+    sm: "h-8 px-3 text-md",
+    md: "h-10 px-4 text-md",
+    lg: "h-12 px-5 text-lg",
+  };
+  for (const [variant, variantClasses] of Object.entries(legacy)) {
+    for (const [size, sizeClasses] of Object.entries(sizes)) {
+      for (const state of [{}, { disabled: true }, { loading: true }]) {
+        const tag = openingTag(renderButton({ variant, size, ...state }));
+        assert.equal(
+          tag.match(/\sclass="([^"]*)"/)[1].trim(),
+          `${base} ${variantClasses} ${sizeClasses}`,
+        );
+      }
+    }
+  }
+  assert.equal(
+    openingTag(renderButton())
+      .match(/\sclass="([^"]*)"/)[1]
+      .trim(),
+    `${base} ${legacy.solid} ${sizes.md}`,
+  );
+});
+
+test("mahjong is an independent tokenized variant with pressed and disabled states", async () => {
+  const tag = openingTag(renderButton({ variant: "mahjong" }));
+  const classes = new Set(tag.match(/\sclass="([^"]*)"/)[1].trim().split(/\s+/));
+  for (const name of [
+    "shadow-mahjong",
+    "enabled:active:shadow-mahjong-pressed",
+    "disabled:shadow-sm",
+    "bg-bg",
+    "text-fg",
+    "border-solid",
+    "transition-shadow",
+    "duration-token",
+  ]) {
+    assert.ok(classes.has(name), `Mahjong is missing ${name}`);
+  }
+  assert.ok(
+    [...classes].every(
+      (name) => !/(?:keycap|translate|scale|transform|gradient)/.test(name),
+    ),
+  );
+  const uno = await createGenerator(unoConfig);
+  const { css, matched } = await uno.generate([...classes].join(" "));
+  for (const name of classes) assert.ok(matched.has(name));
+  for (const name of ["shadow-mahjong", "shadow-mahjong-pressed"]) {
+    assert.ok(css.includes(`var(--${name})`));
+  }
+  const hoverRules = css
+    .split("\n")
+    .filter((rule) => rule.includes("\\:hover\\:"));
+  assert.equal(hoverRules.length, 2);
+  for (const rule of hoverRules) assert.ok(rule.includes(":not(:active)"));
+  for (const state of [{ disabled: true }, { loading: true }]) {
+    assert.match(
+      openingTag(renderButton({ variant: "mahjong", ...state })),
+      /\sdisabled(?:\s|=|>)/,
+    );
+  }
+});
+
 test("every variant, size and state emits valid UnoCSS utilities", async () => {
   const classes = new Set();
-  for (const variant of ["solid", "outline", "ghost", "danger"]) {
+  for (const variant of ["solid", "outline", "ghost", "danger", "mahjong"]) {
     for (const size of ["sm", "md", "lg"]) {
       for (const state of [{}, { disabled: true }, { loading: true }]) {
         const html = renderButton({ variant, size, ...state });
@@ -181,4 +256,22 @@ test("demo renders all 36 matrix cases and labels its icon button", () => {
     }
   }
   assert.ok(html.includes('aria-label="新增项目并增加计数"'));
+});
+
+test("demo compares both styles in all sizes and states with live mahjong controls", () => {
+  const html = renderToString(() => ButtonDemo());
+  for (const style of ["keycap", "mahjong"]) {
+    for (const state of [
+      "常规 / Default",
+      "禁用 / Disabled",
+      "加载 / Loading",
+    ]) {
+      for (const size of ["sm", "md", "lg"]) {
+        const name = `样式对比 ${style} ${state} ${size}`;
+        assert.ok(html.includes(`aria-label="${name}"`), `Missing ${name}`);
+      }
+    }
+  }
+  assert.ok(html.includes('id="mahjong-counter-button"'));
+  assert.ok(html.includes('id="mahjong-save-button"'));
 });

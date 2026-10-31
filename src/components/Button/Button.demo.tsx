@@ -9,6 +9,11 @@ const states = [
   { id: "loading", label: "加载 / Loading", disabled: false, loading: true },
 ] as const;
 
+const comparisons = [
+  { id: "keycap", label: "键帽 / Keycap", variant: "solid" },
+  { id: "mahjong", label: "麻将 / Mahjong", variant: "mahjong" },
+] as const;
+
 export function ButtonDemo() {
   const [count, setCount] = createSignal(0);
   const [disabled, setDisabled] = createSignal(false);
@@ -32,6 +37,60 @@ export function ButtonDemo() {
 
   return (
     <div class="space-y-8">
+      <section
+        id="button-style-comparison"
+        class="space-y-4"
+        aria-labelledby="button-style-comparison-heading"
+      >
+        <h3 id="button-style-comparison-heading" class="text-md font-medium">
+          立体样式对比
+        </h3>
+        <p class="text-md text-fg-muted">
+          保留现有键帽样式，新增瓷质牌面、绿色厚底与细边倒角的麻将实验样式。
+          深色模式牌面跟随主题；按住鼠标或空格时底座收短，不做位移或缩放。
+        </p>
+        <div class="grid gap-6 lg:grid-cols-2">
+          <For each={comparisons}>
+            {(style) => (
+              <section
+                class="space-y-4 rounded-md border border-solid border-border p-4"
+                aria-labelledby={`button-${style.id}-comparison-heading`}
+                data-demo-style={style.id}
+              >
+                <h4
+                  id={`button-${style.id}-comparison-heading`}
+                  class="text-md font-medium"
+                >
+                  {style.label}
+                </h4>
+                <For each={states}>
+                  {(state) => (
+                    <div class="space-y-2">
+                      <p class="text-md text-fg-muted">{state.label}</p>
+                      <div class="flex flex-wrap items-center gap-3">
+                        <For each={sizes}>
+                          {(size) => (
+                            <Button
+                              variant={style.variant}
+                              size={size}
+                              disabled={state.disabled}
+                              loading={state.loading}
+                              aria-label={`样式对比 ${style.id} ${state.label} ${size}`}
+                            >
+                              {size} · Button
+                            </Button>
+                          )}
+                        </For>
+                      </div>
+                    </div>
+                  )}
+                </For>
+              </section>
+            )}
+          </For>
+        </div>
+      </section>
+
       <p class="text-md text-fg-muted">
         solid、outline、danger 使用键帽式底座，按住鼠标或空格时阴影收短；ghost
         保持轻量。按钮本身不做位移或缩放。
@@ -92,6 +151,14 @@ export function ButtonDemo() {
             点击计数
           </Button>
           <Button
+            id="mahjong-counter-button"
+            variant="mahjong"
+            disabled={disabled()}
+            onClick={() => setCount((value) => value + 1)}
+          >
+            麻将计数
+          </Button>
+          <Button
             variant="ghost"
             aria-pressed={disabled()}
             onClick={() => setDisabled((value) => !value)}
@@ -114,6 +181,14 @@ export function ButtonDemo() {
         <div class="flex flex-wrap items-center gap-3">
           <Button id="save-button" loading={loading()} onClick={save}>
             {loading() ? "保存中" : "模拟保存"}
+          </Button>
+          <Button
+            id="mahjong-save-button"
+            variant="mahjong"
+            loading={loading()}
+            onClick={save}
+          >
+            {loading() ? "麻将保存中" : "麻将保存"}
           </Button>
           <p aria-live="polite" class="text-md text-fg-muted">
             {saveMessage()}

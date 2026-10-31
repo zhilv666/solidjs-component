@@ -3,7 +3,7 @@ import { mergeProps, Show, splitProps, type JSX } from "solid-js";
 import clsx from "clsx";
 
 export interface ButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "solid" | "outline" | "ghost" | "danger";
+  variant?: "solid" | "outline" | "ghost" | "danger" | "mahjong";
   size?: "sm" | "md" | "lg";
   loading?: boolean;
 }
@@ -17,6 +17,8 @@ const variants = {
   ghost:
     "border-0 text-fg transition-colors enabled:hover:not-active:bg-surface-hover enabled:active:bg-surface-active",
   danger: `${keycapClasses} border border-danger bg-danger text-danger-fg enabled:hover:not-active:border-danger-hover enabled:hover:not-active:bg-danger-hover enabled:active:border-danger-active enabled:active:bg-danger-active`,
+  mahjong:
+    "shadow-mahjong transition-shadow enabled:active:shadow-mahjong-pressed disabled:shadow-sm border border-solid border-border bg-bg text-fg enabled:hover:not-active:border-success enabled:hover:not-active:bg-surface-hover enabled:active:border-success enabled:active:bg-surface-active",
 } as const;
 
 const sizes = {
