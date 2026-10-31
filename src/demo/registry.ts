@@ -8,6 +8,7 @@ import { RadioGroupDemo } from "@/components/RadioGroup/RadioGroup.demo";
 import { SwitchDemo } from "@/components/Switch/Switch.demo";
 import { SelectDemo } from "@/components/Select/Select.demo";
 import { FormFieldDemo } from "@/components/FormField/FormField.demo";
+import { BadgeDemo } from "@/components/Badge/Badge.demo";
 
 export interface DemoEntry {
   readonly id: string;
@@ -64,6 +65,12 @@ export const demos: readonly DemoEntry[] = [
     name: "FormField",
     description: "组合标签、帮助与错误文字，提供响应式关联属性和分组控件支持。",
     component: FormFieldDemo,
+  },
+  {
+    id: "badge",
+    name: "Badge",
+    description: "3 种变体、3 种尺寸的纯展示标签，支持计数与 class 透传。",
+    component: BadgeDemo,
   },
   {
     id: "theme",

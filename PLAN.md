@@ -119,7 +119,8 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 
 ## Phase 4：展示与反馈
 
-- [ ] 4.1 Badge
+- [x] 4.1 Badge
+  备注：纯展示 span，提供 solid/outline/neutral 与三种尺寸，支持原生属性/ref/class 透传、数字零值和内容换行；不模拟按钮，也不引入 hover/active 或 Tab 停靠点。90 项测试及 typecheck/lint/check:tokens/build 通过；真实浏览器验收全部 9 种组合、键盘计数、零值、明暗主题和 390px 长标签换行，最低对比度 6.70:1，截图已查看。仅使用现有 token，无阴影、额外依赖或已完成组件改动。
 - [ ] 4.2 Tag（可关闭）
 - [ ] 4.3 Card
 - [ ] 4.4 Alert（info / success / warning / danger）

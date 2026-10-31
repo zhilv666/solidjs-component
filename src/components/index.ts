@@ -16,3 +16,5 @@ export { Select } from "./Select";
 export type { SelectOption, SelectProps } from "./Select";
 export { FormField } from "./FormField";
 export type { FormFieldControlProps, FormFieldProps } from "./FormField";
+export { Badge } from "./Badge";
+export type { BadgeProps } from "./Badge";
