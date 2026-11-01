@@ -1,10 +1,12 @@
 import { Root as AlertRoot } from "@kobalte/core/alert";
 import { mergeProps, Show, splitProps, type JSX } from "solid-js";
 import clsx from "clsx";
+import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 
 export interface AlertProps extends JSX.HTMLAttributes<HTMLDivElement> {
   variant?: "info" | "success" | "warning" | "danger";
   size?: "sm" | "md" | "lg";
+  appearance?: ComponentAppearance;
   /** Optional visible heading; the native title attribute stays available. */
   heading?: JSX.Element;
 }
@@ -33,6 +35,7 @@ export function Alert(props: AlertProps) {
     {
       variant: "info",
       size: "md",
+      appearance: "default",
       heading: undefined,
       class: "",
       children: undefined,
@@ -42,6 +45,7 @@ export function Alert(props: AlertProps) {
   const [local, rest] = splitProps(merged, [
     "variant",
     "size",
+    "appearance",
     "heading",
     "class",
     "children",
@@ -53,6 +57,7 @@ export function Alert(props: AlertProps) {
         "flex max-w-full min-w-0 items-start gap-3 rounded-md border border-solid bg-surface text-fg font-normal",
         variants[local.variant],
         sizes[local.size],
+        getAppearanceClasses(local.appearance),
         local.class,
       )}
     >

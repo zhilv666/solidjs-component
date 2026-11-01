@@ -1,6 +1,7 @@
 import { createSignal, For } from "solid-js";
 import { Button } from "../Button";
 import { Alert } from "./Alert";
+import { AppearancePreview } from "../../demo/AppearancePreview";
 
 const variants = ["info", "success", "warning", "danger"] as const;
 const sizes = ["sm", "md", "lg"] as const;
@@ -19,6 +20,26 @@ export function AlertDemo() {
   const [showHeading, setShowHeading] = createSignal(true);
   return (
     <div class="space-y-8">
+      <AppearancePreview id="alert">
+        {(appearance, alertSize) => (
+          <div class="space-y-4">
+            <For each={variants}>
+              {(item) => (
+                <Alert
+                  id={`alert-${appearance}-${item}-${alertSize}`}
+                  appearance={appearance}
+                  variant={item}
+                  size={alertSize}
+                  heading={`${alertSize} · ${messages[item].heading}`}
+                  aria-live="off"
+                >
+                  {messages[item].body}
+                </Alert>
+              )}
+            </For>
+          </div>
+        )}
+      </AppearancePreview>
       <p class="text-md text-fg-muted">
         Kobalte 提供 role=alert，适合重要提示；普通反馈可通过原生 role=status
         使用礼貌播报。符号和文字共同区分状态，正文保持 text-fg。 矩阵设置

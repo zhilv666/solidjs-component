@@ -136,3 +136,75 @@ test("alert demo covers every severity/size and dynamic, polite, zero and wrappi
     assert.ok(html.includes(`id="${id}"`));
   assert.ok(html.includes('aria-live="off"') && html.includes('role="status"'));
 });
+
+test("alert appearance preserves default classes, semantic roles and numeric headings", () => {
+  assert.deepEqual(
+    classes(render()),
+    classes(render({ appearance: "default" })),
+  );
+  for (const appearance of ["keycap", "mahjong"]) {
+    const html = render({
+      appearance,
+      role: "status",
+      "aria-live": "polite",
+      heading: 0,
+      children: 0,
+      class: "w-full",
+    });
+    assert.ok(classes(html).includes(`shadow-${appearance}`));
+    assert.ok(
+      html.includes('role="status"') && html.includes('aria-live="polite"'),
+    );
+    assert.ok(html.includes('<div class="font-medium">0</div>'));
+    assert.doesNotMatch(html, /\s(?:appearance|tabindex)=|(?:hover|active):/);
+    assert.equal(
+      html
+        .match(/class="([^"]*)"/)[1]
+        .trim()
+        .split(/\s+/)
+        .at(-1),
+      "w-full",
+    );
+  }
+});
+
+test("all alert appearance severities and sizes retain exclusive token colors", async () => {
+  const names = new Set();
+  for (const appearance of ["default", "keycap", "mahjong"])
+    for (const variant of ["info", "success", "warning", "danger"])
+      for (const size of ["sm", "md", "lg"]) {
+        const current = classes(
+          render({ appearance, variant, size, heading: "Heading" }),
+        );
+        assert.equal(
+          current.filter((name) =>
+            /^border-(primary|success|warning|danger)$/.test(name),
+          ).length,
+          1,
+        );
+        assert.ok(current.includes("text-fg"));
+        for (const name of current) names.add(name);
+      }
+  const uno = await createGenerator(unoConfig);
+  const { css, matched } = await uno.generate([...names].join(" "));
+  for (const name of names)
+    assert.ok(matched.has(name), `Missing utility: ${name}`);
+  for (const appearance of ["keycap", "mahjong"])
+    assert.ok(css.includes(`var(--shadow-${appearance})`));
+});
+
+test("alert demo includes every appearance, size and severity with preview announcements off", () => {
+  const html = renderToString(() => AlertDemo());
+  for (const appearance of ["default", "keycap", "mahjong"])
+    for (const variant of ["info", "success", "warning", "danger"])
+      for (const size of ["sm", "md", "lg"])
+        assert.ok(html.includes(`id="alert-${appearance}-${variant}-${size}"`));
+  assert.equal(
+    [
+      ...html.matchAll(
+        /id="alert-(?:default|keycap|mahjong)-(?:info|success|warning|danger)-(?:sm|md|lg)"[^>]*aria-live="off"/g,
+      ),
+    ].length,
+    36,
+  );
+});
