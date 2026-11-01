@@ -1,0 +1,26 @@
+.solid-list-option:not([data-disabled]):hover,
+.solid-list-option[data-highlighted]:not([data-disabled]) {
+  background-color: var(--color-surface-hover);
+}
+
+.solid-list-option:not([data-disabled]):active {
+  background-color: var(--color-surface-active);
+}
+
+.solid-list-option[data-selected] {
+  color: var(--color-primary-fg);
+  background-color: var(--color-primary);
+}
+
+.solid-list-option[data-selected]:not([data-disabled]):hover,
+.solid-list-option[data-selected][data-highlighted]:not([data-disabled]) {
+  background-color: var(--color-primary-hover);
+}
+
+.solid-list-option[data-selected]:not([data-disabled]):active {
+  background-color: var(--color-primary-active);
+}
+
+.solid-list-option[data-selected] .solid-list-description {
+  color: var(--color-primary-fg);
+}

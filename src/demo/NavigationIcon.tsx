@@ -36,6 +36,7 @@ const paths: Readonly<Record<string, readonly string[]>> = {
   "dropdown-menu": ["M3 3h18v18H3z", "M7 7h10M7 12h10M7 17h6"],
   toast: ["M4 6h16v12H4z", "M8 3h8M8 21h8M8 10h8M8 14h5"],
   tabs: ["M3 4h7v5h11v11H3z", "M10 4h11v5M3 9h7"],
+  list: ["M3 5h2M3 12h2M3 19h2", "M9 5h12M9 12h12M9 19h12"],
   theme: [
     "M12 3a9 9 0 1 0 0 18h2a3 3 0 0 0 3-3c0-2-2-2-2-4s3-2 5-2a2 2 0 0 0 1-3 10 10 0 0 0-9-6",
     "M7 9h1M12 6h1M17 9h1M6 14h1",

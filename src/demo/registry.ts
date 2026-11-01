@@ -23,6 +23,7 @@ import { DialogDemo } from "@/components/Dialog/Dialog.demo";
 import { DropdownMenuDemo } from "@/components/DropdownMenu/DropdownMenu.demo";
 import { ToastDemo } from "@/components/Toast/Toast.demo";
 import { TabsDemo } from "@/components/Tabs/Tabs.demo";
+import { ListDemo } from "@/components/List/List.demo";
 
 export interface DemoEntry {
   readonly id: string;
@@ -172,6 +173,12 @@ export const demos: readonly DemoEntry[] = [
     name: "Tabs",
     description: "Kobalte 标签页，支持三外观、三尺寸、方向键与手动激活。",
     component: TabsDemo,
+  },
+  {
+    id: "list",
+    name: "List",
+    description: "展示与选择列表，支持单选/多选、禁用项、键盘导航及操作插槽。",
+    component: ListDemo,
   },
   {
     id: "theme",
