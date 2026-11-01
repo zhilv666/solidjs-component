@@ -1,6 +1,7 @@
 import { createSignal, For, Show } from "solid-js";
 import { Button } from "../Button";
 import { Tag } from "./Tag";
+import { AppearancePreview } from "../../demo/AppearancePreview";
 
 const variants = ["solid", "outline", "neutral"] as const;
 const sizes = ["sm", "md", "lg"] as const;
@@ -30,6 +31,53 @@ export function TagDemo() {
   const [disabled, setDisabled] = createSignal(false);
   return (
     <div class="space-y-8">
+      <AppearancePreview id="tag">
+        {(appearance, size) => (
+          <div class="space-y-4">
+            <For each={states}>
+              {(state) => (
+                <div class="space-y-2">
+                  <p class="text-md text-fg-muted">
+                    {state.label} · {size}
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3">
+                    <For each={variants}>
+                      {(variant) => (
+                        <Show
+                          when={state.closable}
+                          fallback={
+                            <Tag
+                              id={`tag-${appearance}-${state.id}-${variant}-${size}`}
+                              appearance={appearance}
+                              variant={variant}
+                              size={size}
+                            >
+                              {variant} · {size}
+                            </Tag>
+                          }
+                        >
+                          <Tag
+                            id={`tag-${appearance}-${state.id}-${variant}-${size}`}
+                            appearance={appearance}
+                            variant={variant}
+                            size={size}
+                            disabled={state.disabled}
+                            closable
+                            closeLabel={`移除 ${appearance} ${state.id} ${variant} ${size} 标签`}
+                            onClose={() => setRequests((count) => count + 1)}
+                          >
+                            {variant} · {size}
+                          </Tag>
+                        </Show>
+                      )}
+                    </For>
+                  </div>
+                </div>
+              )}
+            </For>
+          </div>
+        )}
+      </AppearancePreview>
       <p class="text-md text-fg-muted">
         关闭请求通过 onClose 通知，由调用方移除。可关闭标签必须提供 closeLabel
         和回调；矩阵仅记录请求以保留预览，下方列表会实际删除。关闭按钮使用

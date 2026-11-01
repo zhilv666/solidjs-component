@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import { after, before, test } from "node:test";
+import { URL } from "node:url";
 import { renderToString } from "solid-js/web";
 import { createGenerator } from "unocss";
 import unoConfig from "../uno.config.ts";
@@ -131,4 +133,85 @@ test("tag demo covers every variant/size/state and a removable controlled list",
   ])
     assert.ok(html.includes(`id="${id}"`));
   assert.ok(html.includes('aria-label="移除 SolidJS 标签"'));
+});
+
+test("tag appearance preserves default classes and close-button semantics", () => {
+  assert.deepEqual(
+    classes(render()),
+    classes(render({ appearance: "default" })),
+  );
+  for (const appearance of ["keycap", "mahjong"]) {
+    const plain = render({ appearance, children: 0, class: "w-full" });
+    assert.ok(classes(plain).includes(`shadow-${appearance}`));
+    assert.ok(!plain.includes("<button"));
+    assert.doesNotMatch(plain, /\s(?:appearance|role|tabindex)=/);
+    const html = render({
+      appearance,
+      closable: true,
+      closeLabel: "Remove",
+      onClose() {},
+    });
+    assert.match(html, /<button\b[^>]*type="button"[^>]*aria-label="Remove"/);
+    const unavailable = render({
+      appearance,
+      disabled: true,
+      closable: true,
+      closeLabel: "Remove",
+      onClose() {},
+    });
+    assert.ok(classes(unavailable).includes("shadow-sm"));
+    assert.match(unavailable, /<span\b[^>]*data-disabled=""/);
+    assert.match(unavailable, /<button\b[^>]*\sdisabled(?:\s|=|>)/);
+  }
+});
+
+test("tag appearance utilities and close-only pressed rules use approved tokens", async () => {
+  const names = new Set();
+  for (const appearance of ["default", "keycap", "mahjong"])
+    for (const variant of ["solid", "outline", "neutral"])
+      for (const size of ["sm", "md", "lg"])
+        for (const disabled of [false, true])
+          for (const name of classes(
+            render({
+              appearance,
+              variant,
+              size,
+              disabled,
+              closable: true,
+              closeLabel: "Remove",
+              onClose() {},
+            }),
+          ))
+            names.add(name);
+  const uno = await createGenerator(unoConfig);
+  const { matched } = await uno.generate([...names].join(" "));
+  for (const name of names)
+    assert.ok(matched.has(name), `Missing utility: ${name}`);
+  const source = await readFile(
+    new URL("../src/components/Tag/Tag.css", import.meta.url),
+    "utf8",
+  );
+  for (const appearance of ["keycap", "mahjong"]) {
+    assert.ok(
+      source.includes(
+        `[data-tag-appearance="${appearance}"]:not([data-disabled]):has(> button:active)`,
+      ),
+    );
+    assert.ok(source.includes(`var(--shadow-${appearance}-pressed)`));
+  }
+  assert.doesNotMatch(
+    source,
+    /#[\da-f]{3,8}\b|rgba?\(|\d+px|transform|animation/i,
+  );
+});
+
+test("tag demo shows every appearance, variant, size and close state", () => {
+  const html = renderToString(() => TagDemo());
+  for (const appearance of ["default", "keycap", "mahjong"])
+    for (const variant of ["solid", "outline", "neutral"])
+      for (const size of ["sm", "md", "lg"])
+        for (const state of ["plain", "closable", "disabled"])
+          assert.ok(
+            html.includes(`id="tag-${appearance}-${state}-${variant}-${size}"`),
+          );
 });

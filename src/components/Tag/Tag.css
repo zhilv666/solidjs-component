@@ -1,0 +1,7 @@
+[data-tag-appearance="keycap"]:not([data-disabled]):has(> button:active) {
+  --un-shadow: var(--shadow-keycap-pressed);
+}
+
+[data-tag-appearance="mahjong"]:not([data-disabled]):has(> button:active) {
+  --un-shadow: var(--shadow-mahjong-pressed);
+}

@@ -1,6 +1,8 @@
 import { Root as ButtonRoot } from "@kobalte/core/button";
 import { mergeProps, Show, splitProps, type JSX } from "solid-js";
 import clsx from "clsx";
+import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
+import "./Tag.css";
 
 interface TagBaseProps extends Omit<
   JSX.HTMLAttributes<HTMLSpanElement>,
@@ -8,6 +10,7 @@ interface TagBaseProps extends Omit<
 > {
   variant?: "solid" | "outline" | "neutral";
   size?: "sm" | "md" | "lg";
+  appearance?: ComponentAppearance;
   disabled?: boolean;
 }
 
@@ -46,6 +49,7 @@ export function Tag(props: TagProps) {
     {
       variant: "solid",
       size: "md",
+      appearance: "default",
       disabled: false,
       closable: false,
       closeLabel: undefined,
@@ -58,6 +62,7 @@ export function Tag(props: TagProps) {
   const [local, rest] = splitProps(merged, [
     "variant",
     "size",
+    "appearance",
     "disabled",
     "closable",
     "closeLabel",
@@ -68,11 +73,16 @@ export function Tag(props: TagProps) {
   return (
     <span
       {...rest}
+      data-tag-appearance={
+        local.appearance === "default" ? undefined : local.appearance
+      }
+      data-disabled={local.disabled ? "" : undefined}
       class={clsx(
         "inline-flex max-w-full min-w-0 items-center gap-2 rounded-md border border-solid font-normal",
         variants[local.variant],
         sizes[local.size],
         local.disabled && "cursor-not-allowed",
+        getAppearanceClasses(local.appearance, "display", local.disabled),
         local.class,
       )}
     >
