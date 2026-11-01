@@ -13,6 +13,7 @@ import {
   type JSX,
 } from "solid-js";
 import clsx from "clsx";
+import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 
 export interface FormFieldControlProps {
   id: string;
@@ -31,6 +32,7 @@ export interface FormFieldProps extends Omit<
   label: JSX.Element;
   controlId?: string;
   size?: "sm" | "md" | "lg";
+  appearance?: ComponentAppearance;
   description?: JSX.Element;
   error?: JSX.Element;
   invalid?: boolean;
@@ -44,6 +46,7 @@ export interface FormFieldProps extends Omit<
 }
 
 const sizes = { sm: "text-md", md: "text-md", lg: "text-lg" } as const;
+const frameSizes = { sm: "p-3", md: "p-4", lg: "p-5" } as const;
 const hasContent = (value: JSX.Element) =>
   value !== undefined &&
   value !== null &&
@@ -57,6 +60,7 @@ export function FormField(props: FormFieldProps) {
       id: undefined,
       controlId: `form-field-${createUniqueId()}`,
       size: "md",
+      appearance: "default",
       description: undefined,
       error: undefined,
       invalid: false,
@@ -73,6 +77,7 @@ export function FormField(props: FormFieldProps) {
     "id",
     "controlId",
     "size",
+    "appearance",
     "label",
     "description",
     "error",
@@ -160,6 +165,13 @@ export function FormField(props: FormFieldProps) {
       class={clsx(
         "w-full min-w-0 space-y-2 text-fg font-normal",
         sizes[local.size],
+        local.appearance !== "default" &&
+          clsx(
+            "rounded-md border border-solid bg-surface",
+            local.invalid ? "border-danger" : "border-border",
+            frameSizes[local.size],
+          ),
+        getAppearanceClasses(local.appearance, "display", local.disabled),
         local.class,
       )}
     >

@@ -7,6 +7,7 @@ import { Checkbox } from "../Checkbox";
 import { Radio } from "../Radio";
 import { RadioGroup } from "../RadioGroup";
 import { FormField } from "./FormField";
+import { AppearancePreview } from "../../demo/AppearancePreview";
 
 const sizes = ["sm", "md", "lg"] as const;
 const states = [
@@ -47,6 +48,32 @@ export function FormFieldDemo() {
   const [message, setMessage] = createSignal("尚未提交");
   return (
     <div class="space-y-8">
+      <AppearancePreview
+        id="form-field"
+        description="外观只作用于字段外框，不新增交互或 Tab 停靠点；内部控件可独立设置 appearance。默认保留无外框布局。"
+      >
+        {(appearance, size) => (
+          <div class="space-y-4">
+            <For each={states}>
+              {(state) => (
+                <FormField
+                  controlId={`form-field-${appearance}-${state.id}-${size}`}
+                  label={`${state.label} · ${size}`}
+                  appearance={appearance}
+                  size={size}
+                  required={state.required}
+                  invalid={state.invalid}
+                  disabled={state.disabled}
+                  description="用于显示个人资料。"
+                  error="用户名不能为空。"
+                >
+                  {(field) => <Input {...field} placeholder="请输入用户名" />}
+                </FormField>
+              )}
+            </For>
+          </div>
+        )}
+      </AppearancePreview>
       <p class="text-md text-fg-muted">
         将插槽参数展开到控件，即可关联 label、帮助文字和错误文字，并同步 size /
         invalid / disabled / required。错误只在 invalid

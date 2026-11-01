@@ -208,3 +208,70 @@ test("form field demo covers every size/state with existing controls and a nativ
       html.includes('role="radiogroup"'),
   );
 });
+
+test("form field appearance frames do not change defaults or child control styles and naming", () => {
+  assert.deepEqual(
+    classes(render()),
+    classes(render({ appearance: "default" })),
+  );
+  for (const appearance of ["keycap", "mahjong"]) {
+    const html = render({ appearance, description: "Help", class: "w-full" });
+    const root = html.match(/<div\b[^>]*>/)[0];
+    assert.ok(root.includes(`shadow-${appearance}`));
+    assert.doesNotMatch(root, /\s(?:appearance|tabindex)=|(?:active|hover):/);
+    assert.ok(root.includes('role="group"'));
+    assert.doesNotMatch(native(html), /keycap|mahjong|\sappearance=/);
+    assert.ok(native(html).includes('aria-labelledby="username-label"'));
+    assert.ok(native(html).includes('aria-describedby="username-description"'));
+    assert.equal(
+      root
+        .match(/class="([^"]*)"/)[1]
+        .trim()
+        .split(/\s+/)
+        .at(-1),
+      "w-full",
+    );
+    assert.ok(
+      classes(render({ appearance, disabled: true })).includes("shadow-sm"),
+    );
+  }
+});
+
+test("form field frames preserve semantic error borders and generate token-only sizes", async () => {
+  const names = new Set();
+  for (const appearance of ["default", "keycap", "mahjong"])
+    for (const size of ["sm", "md", "lg"])
+      for (const invalid of [false, true])
+        for (const disabled of [false, true]) {
+          const html = render({
+            appearance,
+            size,
+            invalid,
+            disabled,
+            description: "Help",
+            error: "Error",
+          });
+          const root = html.match(/<div\b[^>]*>/)[0];
+          if (appearance !== "default")
+            assert.ok(
+              root.includes(invalid ? "border-danger" : "border-border"),
+            );
+          for (const name of classes(html)) names.add(name);
+        }
+  const uno = await createGenerator(unoConfig);
+  const { css, matched } = await uno.generate([...names].join(" "));
+  for (const name of names)
+    assert.ok(matched.has(name), `Missing utility: ${name}`);
+  for (const appearance of ["keycap", "mahjong"])
+    assert.ok(css.includes(`var(--shadow-${appearance})`));
+});
+
+test("form field demo includes every appearance, size and validation state", () => {
+  const html = renderToString(() => FormFieldDemo());
+  for (const appearance of ["default", "keycap", "mahjong"])
+    for (const size of ["sm", "md", "lg"])
+      for (const state of ["normal", "required", "invalid", "disabled"])
+        assert.ok(
+          html.includes(`id="form-field-${appearance}-${state}-${size}"`),
+        );
+});
