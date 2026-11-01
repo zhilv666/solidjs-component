@@ -33,6 +33,7 @@ export interface ThemeTokens {
     readonly sm: string;
     readonly md: string;
     readonly lg: string;
+    readonly pixel: string;
   };
   readonly font: {
     readonly family: string;
@@ -54,6 +55,8 @@ export interface ThemeTokens {
     readonly keycapPressed: string;
     readonly mahjong: string;
     readonly mahjongPressed: string;
+    readonly pixel: string;
+    readonly pixelPressed: string;
   };
   readonly transition: {
     readonly duration: string;
@@ -186,6 +189,7 @@ export const tokens = {
     sm: "2px",
     md: "4px",
     lg: "6px",
+    pixel: "0px",
   },
   font: {
     family:
@@ -210,6 +214,9 @@ export const tokens = {
       "inset 0 1px 0 var(--color-surface), inset 0 -2px 0 var(--color-surface-active), 0 2px 0 var(--color-surface-active), 0 6px 0 var(--color-success), 0 7px 0 var(--color-border), var(--shadow-md)",
     mahjongPressed:
       "inset 0 1px 0 var(--color-surface), inset 0 -2px 0 var(--color-surface-active), 0 1px 0 var(--color-surface-active), 0 2px 0 var(--color-success), 0 3px 0 var(--color-border), var(--shadow-md)",
+    pixel: "2px 2px 0 var(--color-border), 4px 4px 0 var(--color-primary)",
+    pixelPressed:
+      "1px 1px 0 var(--color-border), 2px 2px 0 var(--color-primary)",
   },
   transition: {
     duration: "150ms",

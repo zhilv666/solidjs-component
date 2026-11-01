@@ -58,7 +58,8 @@ export function LayoutDemo() {
           Header / Sidebar / Content / Footer 可以独立使用，也可以通过 Layout
           继承尺寸与外观。
           桌面折叠保留图标导航与内容节点；窄屏显示图标和文字并改为可滚动抽屉，Esc
-          关闭并返回触发器。 从右上角切换默认、键帽或麻将主题。
+          关闭并返回触发器。 从右上角切换默认、键帽、麻将或像素主题，
+          工作区支持四种外观与三种尺寸。
         </p>
         <div class="flex flex-wrap items-center gap-4">
           <div class="w-40">
@@ -224,7 +225,8 @@ export function LayoutDemo() {
 
       <AppearancePreview
         id="layout"
-        description="三种外观、三种尺寸与 plain / outline 两种边框组合。布局底座静止；只有侧栏开关响应按下。小型样例使用桌面模式，展开后宽度受容器约束。"
+        showPixel={false}
+        description="固定保留三种原外观、三种尺寸与 plain / outline 两种边框的 18 组对比；像素外观可在上方工作区切换验收。布局底座静止；只有侧栏开关响应按下。小型样例使用桌面模式，展开后宽度受容器约束。"
       >
         {(value, currentSize) => (
           <div class="space-y-6">

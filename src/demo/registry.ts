@@ -39,7 +39,7 @@ export const demos: readonly DemoEntry[] = [
     id: "layout",
     name: "Layout / Sidebar",
     description:
-      "Header、Sidebar、Content、Footer 组合布局，支持折叠、响应式抽屉与三种外观。",
+      "Header、Sidebar、Content、Footer 组合布局，支持折叠、响应式抽屉与四种外观。",
     component: LayoutDemo,
   },
   {
@@ -117,63 +117,63 @@ export const demos: readonly DemoEntry[] = [
   {
     id: "spinner",
     name: "Spinner",
-    description: "3 种外观、3 种尺寸，加载图形旋转并支持减少动态效果。",
+    description: "4 种外观、3 种尺寸，加载图形旋转并支持减少动态效果。",
     component: SpinnerDemo,
   },
   {
     id: "skeleton",
     name: "Skeleton",
-    description: "行与块的静态占位，支持三尺寸、三外观和无障碍加载组合。",
+    description: "行与块的静态占位，支持三尺寸、四外观和无障碍加载组合。",
     component: SkeletonDemo,
   },
   {
     id: "avatar",
     name: "Avatar",
-    description: "圆形与方形头像，支持三尺寸、三外观和图片加载回退。",
+    description: "圆形与方形头像，支持三尺寸、四外观和图片加载回退。",
     component: AvatarDemo,
   },
   {
     id: "divider",
     name: "Divider",
-    description: "横向与竖向分隔，支持三线宽、三外观和装饰语义。",
+    description: "横向与竖向分隔，支持三线宽、四外观和装饰语义。",
     component: DividerDemo,
   },
   {
     id: "tooltip",
     name: "Tooltip",
-    description: "Kobalte 焦点/悬停提示，支持三外观、三尺寸与 Portal。",
+    description: "Kobalte 焦点/悬停提示，支持四外观、三尺寸与 Portal。",
     component: TooltipDemo,
   },
   {
     id: "popover",
     name: "Popover",
-    description: "Kobalte 可交互弹层，支持三外观、三尺寸、标题说明与模态选项。",
+    description: "Kobalte 可交互弹层，支持四外观、三尺寸、标题说明与模态选项。",
     component: PopoverDemo,
   },
   {
     id: "dialog",
     name: "Dialog",
     description:
-      "Kobalte 模态对话框，支持三外观、三尺寸、标题说明与视口内滚动。",
+      "Kobalte 模态对话框，支持四外观、三尺寸、标题说明与视口内滚动。",
     component: DialogDemo,
   },
   {
     id: "dropdown-menu",
     name: "DropdownMenu",
-    description: "Kobalte 操作菜单，支持三外观、三尺寸、复选/单选与子菜单。",
+    description: "Kobalte 操作菜单，支持四外观、三尺寸、复选/单选与子菜单。",
     component: DropdownMenuDemo,
   },
   {
     id: "toast",
     name: "Toast",
     description:
-      "Kobalte 全局通知队列，支持三外观、三尺寸、键盘关闭与暂停计时。",
+      "Kobalte 全局通知队列，支持四外观、三尺寸、键盘关闭与暂停计时。",
     component: ToastDemo,
   },
   {
     id: "tabs",
     name: "Tabs",
-    description: "Kobalte 标签页，支持三外观、三尺寸、方向键与手动激活。",
+    description: "Kobalte 标签页，支持四外观、三尺寸、方向键与手动激活。",
     component: TabsDemo,
   },
   {
@@ -185,7 +185,7 @@ export const demos: readonly DemoEntry[] = [
   {
     id: "pagination",
     name: "Pagination",
-    description: "Kobalte 分页，支持受控页码、边界禁用、省略号与三种外观。",
+    description: "Kobalte 分页，支持受控页码、边界禁用、省略号与四种外观。",
     component: PaginationDemo,
   },
   {

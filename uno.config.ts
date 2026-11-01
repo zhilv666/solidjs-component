@@ -29,6 +29,15 @@ export default defineConfig({
     // The Vite pipeline excludes plain TypeScript class maps by default.
     filesystem: ["src/components/appearance.ts"],
   },
+  rules: [
+    // Restrict straight corners to the exact surface marker. Higher specificity
+    // preserves the existing rounded utilities and never restyles descendants.
+    [
+      /^solid-appearance-pixel$/,
+      () =>
+        ".solid-appearance-pixel.solid-appearance-pixel { border-radius: var(--radius-pixel); }",
+    ],
+  ],
   blocklist: [
     /-\[[^\]]+\]/,
     /^rounded(?:-[trblse]{1,2})?-(?:xl|[2-9]xl)$/,

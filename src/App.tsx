@@ -24,6 +24,7 @@ const appearanceOptions = [
   { value: "default", label: "默认主题" },
   { value: "keycap", label: "键帽主题" },
   { value: "mahjong", label: "麻将主题" },
+  { value: "pixel", label: "像素主题" },
 ] as const;
 
 const controlClass =
@@ -168,7 +169,7 @@ export default function App() {
             class="border-0 border-t-2 border-solid border-border"
           >
             <p class="mx-auto max-w-7xl text-md text-fg-muted">
-              SolidJS · Kobalte · 默认 / 键帽 / 麻将外观
+              SolidJS · Kobalte · 默认 / 键帽 / 麻将 / 像素外观
             </p>
           </Footer>
         </Layout>

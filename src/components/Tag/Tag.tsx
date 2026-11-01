@@ -100,6 +100,7 @@ export function Tag(props: TagProps) {
           class={clsx(
             "inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-sm border-0 p-0 text-lg font-normal cursor-pointer transition-colors duration-token focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:opacity-50 disabled:cursor-not-allowed",
             closeVariants[local.variant],
+            local.appearance === "pixel" && "solid-appearance-pixel",
           )}
         >
           <span aria-hidden="true">×</span>

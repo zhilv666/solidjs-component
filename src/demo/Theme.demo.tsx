@@ -10,8 +10,9 @@ const appearanceNames = {
   default: "默认",
   keycap: "键帽",
   mahjong: "麻将",
+  pixel: "像素",
 } as const;
-const appearances = ["default", "keycap", "mahjong"] as const;
+const appearances = ["default", "keycap", "mahjong", "pixel"] as const;
 
 const swatches = [
   {
@@ -34,6 +35,7 @@ export function ThemeDemo() {
           右上角的配色、外观和明暗模式独立切换。配色包含默认蓝、樱花粉、清新绿、
           薰衣草紫和暖杏橙；未指定 appearance 的组件跟随外观，输入内容保留。
           Button 保留已确认的键帽与麻将变体，颜色跟随配色。
+          像素是第四种外观：保持清晰字体，使用局部直角与无模糊的阶梯硬阴影。
         </p>
         <Input
           id="theme-preview-input"
@@ -46,7 +48,7 @@ export function ThemeDemo() {
         <h3 id="theme-explicit-heading" class="text-md font-medium">
           显式外观不受主题切换影响
         </h3>
-        <div class="grid gap-6 sm:grid-cols-3">
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <For each={appearances}>
             {(value) => (
               <Card appearance={value} data-demo-explicit={value}>
@@ -99,6 +101,7 @@ export function ThemeDemo() {
           <div class="rounded-lg border border-border bg-surface p-4 text-md">
             Large · {tokens.radius.lg}
           </div>
+          <Card appearance="pixel">Pixel · {tokens.radius.pixel}</Card>
         </div>
       </section>
     </div>

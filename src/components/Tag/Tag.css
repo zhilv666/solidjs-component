@@ -5,3 +5,7 @@
 [data-tag-appearance="mahjong"]:not([data-disabled]):has(> button:active) {
   --un-shadow: var(--shadow-mahjong-pressed);
 }
+
+[data-tag-appearance="pixel"]:not([data-disabled]):has(> button:active) {
+  --un-shadow: var(--shadow-pixel-pressed);
+}

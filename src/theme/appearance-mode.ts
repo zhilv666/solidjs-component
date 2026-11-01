@@ -5,7 +5,12 @@ export const APPEARANCE_STORAGE_KEY = "solidjs-component-appearance";
 export function isComponentAppearance(
   value: unknown,
 ): value is ComponentAppearance {
-  return value === "default" || value === "keycap" || value === "mahjong";
+  return (
+    value === "default" ||
+    value === "keycap" ||
+    value === "mahjong" ||
+    value === "pixel"
+  );
 }
 
 export function getPreferredAppearance(): ComponentAppearance {

@@ -17,7 +17,7 @@
 
 ## 2. 设计风格（不可更改）
 
-- **小圆角**：只使用 `rounded-sm`（2px）、`rounded-md`（4px）、`rounded-lg`（6px）。默认 `rounded-md`。禁止 `rounded-xl` 及以上，禁止 `rounded-full`（Avatar、Switch 滑块等确需圆形的例外，须在 PR 说明中标注）。
+- **小圆角**：常规外观只使用 `rounded-sm`（2px）、`rounded-md`（4px）、`rounded-lg`（6px）。默认 `rounded-md`。用户已授权第四种 pixel 外观仅在标记表面使用 `radius.pixel`（0px）；不改变原有三种外观或 Button。禁止 `rounded-xl` 及以上，禁止 `rounded-full`（Avatar、Switch 滑块等确需圆形的例外，须在 PR 说明中标注）。
 - **字体清晰**：正文使用 `text-fg`（深色），次要文字使用 `text-fg-muted`，禁止用更浅的灰色。正文不小于 14px，字重只用 400 / 500，禁止 300 及以下。
 - **风格克制**：默认外观保持现状，边框清晰，常规阴影只用 token 中的 `shadow-sm` / `shadow-md`，不做渐变、不做大面积模糊。用户已授权所有组件提供可选键帽/麻将外观，可复用 `shadow-keycap` / `shadow-keycap-pressed`、`shadow-mahjong` / `shadow-mahjong-pressed`。Button 已确认的现有外观与实现仍保留；其他组件的追加授权和适用方式见第 9 节。
 
@@ -62,7 +62,7 @@ src/components/Button/
 - 统一命名：
   - `variant`：视觉变体，如 `"solid" | "outline" | "ghost"`
   - `size`：`"sm" | "md" | "lg"`，默认 `"md"`
-  - `appearance`：新增外观选项 `"default" | "keycap" | "mahjong"`，默认 `"default"`，与语义 `variant` 正交；Button 继续使用既有键帽变体和 `variant="mahjong"` API，不为统一命名改写已确认实现。
+  - `appearance`：外观选项 `"default" | "keycap" | "mahjong" | "pixel"`，默认 `"default"`，与语义 `variant` 正交；Button 继续使用既有键帽变体和 `variant="mahjong"` API，不为统一命名改写已确认实现。
   - `disabled`、`loading`、`class`、`children`
 - 所有可选 props 必须有明确默认值（用 `mergeProps` 设置）。
 - 支持外部传入 `class`，并与内部 class 通过 `clsx` 合并，外部 class 排在最后。
@@ -159,3 +159,4 @@ export function Xxx(props: XxxProps) {
 - 可交互控件在可用状态下支持按下底座收短；禁用、只读状态不引入按下效果。纯展示组件只应用立体外框，不模拟按钮、不新增 Tab 停靠点。
 - 语义颜色、选中/错误状态、聚焦环与文字对比度仍需保留；麻将外观使用现有主题颜色和绿色厚底，不新增硬编码视觉值。
 - 用户已授权为 Spinner 新增 `animation.spinDuration: "1000ms"`，并同步生成 CSS 变量和测试；其他缺失 token 仍须先询问。
+- 用户已授权第四种像素外观，仅新增 `radius.pixel`、`shadow.pixel`、`shadow.pixelPressed`；不新增依赖、字体或动画 token。直角只作用于显式像素表面，不能通过全局或后代选择器改写原有外观与冻结的 Button；禁用/只读保持扁平且无按下效果，纯展示底座静止。

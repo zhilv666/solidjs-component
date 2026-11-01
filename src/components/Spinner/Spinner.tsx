@@ -20,6 +20,7 @@ const appearances = {
   default: "",
   keycap: "border border-solid border-border bg-surface",
   mahjong: "border border-solid border-border bg-bg",
+  pixel: "border border-solid border-border bg-surface",
 } as const;
 
 export function Spinner(props: SpinnerProps) {

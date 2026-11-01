@@ -47,6 +47,7 @@ const backgrounds = {
   default: "bg-surface",
   keycap: "bg-surface",
   mahjong: "bg-bg",
+  pixel: "bg-surface",
 } as const;
 
 /** Kobalte owns image loading, stale-request cleanup and fallback selection. */

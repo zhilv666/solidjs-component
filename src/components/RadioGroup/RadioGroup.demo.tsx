@@ -5,7 +5,7 @@ import { RadioDemo } from "../Radio/Radio.demo";
 import { RadioGroup } from "./RadioGroup";
 import type { ComponentAppearance } from "../appearance";
 
-const appearances = ["default", "keycap", "mahjong"] as const;
+const appearances = ["default", "keycap", "mahjong", "pixel"] as const;
 
 export function RadioGroupDemo() {
   const [value, setValue] = createSignal("a");
