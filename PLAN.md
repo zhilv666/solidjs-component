@@ -252,10 +252,11 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 ## Phase 7：收尾
 
 - [ ] 7.1 **全库审计**：检查所有组件 props 命名、状态覆盖、暗色模式对比度是否一致，列出不一致项交给我决定。
-- [ ] 7.2 **README**
+- [x] 7.2 **README**
   范围：中文项目说明、环境与 pnpm 运行/验证命令、本地源码引用和主要 API 示例、完整已实现组件列表；说明配色/明暗/四外观及如何在 tokens.ts 配置主色、圆角、字体，记录 Button 保留风格与交互限制。明确 private demo 与未完成库打包的边界，不虚构安装发布方式。
   参考：package.json、tokens、theme 生成/偏好、components/index、demo/registry、实际组件 API、PLAN；依赖本轮 1.9。
   验收：命令/路径/导出/示例与实际仓库一致，包含增强 List/Table 与像素配置、限制及未完成任务；文档格式与全部检查通过。
+  备注：中文 README 已覆盖实际环境与命令、本地源码引用、完整组件清单、五配色/明暗/四外观，以及 FormField/List/Table/Layout/Toast 示例和受控状态边界。5 个 strict TSX 示例、15 个本地链接、36 个运行时导出及 13 个 UnoCSS 类已独立核对；386 项整库测试及 typecheck/完整 lint/check:tokens/生产构建通过。明确 Button 冻结、Kobalte 已知交互限制和未做实际屏幕阅读器朗读验收；当前仅为 private demo，Breadcrumb/全库审计/library mode 仍未完成。未修改组件、token 或依赖。
 - [ ] 7.3 **库模式打包**：Vite library mode，输出 ESM + 类型声明，`solid-js` 作为 peerDependency。
 
 ---
