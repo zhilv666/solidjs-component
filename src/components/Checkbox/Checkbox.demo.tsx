@@ -1,6 +1,7 @@
 import { createSignal, For, Show } from "solid-js";
 import { Button } from "../Button";
 import { Checkbox } from "./Checkbox";
+import { AppearancePreview } from "../../demo/AppearancePreview";
 
 const sizes = ["sm", "md", "lg"] as const;
 const states = [
@@ -29,6 +30,45 @@ export function CheckboxDemo() {
 
   return (
     <div class="space-y-8">
+      <AppearancePreview id="checkbox">
+        {(appearance, size) => (
+          <div class="space-y-3">
+            <For each={states}>
+              {(state) => (
+                <div class="min-w-0 space-y-2">
+                  <Checkbox
+                    id={`checkbox-${appearance}-${state.id}-${size}`}
+                    appearance={appearance}
+                    size={size}
+                    defaultChecked={state.checked}
+                    indeterminate={
+                      "indeterminate" in state && state.indeterminate
+                    }
+                    invalid={"invalid" in state && state.invalid}
+                    disabled={"disabled" in state && state.disabled}
+                    readOnly={"readOnly" in state && state.readOnly}
+                    aria-describedby={
+                      state.id === "invalid"
+                        ? `checkbox-${appearance}-${size}-error`
+                        : undefined
+                    }
+                  >
+                    {state.label} · {size}
+                  </Checkbox>
+                  <Show when={state.id === "invalid"}>
+                    <p
+                      id={`checkbox-${appearance}-${size}-error`}
+                      class="text-md text-danger"
+                    >
+                      请确认选项后继续。
+                    </p>
+                  </Show>
+                </div>
+              )}
+            </For>
+          </div>
+        )}
+      </AppearancePreview>
       <p class="text-md text-fg-muted">
         Tab
         聚焦，空格切换。标签可点击；半选是独立展示状态，由使用方决定何时清除。

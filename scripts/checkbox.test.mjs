@@ -190,3 +190,89 @@ test("checkbox demo covers all sizes/states and controlled native form examples"
   assert.ok(html.includes('type="reset"'));
   assert.ok(html.includes('data-demo="class-passthrough"'));
 });
+
+test("checkbox appearance defaults preserve original classes, labels and native forwarding", () => {
+  assert.deepEqual(
+    classes(render()),
+    classes(render({ appearance: "default" })),
+  );
+  for (const appearance of ["keycap", "mahjong"]) {
+    const html = render({
+      appearance,
+      id: "consent",
+      name: "consent",
+      value: "yes",
+      children: "Agree",
+      class: "w-full",
+    });
+    assert.doesNotMatch(html, /\sappearance=/);
+    assert.ok(
+      native(html).includes('name="consent"') && html.includes('for="consent"'),
+    );
+    assert.ok(
+      html
+        .match(/class="([^"]*)"/)[1]
+        .trim()
+        .endsWith("w-full"),
+    );
+    assert.doesNotMatch(native(html), /shadow-/);
+  }
+});
+test("checkbox appearance shadows preserve checked/mixed/invalid/focus and unavailable states", async () => {
+  const names = new Set();
+  for (const appearance of ["keycap", "mahjong"])
+    for (const size of ["sm", "md", "lg"])
+      for (const state of [
+        {},
+        { checked: true },
+        { indeterminate: true },
+        { checked: true, invalid: true },
+        { disabled: true },
+        { readOnly: true },
+        { readonly: true },
+      ]) {
+        const html = render({ appearance, size, ...state }),
+          values = classes(html);
+        const unavailable = state.disabled || state.readOnly || state.readonly;
+        assert.ok(
+          values.includes(unavailable ? "shadow-sm" : `shadow-${appearance}`),
+        );
+        assert.equal(
+          values.includes(`peer-active:shadow-${appearance}-pressed`),
+          !unavailable,
+        );
+        assert.equal(
+          values.includes(`active:shadow-${appearance}-pressed`),
+          !unavailable,
+        );
+        assert.ok(values.includes("peer-focus-visible:ring-ring"));
+        if (state.invalid) assert.ok(values.includes("border-danger"));
+        if (state.checked || state.indeterminate)
+          assert.ok(
+            values.includes("bg-primary") && values.includes("text-primary-fg"),
+          );
+        for (const name of values) names.add(name);
+      }
+  const uno = await createGenerator(unoConfig),
+    { matched } = await uno.generate([...names].join(" "));
+  for (const name of names)
+    if (name !== "peer")
+      assert.ok(matched.has(name), `Missing utility: ${name}`);
+});
+test("checkbox appearance demo covers every size and selection/availability state", () => {
+  const html = renderToString(() => CheckboxDemo());
+  for (const appearance of ["default", "keycap", "mahjong"])
+    for (const size of ["sm", "md", "lg"])
+      for (const state of [
+        "unchecked",
+        "checked",
+        "mixed",
+        "invalid",
+        "disabled",
+        "disabled-checked",
+        "readonly",
+      ])
+        assert.ok(
+          html.includes(`id="checkbox-${appearance}-${state}-${size}"`),
+        );
+});

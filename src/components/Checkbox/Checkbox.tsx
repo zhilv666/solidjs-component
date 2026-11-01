@@ -7,12 +7,14 @@ import {
 } from "@kobalte/core/checkbox";
 import { mergeProps, Show, splitProps, type JSX } from "solid-js";
 import clsx from "clsx";
+import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 
 export interface CheckboxProps extends Omit<
   JSX.InputHTMLAttributes<HTMLInputElement>,
   "size" | "type" | "children"
 > {
   size?: "sm" | "md" | "lg";
+  appearance?: ComponentAppearance;
   invalid?: boolean;
   indeterminate?: boolean;
   defaultChecked?: boolean;
@@ -68,6 +70,7 @@ export function Checkbox(props: CheckboxProps) {
   const merged = mergeProps(
     {
       size: "md",
+      appearance: "default",
       invalid: false,
       indeterminate: false,
       checked: undefined,
@@ -90,6 +93,7 @@ export function Checkbox(props: CheckboxProps) {
   );
   const [local, rest] = splitProps(merged, [
     "size",
+    "appearance",
     "invalid",
     "indeterminate",
     "checked",
@@ -202,6 +206,11 @@ export function Checkbox(props: CheckboxProps) {
                         : "unchecked"
                   ],
                 ),
+              getAppearanceClasses(
+                local.appearance,
+                "control",
+                local.disabled || (local.readOnly ?? local.readonly),
+              ),
             )}
           >
             <CheckboxIndicator class="flex h-full w-full items-center justify-center">
