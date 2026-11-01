@@ -25,6 +25,7 @@ import { ToastDemo } from "@/components/Toast/Toast.demo";
 import { TabsDemo } from "@/components/Tabs/Tabs.demo";
 import { ListDemo } from "@/components/List/List.demo";
 import { PaginationDemo } from "@/components/Pagination/Pagination.demo";
+import { TableDemo } from "@/components/Table/Table.demo";
 
 export interface DemoEntry {
   readonly id: string;
@@ -186,6 +187,12 @@ export const demos: readonly DemoEntry[] = [
     name: "Pagination",
     description: "Kobalte 分页，支持受控页码、边界禁用、省略号与三种外观。",
     component: PaginationDemo,
+  },
+  {
+    id: "table",
+    name: "Table",
+    description: "语义表格，支持行复选/全选、稳定排序、本地分页与横向滚动。",
+    component: TableDemo,
   },
   {
     id: "theme",

@@ -127,3 +127,10 @@ export type {
 } from "./List";
 export { Pagination } from "./Pagination";
 export type { PaginationProps } from "./Pagination";
+export { Table } from "./Table";
+export type {
+  TableProps,
+  TableColumn,
+  TableSortState,
+  TableSortValue,
+} from "./Table";

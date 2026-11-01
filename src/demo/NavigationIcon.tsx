@@ -38,6 +38,7 @@ const paths: Readonly<Record<string, readonly string[]>> = {
   tabs: ["M3 4h7v5h11v11H3z", "M10 4h11v5M3 9h7"],
   list: ["M3 5h2M3 12h2M3 19h2", "M9 5h12M9 12h12M9 19h12"],
   pagination: ["m6 7-5 5 5 5M18 7l5 5-5 5", "M9 7h6v10H9z"],
+  table: ["M3 4h18v16H3z", "M3 9h18M3 14h18M10 4v16"],
   theme: [
     "M12 3a9 9 0 1 0 0 18h2a3 3 0 0 0 3-3c0-2-2-2-2-4s3-2 5-2a2 2 0 0 0 1-3 10 10 0 0 0-9-6",
     "M7 9h1M12 6h1M17 9h1M6 14h1",

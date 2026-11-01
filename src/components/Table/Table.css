@@ -1,0 +1,7 @@
+.solid-table-row[data-striped]:nth-child(even) {
+  background-color: var(--color-bg);
+}
+
+.solid-table-row[data-selected] {
+  background-color: var(--color-surface-active);
+}
