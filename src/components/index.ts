@@ -30,3 +30,5 @@ export { Spinner } from "./Spinner";
 export type { SpinnerProps } from "./Spinner";
 export { Skeleton } from "./Skeleton";
 export type { SkeletonProps } from "./Skeleton";
+export { Avatar } from "./Avatar";
+export type { AvatarProps, AvatarLoadingStatus } from "./Avatar";
