@@ -1,0 +1,8 @@
+.solid-dropdown-menu-item:not([data-disabled]):hover,
+.solid-dropdown-menu-item[data-highlighted]:not([data-disabled]):not(:active) {
+  background-color: var(--color-surface-hover);
+}
+
+.solid-dropdown-menu-item:not([data-disabled]):active {
+  background-color: var(--color-surface-active);
+}

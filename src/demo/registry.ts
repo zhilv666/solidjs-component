@@ -19,6 +19,7 @@ import { DividerDemo } from "@/components/Divider/Divider.demo";
 import { TooltipDemo } from "@/components/Tooltip/Tooltip.demo";
 import { PopoverDemo } from "@/components/Popover/Popover.demo";
 import { DialogDemo } from "@/components/Dialog/Dialog.demo";
+import { DropdownMenuDemo } from "@/components/DropdownMenu/DropdownMenu.demo";
 
 export interface DemoEntry {
   readonly id: string;
@@ -142,6 +143,12 @@ export const demos: readonly DemoEntry[] = [
     description:
       "Kobalte 模态对话框，支持三外观、三尺寸、标题说明与视口内滚动。",
     component: DialogDemo,
+  },
+  {
+    id: "dropdown-menu",
+    name: "DropdownMenu",
+    description: "Kobalte 操作菜单，支持三外观、三尺寸、复选/单选与子菜单。",
+    component: DropdownMenuDemo,
   },
   {
     id: "theme",

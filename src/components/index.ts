@@ -62,3 +62,23 @@ export type {
   DialogCloseButtonProps,
   DialogPortalProps,
 } from "./Dialog";
+export { DropdownMenu } from "./DropdownMenu";
+export type {
+  DropdownMenuProps,
+  DropdownMenuTriggerProps,
+  DropdownMenuContentProps,
+  DropdownMenuSubContentProps,
+  DropdownMenuItemProps,
+  DropdownMenuCheckboxItemProps,
+  DropdownMenuRadioGroupProps,
+  DropdownMenuRadioItemProps,
+  DropdownMenuSubTriggerProps,
+  DropdownMenuGroupLabelProps,
+  DropdownMenuItemLabelProps,
+  DropdownMenuItemDescriptionProps,
+  DropdownMenuItemIndicatorProps,
+  DropdownMenuSeparatorProps,
+  DropdownMenuPortalProps,
+  DropdownMenuGroupProps,
+  DropdownMenuSubProps,
+} from "./DropdownMenu";

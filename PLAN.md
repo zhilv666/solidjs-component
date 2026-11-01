@@ -175,7 +175,8 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
   备注：基于 Kobalte 的 Root/Trigger/Portal/Content/Title/Description/CloseButton 组合，三尺寸/三外观同步触发器、弹层与关闭控件，outline/ghost 按钮保留原生属性/ref/class，内容 style 支持对象与字符串并保留视口约束。默认非模态，modal 的焦点陷阱/外部隐藏/滚动锁定及标题/说明关联由 Kobalte 管理；关闭图标类型要求 aria-label，按钮默认 type=button。182 项测试及 typecheck/lint/check:tokens/生产构建通过；真实浏览器验收 36 个矩阵、22 个关闭态 Tab 停靠点、自动聚焦输入/禁用关闭按钮跳过/Enter 与空格/Esc 焦点返回/外部点击焦点保留、鼠标按下无位移、受控昵称提交与重开保留、模态双向 Tab 循环和实际滚动锁定、固定受控展开/可阻止 Esc、展开时动态尺寸/外观/标题说明 ID/style 与弹层/输入/关闭控件身份和编辑值、明暗及 390px 长内容布局。最低说明对比度 7.73:1，七张弹层截图已查看；已导出并注册，未新增 token、依赖或修改已完成组件。未进行实际屏幕阅读器朗读测试。
 - [x] 5.3 Dialog（含 `Dialog.Title` / `Dialog.Description`）
   备注：基于 Kobalte 的 Root/Trigger/Portal/Overlay/Content/Title/Description/CloseButton 组合，三尺寸/三外观同步触发器、面板和关闭按钮，outline/ghost 按钮保留原生属性/ref/class，内容和遮罩支持原生对象/字符串 style。默认模态；焦点陷阱、外部隐藏、滚动锁定、标题说明关联与关闭逻辑由 Kobalte 管理，非模态示例不显示遮罩。面板通过默认间距刻度居中并限制视口内宽高，长内容内部滚动，展示面板不产生按下效果；关闭图标要求 aria-label，按钮默认 type=button。189 项测试及 typecheck/lint/check:tokens/生产构建通过；真实浏览器验收 36 个矩阵、22 个关闭态 Tab 停靠点、自动聚焦/双向 Tab 循环/禁用跳过/Enter 与空格/Esc 和遮罩关闭及焦点返回、实际滚动锁定和外部隐藏恢复、非模态外部点击焦点保留、受控昵称保存与重开保留、固定受控值/阻止 Esc/单次回调/原生表单安全、展开时动态外观/尺寸/标题说明 ID/style 与面板/输入/关闭/遮罩节点身份和编辑值、明暗与 390px 长文本内部滚动及键盘到达关闭按钮。最低说明对比度 7.73:1，七张截图已查看；已导出并注册，未新增 token、依赖或修改已完成组件。未进行实际屏幕阅读器朗读测试。
-- [ ] 5.4 DropdownMenu
+- [x] 5.4 DropdownMenu
+  备注：基于 Kobalte 的 Root/Trigger/Portal/Content、普通/复选/单选项目、分组标签/项目说明/指示器/分隔及 Sub/SubTrigger/SubContent 组合；三尺寸/三外观同步触发器和两级浮层，菜单行沿用 Select 的轻量布局，普通项目提供 default/danger。原生属性/ref/class/style 透传，按钮默认 type=button，浮层使用可用视口变量限制宽高；普通项目选择关闭，复选/单选默认保持展开，半选为展示并在示例中组合 forceMount 的减号指示器。补齐当前 Kobalte 未透传的单选组禁用属性，状态与键盘/焦点/ARIA 仍由 Kobalte 管理。197 项测试及 typecheck/lint/check:tokens/生产构建通过；真实浏览器验收 36 个矩阵、21 个关闭态 Tab 停靠点、Enter/空格/上下方向键打开、方向键/禁用跳过/Home/End/首字母定位、左右方向键进入/返回子菜单、Esc 焦点返回、模态外部隐藏与实际滚动锁定、非模态外部焦点保留、单次操作与受控复选/单选、动态外观/尺寸/style/组选中及禁用/半选、两级弹层和项目节点身份、原生表单安全与固定受控展开值。明暗常规/悬停/按下、说明与危险文本均通过 AA；390px 长菜单和子菜单无横向溢出，末项可通过键盘到达，八张截图已查看。子菜单验收等待根菜单自动聚焦和布局稳定后再进入；当前 Kobalte 的 Esc 回调忽略 preventDefault 并强制请求关闭，已在 API 注释说明，可通过受控 open 拒绝关闭请求。已导出并注册，未新增 token、依赖或修改已完成组件；未进行实际屏幕阅读器朗读测试。
 - [ ] 5.5 Toast（含全局调用方法）
 
 ---
@@ -200,6 +201,8 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 ## 备注区（agent 在此记录遗留问题与待决事项）
 
 <!-- 格式：- [任务编号] 问题描述 / 需要我决定的事项 -->
+
+- [5.4] 当前 Kobalte 0.13.14 的 MenuContentBase 在 onEscapeKeyDown 回调后无条件执行 context.close(true)，直接 preventDefault 不能取消关闭；受控 open 可以拒绝关闭请求。本轮保留库的键盘逻辑并说明限制，依赖升级或行为适配交给全库审计决定。
 
 - [2.1] 浏览器连接已恢复；SSR 测试使用独立临时缓存，开发服务运行测试后缓存不变、预览正常。新增阴影 token 后已重启开发服务，使 UnoCSS 重新加载主题映射。
 - [2.1] 用户已确认键帽方向及 `shadow.keycap` / `shadow.keycapPressed` 两个 token；Button 的阴影例外仅限本组件。预览中底座阴影从 3px 收短到 1px，disabled / loading 使用 `shadow-sm`，未新增依赖或修改其他组件。
