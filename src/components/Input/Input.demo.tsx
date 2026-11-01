@@ -1,6 +1,7 @@
 import { createSignal, For, Show } from "solid-js";
 import { Button } from "../Button";
 import { Input } from "./Input";
+import { AppearancePreview } from "../../demo/AppearancePreview";
 
 const sizes = ["sm", "md", "lg"] as const;
 const states = [
@@ -51,6 +52,47 @@ export function InputDemo() {
 
   return (
     <div class="space-y-8">
+      <AppearancePreview id="input">
+        {(appearance, size) => (
+          <div class="space-y-4">
+            <For each={states}>
+              {(state) => (
+                <div class="min-w-0 space-y-2">
+                  <label
+                    for={`input-${appearance}-${state.id}-${size}`}
+                    class="block text-md text-fg"
+                  >
+                    {state.label} · {size}
+                  </label>
+                  <Input
+                    id={`input-${appearance}-${state.id}-${size}`}
+                    appearance={appearance}
+                    size={size}
+                    disabled={state.disabled}
+                    invalid={state.invalid}
+                    readOnly={state.readOnly}
+                    defaultValue={state.value}
+                    placeholder="请输入文字 / Type here"
+                    aria-describedby={
+                      state.invalid
+                        ? `input-${appearance}-${state.id}-${size}-error`
+                        : undefined
+                    }
+                  />
+                  <Show when={state.invalid}>
+                    <p
+                      id={`input-${appearance}-${state.id}-${size}-error`}
+                      class="text-md text-danger"
+                    >
+                      校验未通过，请检查输入内容。
+                    </p>
+                  </Show>
+                </div>
+              )}
+            </For>
+          </div>
+        )}
+      </AppearancePreview>
       <p class="text-md text-fg-muted">
         单一边框样式，三种尺寸。前后缀为非交互内容；使用 Tab 聚焦，输入文字，
         只读字段仍可聚焦、选择和复制。

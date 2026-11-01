@@ -318,3 +318,75 @@ test("input demo includes JSX slots, controlled editing and native form submissi
   assert.ok(html.includes('data-demo="class-passthrough"'));
   assert.equal([...html.matchAll(/data-input-slot=/g)].length, 4);
 });
+
+test("input default appearance stays unchanged and appearance never leaks to the native control", () => {
+  assert.deepEqual(
+    classNames(openingTag(renderInput())),
+    classNames(openingTag(renderInput({ appearance: "default" }))),
+  );
+  for (const appearance of ["keycap", "mahjong"]) {
+    const html = renderInput({
+      appearance,
+      prefix: "@",
+      suffix: ".dev",
+      class: "max-w-md",
+      name: "account",
+      defaultValue: "SolidJS",
+    });
+    assert.equal(classNames(openingTag(html)).at(-1), "max-w-md");
+    assert.doesNotMatch(html, /\sappearance=/);
+    assert.ok(
+      html.includes('name="account"') && html.includes('value="SolidJS"'),
+    );
+    assert.equal([...html.matchAll(/data-input-slot=/g)].length, 2);
+  }
+});
+test("input appearances preserve invalid/focus styles and flatten disabled and read-only controls", () => {
+  for (const appearance of ["keycap", "mahjong"])
+    for (const size of ["sm", "md", "lg"])
+      for (const state of [
+        {},
+        { invalid: true },
+        { disabled: true },
+        { readOnly: true },
+        { readonly: true },
+      ]) {
+        const html = renderInput({ appearance, size, ...state }),
+          names = classNames(openingTag(html));
+        const unavailable = state.disabled || state.readOnly || state.readonly;
+        assert.ok(
+          names.includes(unavailable ? "shadow-sm" : `shadow-${appearance}`),
+        );
+        assert.equal(
+          names.includes(`enabled:active:shadow-${appearance}-pressed`),
+          !unavailable,
+        );
+        assert.ok(
+          names.includes("focus-visible:ring-ring") &&
+            names.includes(state.invalid ? "border-danger" : "border-border"),
+        );
+      }
+});
+test("all appended input appearance utilities generate and the demo covers every size/state", async () => {
+  const names = new Set();
+  for (const appearance of ["default", "keycap", "mahjong"])
+    for (const size of ["sm", "md", "lg"])
+      for (const disabled of [false, true])
+        for (const name of classNames(
+          openingTag(renderInput({ appearance, size, disabled })),
+        ))
+          names.add(name);
+  const uno = await createGenerator(unoConfig),
+    { css, matched } = await uno.generate([...names].join(" "));
+  for (const name of names)
+    assert.ok(matched.has(name), `Missing utility: ${name}`);
+  assert.ok(
+    css.includes("var(--shadow-keycap-pressed)") &&
+      css.includes("var(--shadow-mahjong-pressed)"),
+  );
+  const html = renderToString(() => InputDemo());
+  for (const appearance of ["default", "keycap", "mahjong"])
+    for (const size of ["sm", "md", "lg"])
+      for (const state of ["default", "invalid", "disabled", "readonly"])
+        assert.ok(html.includes(`id="input-${appearance}-${state}-${size}"`));
+});

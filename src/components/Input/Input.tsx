@@ -4,12 +4,14 @@ import {
 } from "@kobalte/core/text-field";
 import { mergeProps, Show, splitProps, type JSX } from "solid-js";
 import clsx from "clsx";
+import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 
 export interface InputProps extends Omit<
   JSX.InputHTMLAttributes<HTMLInputElement>,
   "size" | "prefix" | "children"
 > {
   size?: "sm" | "md" | "lg";
+  appearance?: ComponentAppearance;
   invalid?: boolean;
   /** Non-interactive content before the native input. */
   prefix?: JSX.Element;
@@ -53,6 +55,7 @@ export function Input(props: InputProps) {
   const merged = mergeProps(
     {
       size: "md",
+      appearance: "default",
       invalid: false,
       disabled: false,
       required: false,
@@ -73,6 +76,7 @@ export function Input(props: InputProps) {
   );
   const [local, rest] = splitProps(merged, [
     "size",
+    "appearance",
     "invalid",
     "disabled",
     "required",
@@ -148,6 +152,11 @@ export function Input(props: InputProps) {
           "w-full min-w-0 flex-1 rounded-md border border-solid bg-bg text-fg font-normal transition-colors duration-token placeholder:text-fg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:cursor-not-allowed",
           states[local.invalid ? "invalid" : "valid"],
           sizes[local.size],
+          getAppearanceClasses(
+            local.appearance,
+            "native",
+            local.disabled || (local.readOnly ?? local.readonly),
+          ),
           local.class,
         )}
       />
