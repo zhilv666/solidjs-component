@@ -20,6 +20,7 @@ import { TooltipDemo } from "@/components/Tooltip/Tooltip.demo";
 import { PopoverDemo } from "@/components/Popover/Popover.demo";
 import { DialogDemo } from "@/components/Dialog/Dialog.demo";
 import { DropdownMenuDemo } from "@/components/DropdownMenu/DropdownMenu.demo";
+import { ToastDemo } from "@/components/Toast/Toast.demo";
 
 export interface DemoEntry {
   readonly id: string;
@@ -149,6 +150,13 @@ export const demos: readonly DemoEntry[] = [
     name: "DropdownMenu",
     description: "Kobalte 操作菜单，支持三外观、三尺寸、复选/单选与子菜单。",
     component: DropdownMenuDemo,
+  },
+  {
+    id: "toast",
+    name: "Toast",
+    description:
+      "Kobalte 全局通知队列，支持三外观、三尺寸、键盘关闭与暂停计时。",
+    component: ToastDemo,
   },
   {
     id: "theme",
