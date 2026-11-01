@@ -168,7 +168,10 @@ export function TabsDemo() {
             禁用的是标签导航；面板保留可读内容。
           </Tabs.Content>
         </Tabs>
-        <Tabs id="tabs-auto" appearance="mahjong">
+        <p class="text-md text-fg-muted">
+          下面的标签组未显式设置外观，跟随右上角的全局外观选择。
+        </p>
+        <Tabs id="tabs-auto">
           <Tabs.List aria-label="自动默认值">
             <Tabs.Trigger value="disabled" disabled>
               禁用首项
