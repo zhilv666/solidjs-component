@@ -176,3 +176,95 @@ test("switch demo covers every size/state and controlled/native form examples", 
     assert.ok(html.includes(`id="${id}"`));
   assert.ok(html.includes('type="submit"') && html.includes('type="reset"'));
 });
+
+test("switch appearance preserves default classes and adds only a track base", () => {
+  assert.deepEqual(
+    classes(render()),
+    classes(render({ appearance: "default" })),
+  );
+  for (const appearance of ["keycap", "mahjong"]) {
+    const html = render({ appearance, children: "Auto save", class: "w-full" });
+    const names = classes(html);
+    assert.ok(names.includes(`shadow-${appearance}`));
+    assert.ok(names.includes(`active:shadow-${appearance}-pressed`));
+    assert.ok(names.includes(`peer-active:shadow-${appearance}-pressed`));
+    assert.equal(
+      names.filter((name) => name === `shadow-${appearance}`).length,
+      1,
+    );
+    assert.doesNotMatch(native(html), /appearance|shadow-|transition-shadow/);
+    assert.doesNotMatch(html, /\sappearance=/);
+    assert.ok(
+      names.includes("justify-start") && names.includes("rounded-full"),
+    );
+    for (const props of [
+      { disabled: true },
+      { readOnly: true },
+      { readonly: true },
+    ]) {
+      const unavailable = classes(render({ appearance, ...props }));
+      assert.ok(unavailable.includes("shadow-sm"));
+      assert.ok(!unavailable.some((name) => /keycap|mahjong/.test(name)));
+    }
+  }
+});
+
+test("switch appearance utilities preserve every size, selection, error and focus state", async () => {
+  const names = new Set();
+  for (const appearance of ["default", "keycap", "mahjong"])
+    for (const size of ["sm", "md", "lg"])
+      for (const checked of [false, true])
+        for (const invalid of [false, true])
+          for (const disabled of [false, true])
+            for (const readOnly of [false, true]) {
+              const html = render({
+                appearance,
+                size,
+                checked,
+                invalid,
+                disabled,
+                readOnly,
+              });
+              assert.deepEqual(
+                classes(html).filter((name) =>
+                  /^border-(border|primary|danger)$/.test(name),
+                ),
+                [
+                  invalid
+                    ? "border-danger"
+                    : checked
+                      ? "border-primary"
+                      : "border-border",
+                ],
+              );
+              for (const name of classes(html)) names.add(name);
+            }
+  const uno = await createGenerator(unoConfig);
+  const { css, matched } = await uno.generate([...names].join(" "));
+  for (const name of names)
+    if (name !== "peer")
+      assert.ok(matched.has(name), `Missing utility: ${name}`);
+  for (const appearance of ["keycap", "mahjong"]) {
+    assert.ok(css.includes(`var(--shadow-${appearance})`));
+    assert.ok(css.includes(`var(--shadow-${appearance}-pressed)`));
+  }
+  assert.ok(
+    css.includes(".peer:active~") && css.includes(".peer:focus-visible~"),
+  );
+});
+
+test("switch demo includes all appearance, size and state combinations", () => {
+  const html = renderToString(() => SwitchDemo());
+  for (const appearance of ["default", "keycap", "mahjong"])
+    for (const size of ["sm", "md", "lg"])
+      for (const state of [
+        "off",
+        "on",
+        "invalid",
+        "invalid-on",
+        "disabled",
+        "disabled-on",
+        "readonly",
+      ])
+        assert.ok(html.includes(`id="switch-${appearance}-${state}-${size}"`));
+});

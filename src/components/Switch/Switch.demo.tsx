@@ -1,6 +1,7 @@
 import { createSignal, For, Show } from "solid-js";
 import { Button } from "../Button";
 import { Switch } from "./Switch";
+import { AppearancePreview } from "../../demo/AppearancePreview";
 
 const sizes = ["sm", "md", "lg"] as const;
 const states = [
@@ -71,6 +72,42 @@ export function SwitchDemo() {
   const [message, setMessage] = createSignal("尚未提交");
   return (
     <div class="space-y-8">
+      <AppearancePreview id="switch">
+        {(appearance, size) => (
+          <div class="space-y-3">
+            <For each={states}>
+              {(state) => (
+                <div class="min-w-0 space-y-2">
+                  <Switch
+                    id={`switch-${appearance}-${state.id}-${size}`}
+                    appearance={appearance}
+                    size={size}
+                    defaultChecked={state.checked}
+                    invalid={state.invalid}
+                    disabled={state.disabled}
+                    readOnly={state.readOnly}
+                    aria-describedby={
+                      state.invalid
+                        ? `switch-${appearance}-${state.id}-${size}-error`
+                        : undefined
+                    }
+                  >
+                    {state.label} · {size}
+                  </Switch>
+                  <Show when={state.invalid}>
+                    <p
+                      id={`switch-${appearance}-${state.id}-${size}-error`}
+                      class="text-md text-danger"
+                    >
+                      当前设置需要确认。
+                    </p>
+                  </Show>
+                </div>
+              )}
+            </For>
+          </div>
+        )}
+      </AppearancePreview>
       <p class="text-md text-fg-muted">
         Tab
         聚焦，空格切换；圆形滑块直接切换左右位置，只做颜色过渡，没有位移或缩放动画。

@@ -7,12 +7,14 @@ import {
 } from "@kobalte/core/switch";
 import { mergeProps, Show, splitProps, type JSX } from "solid-js";
 import clsx from "clsx";
+import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 
 export interface SwitchProps extends Omit<
   JSX.InputHTMLAttributes<HTMLInputElement>,
   "size" | "type" | "role" | "children"
 > {
   size?: "sm" | "md" | "lg";
+  appearance?: ComponentAppearance;
   invalid?: boolean;
   defaultChecked?: boolean;
   readOnly?: boolean;
@@ -78,6 +80,7 @@ export function Switch(props: SwitchProps) {
   const merged = mergeProps(
     {
       size: "md",
+      appearance: "default",
       invalid: false,
       checked: undefined,
       defaultChecked: false,
@@ -99,6 +102,7 @@ export function Switch(props: SwitchProps) {
   );
   const [local, rest] = splitProps(merged, [
     "size",
+    "appearance",
     "invalid",
     "checked",
     "defaultChecked",
@@ -178,6 +182,11 @@ export function Switch(props: SwitchProps) {
                         : "unchecked"
                   ],
                 ),
+              getAppearanceClasses(
+                local.appearance,
+                "control",
+                local.disabled || (local.readOnly ?? local.readonly),
+              ),
             )}
           >
             <SwitchThumb
