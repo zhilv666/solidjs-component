@@ -8,12 +8,14 @@ import {
   type JSX,
 } from "solid-js";
 import clsx from "clsx";
+import type { ComponentAppearance } from "../appearance";
 
 export interface RadioGroupProps extends Omit<
   JSX.HTMLAttributes<HTMLDivElement>,
   "onChange"
 > {
   size?: "sm" | "md" | "lg";
+  appearance?: ComponentAppearance;
   orientation?: "horizontal" | "vertical";
   value?: string;
   defaultValue?: string;
@@ -27,6 +29,7 @@ export interface RadioGroupProps extends Omit<
 
 interface RadioStyleContextValue {
   size: Accessor<"sm" | "md" | "lg">;
+  appearance: Accessor<ComponentAppearance>;
   invalid: Accessor<boolean>;
   disabled: Accessor<boolean>;
   readOnly: Accessor<boolean>;
@@ -50,6 +53,7 @@ export function RadioGroup(props: RadioGroupProps) {
   const merged = mergeProps(
     {
       size: "md",
+      appearance: "default",
       orientation: "vertical",
       value: undefined,
       defaultValue: undefined,
@@ -67,6 +71,7 @@ export function RadioGroup(props: RadioGroupProps) {
   );
   const [local, rest] = splitProps(merged, [
     "size",
+    "appearance",
     "orientation",
     "value",
     "defaultValue",
@@ -85,6 +90,7 @@ export function RadioGroup(props: RadioGroupProps) {
     <RadioStyleContext.Provider
       value={{
         size: () => local.size,
+        appearance: () => local.appearance,
         invalid: () => local.invalid,
         disabled: () => local.disabled,
         readOnly: () => local.readOnly,

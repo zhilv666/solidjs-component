@@ -3,9 +3,14 @@ import { Button } from "../Button";
 import { Radio } from "../Radio";
 import { RadioDemo } from "../Radio/Radio.demo";
 import { RadioGroup } from "./RadioGroup";
+import type { ComponentAppearance } from "../appearance";
+
+const appearances = ["default", "keycap", "mahjong"] as const;
 
 export function RadioGroupDemo() {
   const [value, setValue] = createSignal("a");
+  const [appearance, setAppearance] =
+    createSignal<ComponentAppearance>("default");
   const [size, setSize] = createSignal<"md" | "lg">("md");
   const [orientation, setOrientation] = createSignal<"horizontal" | "vertical">(
     "vertical",
@@ -33,6 +38,7 @@ export function RadioGroupDemo() {
         </h3>
         <RadioGroup
           id="radio-controlled-group"
+          appearance={appearance()}
           value={value()}
           onValueChange={(next) => {
             setValue(next);
@@ -70,6 +76,20 @@ export function RadioGroupDemo() {
           </p>
         </Show>
         <div class="flex flex-wrap items-center gap-3">
+          <Button
+            id="radio-toggle-appearance"
+            variant="ghost"
+            onClick={() =>
+              setAppearance(
+                (current) =>
+                  appearances[
+                    (appearances.indexOf(current) + 1) % appearances.length
+                  ]!,
+              )
+            }
+          >
+            切换外观：{appearance()}
+          </Button>
           <Button variant="outline" onClick={() => setValue("b")}>
             外部选择 B
           </Button>
@@ -207,6 +227,31 @@ export function RadioGroupDemo() {
             desktop and narrow screens.
           </Radio>
           <Radio value="manual" size="lg" aria-label="手动保存" />
+        </RadioGroup>
+      </section>
+      <section
+        class="space-y-3 border-t border-border pt-6"
+        aria-labelledby="radio-override-heading"
+      >
+        <h3 id="radio-override-heading" class="text-md font-medium">
+          组外观与单项覆盖
+        </h3>
+        <RadioGroup
+          id="radio-appearance-override"
+          appearance="keycap"
+          defaultValue="inherited"
+          aria-label="单项外观覆盖"
+        >
+          <Radio id="radio-appearance-inherited" value="inherited">
+            继承键帽外观
+          </Radio>
+          <Radio
+            id="radio-appearance-overridden"
+            value="overridden"
+            appearance="mahjong"
+          >
+            单项麻将外观
+          </Radio>
         </RadioGroup>
       </section>
     </div>

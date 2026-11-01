@@ -1,6 +1,7 @@
 import { For, Show } from "solid-js";
 import { RadioGroup } from "../RadioGroup";
 import { Radio } from "./Radio";
+import { AppearancePreview } from "../../demo/AppearancePreview";
 
 const sizes = ["sm", "md", "lg"] as const;
 const states = [
@@ -54,6 +55,56 @@ const options = [
 export function RadioDemo() {
   return (
     <div class="space-y-8">
+      <AppearancePreview id="radio">
+        {(appearance, size) => (
+          <div class="space-y-4">
+            <For each={states}>
+              {(state) => (
+                <div class="min-w-0 space-y-2">
+                  <h4 class="text-md text-fg">
+                    {state.label} · {size}
+                  </h4>
+                  <RadioGroup
+                    id={`radio-${appearance}-${state.id}-${size}`}
+                    appearance={appearance}
+                    size={size}
+                    defaultValue={state.selected}
+                    invalid={state.invalid}
+                    disabled={state.disabled}
+                    readOnly={state.readOnly}
+                    aria-label={`${appearance} ${state.label} ${size}`}
+                    aria-describedby={
+                      state.invalid
+                        ? `radio-${appearance}-${size}-error`
+                        : undefined
+                    }
+                  >
+                    <For each={options}>
+                      {(option) => (
+                        <Radio
+                          id={`radio-${appearance}-${state.id}-${size}-${option.value}`}
+                          value={option.value}
+                          disabled={option.disabled}
+                        >
+                          {option.label}
+                        </Radio>
+                      )}
+                    </For>
+                  </RadioGroup>
+                  <Show when={state.invalid}>
+                    <p
+                      id={`radio-${appearance}-${size}-error`}
+                      class="text-md text-danger"
+                    >
+                      请确认选择后继续。
+                    </p>
+                  </Show>
+                </div>
+              )}
+            </For>
+          </div>
+        )}
+      </AppearancePreview>
       <For each={states}>
         {(state) => (
           <section

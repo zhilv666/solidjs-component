@@ -9,6 +9,7 @@ import {
 import { mergeProps, Show, splitProps, type JSX } from "solid-js";
 import clsx from "clsx";
 import { useRadioStyleContext } from "../RadioGroup/RadioGroup";
+import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 
 export interface RadioProps extends Omit<
   JSX.InputHTMLAttributes<HTMLInputElement>,
@@ -23,6 +24,7 @@ export interface RadioProps extends Omit<
 > {
   value: string;
   size?: "sm" | "md" | "lg";
+  appearance?: ComponentAppearance;
   children?: JSX.Element;
   /** Styles the outer row; native attributes and ref go to its hidden input. */
   class?: string;
@@ -103,6 +105,7 @@ export function Radio(props: RadioProps) {
   const merged = mergeProps(
     {
       size: undefined,
+      appearance: undefined,
       disabled: false,
       onChange: undefined,
       onFocus: undefined,
@@ -115,6 +118,7 @@ export function Radio(props: RadioProps) {
   const [local, rest] = splitProps(merged, [
     "value",
     "size",
+    "appearance",
     "disabled",
     "onChange",
     "onFocus",
@@ -180,6 +184,11 @@ export function Radio(props: RadioProps) {
               "cursor-pointer",
               interactions[group.invalid() ? "invalid" : "valid"],
             ),
+          getAppearanceClasses(
+            local.appearance ?? group.appearance(),
+            "control",
+            isDisabled() || group.readOnly(),
+          ),
         )}
       >
         <RadioIndicator

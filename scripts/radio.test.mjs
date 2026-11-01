@@ -218,3 +218,94 @@ test("radio demo covers all sizes and states with controlled/native examples", (
   assert.ok(html.includes('type="submit"') && html.includes('type="reset"'));
   assert.ok(html.includes('aria-label="手动保存"'));
 });
+
+test("radio appearance defaults preserve classes and group inheritance allows single-item overrides", () => {
+  assert.deepEqual(
+    classes(render()),
+    classes(render({ appearance: "default" }, { appearance: "default" })),
+  );
+  const inherited = classes(render({ appearance: "keycap" }));
+  assert.equal(inherited.filter((name) => name === "shadow-keycap").length, 2);
+  const overridden = classes(
+    render({ appearance: "keycap" }, { appearance: "mahjong" }),
+  );
+  assert.equal(overridden.filter((name) => name === "shadow-keycap").length, 1);
+  assert.equal(
+    overridden.filter((name) => name === "shadow-mahjong").length,
+    1,
+  );
+  assert.doesNotMatch(
+    render({ appearance: "mahjong" }, { appearance: "keycap" }),
+    /\sappearance=/,
+  );
+});
+test("radio appearances retain selection, focus, validation and unavailable states", async () => {
+  const names = new Set();
+  for (const appearance of ["keycap", "mahjong"])
+    for (const size of ["sm", "md", "lg"])
+      for (const state of [
+        {},
+        { defaultValue: "a" },
+        { defaultValue: "a", invalid: true },
+        { disabled: true },
+        { readOnly: true },
+      ]) {
+        const html = render({ appearance, size, ...state }),
+          values = classes(html),
+          unavailable = state.disabled || state.readOnly;
+        assert.equal(
+          values.filter(
+            (name) =>
+              name === (unavailable ? "shadow-sm" : `shadow-${appearance}`),
+          ).length,
+          2,
+        );
+        assert.equal(
+          values.includes(`peer-active:shadow-${appearance}-pressed`),
+          !unavailable,
+        );
+        assert.ok(
+          values.includes("peer-focus-visible:ring-ring") &&
+            values.includes("rounded-full"),
+        );
+        if (state.invalid)
+          assert.equal(
+            values.filter((name) => name === "border-danger").length,
+            2,
+          );
+        for (const name of values) names.add(name);
+      }
+  const uno = await createGenerator(unoConfig),
+    { matched } = await uno.generate([...names].join(" "));
+  for (const name of names)
+    if (name !== "peer")
+      assert.ok(matched.has(name), `Missing utility: ${name}`);
+});
+test("an individually disabled radio flattens its inherited appearance without changing its siblings", () => {
+  const values = classes(render({ appearance: "mahjong" }, { disabled: true }));
+  assert.equal(values.filter((name) => name === "shadow-sm").length, 1);
+  assert.equal(values.filter((name) => name === "shadow-mahjong").length, 1);
+  assert.ok(values.includes("pointer-events-none"));
+});
+test("radio appearance demo covers each group state, size, inheritance and live switching", () => {
+  const html = renderToString(() => RadioGroupDemo());
+  for (const appearance of ["default", "keycap", "mahjong"])
+    for (const size of ["sm", "md", "lg"])
+      for (const state of [
+        "default",
+        "empty",
+        "invalid",
+        "disabled",
+        "readonly",
+      ])
+        for (const value of ["a", "b", "c"])
+          assert.ok(
+            html.includes(`id="radio-${appearance}-${state}-${size}-${value}"`),
+          );
+  for (const id of [
+    "radio-toggle-appearance",
+    "radio-appearance-inherited",
+    "radio-appearance-overridden",
+  ])
+    assert.ok(html.includes(`id="${id}"`));
+});
