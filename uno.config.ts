@@ -25,6 +25,10 @@ const colors = tokenVariables("color", [
 
 export default defineConfig({
   presets: [presetUno()],
+  content: {
+    // The Vite pipeline excludes plain TypeScript class maps by default.
+    filesystem: ["src/components/appearance.ts"],
+  },
   blocklist: [
     /-\[[^\]]+\]/,
     /^rounded(?:-[trblse]{1,2})?-(?:xl|[2-9]xl)$/,

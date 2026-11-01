@@ -90,7 +90,7 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 - [x] **2.1 Button** 🛑
   variant：`solid` / `outline` / `ghost` / `danger`，另有经用户授权的 `mahjong` 实验变体；size：`sm` / `md` / `lg`；支持 `loading`、`disabled`、`as` 渲染为链接（可选）。
   验收：满足完成定义。
-  备注：基于 Kobalte，保留 36 个旧矩阵组合，新增 18 个键帽/麻将并排对比组合及麻将计数、保存示例。原有四个变体、默认样式和键帽 token 已由回归测试锁定；仅新增用户授权的两个麻将阴影 token。30 项测试及 typecheck/check:tokens/build 通过；真实浏览器已验证鼠标、键盘、明暗主题三态与移动端布局。后续已仅修正 Button 测试的换行格式，完整 lint 复核通过，断言与组件实现未改。可选 as 链接未实现；按用户“继续下一个”的确认，Button 外观审核关卡已通过，现有实现与风格冻结。麻将仍是独立可选实验变体，其他组件不继承 Button 的立体阴影例外。
+  备注：基于 Kobalte，保留 36 个旧矩阵组合，新增 18 个键帽/麻将并排对比组合及麻将计数、保存示例。原有四个变体、默认样式和键帽 token 已由回归测试锁定；仅新增用户授权的两个麻将阴影 token。30 项测试及 typecheck/check:tokens/build 通过；真实浏览器已验证鼠标、键盘、明暗主题三态与移动端布局。后续已仅修正 Button 测试的换行格式，完整 lint 复核通过，断言与组件实现未改。可选 as 链接未实现；按用户“继续下一个”的确认，Button 外观审核关卡已通过，现有实现与风格冻结。麻将仍是独立可选实验变体；本次完成时立体阴影例外仅限 Button，后续全组件外观授权见 4.4a。
 
   **agent 完成后停止，等待我审核并手动修改。** 我确认后，该组件即成为后续所有组件的"标准样例"，之后不得再改动其风格。
 
@@ -127,7 +127,23 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
   备注：纯展示 section 容器，提供 outline/elevated 与三种尺寸，默认 outline；尺寸使用默认间距刻度，elevated 仅增加 shadow-sm。通过 children 组合语义化标题/header/footer/内部操作，支持原生属性/ref/事件/class、数字零值和长内容换行；区域名称由调用方的 aria-labelledby 或 aria-label 提供，不模拟按钮、不增加 Tab 停靠点。100 项测试及 typecheck/lint/check:tokens/build 通过；真实浏览器验收全部 6 个组合、4 个内部按钮的键盘操作与焦点、动态尺寸/变体/内容、控件身份与计数保留、原生属性和事件、明暗主题和 390px 无间断长文本。最低文字对比度 7.73:1，截图已查看；未新增 token、依赖或修改已完成组件。
 - [x] 4.4 Alert（info / success / warning / danger）
   备注：基于 Kobalte Alert，提供四种状态与三种尺寸、可选 heading；原生 title/属性/事件/ref/class 与 ARIA 覆盖保持透传，可用 role=status 提供普通反馈语义。状态只使用现有语义色边框和不同装饰符号，正文 text-fg；支持空标题、数字零值、动态内容和长消息换行，无关闭交互或额外 Tab 停靠点。106 项测试及 typecheck/lint/check:tokens/build 通过；真实浏览器验收全部 12 个组合、3 个操作按钮的 Tab/Enter/空格与焦点、单次消息更新且不抢焦点、动态尺寸/状态/标题/原生 role、组件身份保留、装饰符号从无障碍文本中隐藏、明暗主题和 390px 窄屏。正文最低对比度 14.27:1、符号最低 6.47:1，截图已查看；预览矩阵 aria-live=off，动态提示保留 alert 语义。未新增 token、依赖或修改已完成组件；未进行实际屏幕阅读器朗读测试。
+- [x] 4.4a 共享键帽/麻将外观基础
+  范围：记录用户的全组件外观授权，复用现有四个阴影 token，提供 ComponentAppearance 类型、展示/原生控件/隐藏输入控件的状态样式和可复用 demo 对比区。默认外观不变，Button 既有实现与测试冻结；不新增依赖。
+  备注：共享外观类型、三类交互阴影映射和 3 外观 × 3 尺寸 demo 对比区已完成；113 项测试及 typecheck/lint/check:tokens/build 通过。为共享 .ts 文件添加精确 UnoCSS 扫描与单文件标记，生产 CSS 已确认包含 peer-active 按下规则；真实浏览器验收鼠标/Enter/空格单次激活、两种底座收短且无位移、隐藏输入框键盘按下、禁用扁平、明暗和 390px 窄屏，截图已查看。未新增 token、依赖或修改 Button 实现与断言。
 - [ ] 4.5 Spinner
+  追加验收：用户已允许旋转动画和 animation.spinDuration=1000ms；支持减少动态效果。默认/键帽/麻将三种外观的外框保持静止，只有内部加载图形旋转。
+- [ ] 4.5a Input 键帽/麻将外观
+- [ ] 4.5b Textarea 键帽/麻将外观
+- [ ] 4.5c Checkbox 键帽/麻将外观
+- [ ] 4.5d Radio / RadioGroup 键帽/麻将外观
+- [ ] 4.5e Switch 键帽/麻将外观
+- [ ] 4.5f Select 键帽/麻将外观（含弹层）
+- [ ] 4.5g FormField 键帽/麻将外观
+- [ ] 4.5h Badge 键帽/麻将外观
+- [ ] 4.5i Tag 键帽/麻将外观
+- [ ] 4.5j Card 键帽/麻将外观
+- [ ] 4.5k Alert 键帽/麻将外观
+  通用追加验收：appearance=default 保持原实现外观；keycap/mahjong 支持全部尺寸，保留禁用/只读/选中/错误/聚焦等原有状态。原测试保留并追加覆盖，检查通过后逐项更新；所有后续新组件首次实现时一并提供两种外观。
 - [ ] 4.6 Skeleton
 - [ ] 4.7 Avatar（圆形例外，需在备注中说明）
 - [ ] 4.8 Divider

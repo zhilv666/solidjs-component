@@ -19,7 +19,7 @@
 
 - **小圆角**：只使用 `rounded-sm`（2px）、`rounded-md`（4px）、`rounded-lg`（6px）。默认 `rounded-md`。禁止 `rounded-xl` 及以上，禁止 `rounded-full`（Avatar、Switch 滑块等确需圆形的例外，须在 PR 说明中标注）。
 - **字体清晰**：正文使用 `text-fg`（深色），次要文字使用 `text-fg-muted`，禁止用更浅的灰色。正文不小于 14px，字重只用 400 / 500，禁止 300 及以下。
-- **风格克制**：扁平为主，边框清晰，阴影只用 token 中的 `shadow-sm` / `shadow-md`，不做渐变、不做大面积模糊。Button 经用户确认的键帽样式是例外，可使用 `shadow-keycap` / `shadow-keycap-pressed`；经用户授权的 `mahjong` 实验变体另可使用 `shadow-mahjong` / `shadow-mahjong-pressed`，仅用于该变体。其他组件不沿用上述例外。
+- **风格克制**：默认外观保持现状，边框清晰，常规阴影只用 token 中的 `shadow-sm` / `shadow-md`，不做渐变、不做大面积模糊。用户已授权所有组件提供可选键帽/麻将外观，可复用 `shadow-keycap` / `shadow-keycap-pressed`、`shadow-mahjong` / `shadow-mahjong-pressed`。Button 已确认的现有外观与实现仍保留；其他组件的追加授权和适用方式见第 9 节。
 
 ## 3. 硬性规则（违反即视为任务失败）
 
@@ -62,6 +62,7 @@ src/components/Button/
 - 统一命名：
   - `variant`：视觉变体，如 `"solid" | "outline" | "ghost"`
   - `size`：`"sm" | "md" | "lg"`，默认 `"md"`
+  - `appearance`：新增外观选项 `"default" | "keycap" | "mahjong"`，默认 `"default"`，与语义 `variant` 正交；Button 继续使用既有键帽变体和 `variant="mahjong"` API，不为统一命名改写已确认实现。
   - `disabled`、`loading`、`class`、`children`
 - 所有可选 props 必须有明确默认值（用 `mergeProps` 设置）。
 - 支持外部传入 `class`，并与内部 class 通过 `clsx` 合并，外部 class 排在最后。
@@ -73,6 +74,7 @@ src/components/Button/
 - 聚焦样式统一使用 `focus-visible:ring-2 focus-visible:ring-ring`，不得移除 outline 而不提供替代。
 - 禁用状态统一：`disabled:opacity-50 disabled:cursor-not-allowed`。
 - 动画过渡只用 `transition-colors` / `transition-shadow` 加 token 时长，不做位移、缩放动画。
+  Spinner 经用户授权可使用独立旋转动画，时长必须来自 `animation.spinDuration` token，并在 `prefers-reduced-motion: reduce` 下停止；立体外框不随加载图形旋转。
 
 ### 5.4 交互与无障碍
 
@@ -149,3 +151,11 @@ export function Xxx(props: XxxProps) {
 - 汇报简洁，列出事实，不要夸大完成度。
 - 做不到或不确定的部分明确说明，不要用"应该可以"含糊带过。
 - 默认用中文回复；代码、变量名、注释使用英文。
+
+## 9. 本轮追加授权与外观扩展
+
+- 用户已明确要求所有组件增加键帽和麻将可选外观，因此本轮允许修改已完成组件来追加 `appearance`、演示与回归测试；保留原默认外观、原生属性透传和 Kobalte 交互/无障碍逻辑。此授权不包含无关重构、删除测试或替换技术栈。
+- 按 `PLAN.md` 的新增任务逐个实现与提交，后续新组件在首次实现时一并提供两种外观。既有 Button 已具备两种风格，其实现和现有测试断言不改。
+- 可交互控件在可用状态下支持按下底座收短；禁用、只读状态不引入按下效果。纯展示组件只应用立体外框，不模拟按钮、不新增 Tab 停靠点。
+- 语义颜色、选中/错误状态、聚焦环与文字对比度仍需保留；麻将外观使用现有主题颜色和绿色厚底，不新增硬编码视觉值。
+- 用户已授权为 Spinner 新增 `animation.spinDuration: "1000ms"`，并同步生成 CSS 变量和测试；其他缺失 token 仍须先询问。
