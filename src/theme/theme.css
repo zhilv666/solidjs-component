@@ -87,3 +87,91 @@
     var(--color-fg)
   );
 }
+
+:root[data-palette="sakura"] {
+  --color-primary: #a52d62;
+  --color-primary-fg: #ffffff;
+  --color-bg: #fceff4;
+  --color-surface: #fff7fa;
+  --color-fg: #331624;
+  --color-fg-muted: #725360;
+  --color-border: #95697d;
+  --color-ring: #a52d62;
+}
+
+:root[data-theme="dark"][data-palette="sakura"] {
+  --color-primary: #f2a8c8;
+  --color-primary-fg: #45172e;
+  --color-bg: #23171e;
+  --color-surface: #30212a;
+  --color-fg: #fff0f6;
+  --color-fg-muted: #e8bed0;
+  --color-border: #b7829a;
+  --color-ring: #f2a8c8;
+}
+
+:root[data-palette="mint"] {
+  --color-primary: #116a4f;
+  --color-primary-fg: #ffffff;
+  --color-bg: #edf8f0;
+  --color-surface: #f8fdfa;
+  --color-fg: #153729;
+  --color-fg-muted: #466b56;
+  --color-border: #62856e;
+  --color-ring: #116a4f;
+}
+
+:root[data-theme="dark"][data-palette="mint"] {
+  --color-primary: #8be0b2;
+  --color-primary-fg: #113c2a;
+  --color-bg: #14231c;
+  --color-surface: #203329;
+  --color-fg: #eafaf0;
+  --color-fg-muted: #bedfca;
+  --color-border: #79a78b;
+  --color-ring: #8be0b2;
+}
+
+:root[data-palette="lavender"] {
+  --color-primary: #6941b1;
+  --color-primary-fg: #ffffff;
+  --color-bg: #f4effc;
+  --color-surface: #fcfaff;
+  --color-fg: #2c1d41;
+  --color-fg-muted: #635176;
+  --color-border: #8b759f;
+  --color-ring: #6941b1;
+}
+
+:root[data-theme="dark"][data-palette="lavender"] {
+  --color-primary: #c5acf3;
+  --color-primary-fg: #32204e;
+  --color-bg: #201928;
+  --color-surface: #30243d;
+  --color-fg: #f7f0ff;
+  --color-fg-muted: #d5c4e9;
+  --color-border: #a791bd;
+  --color-ring: #c5acf3;
+}
+
+:root[data-palette="apricot"] {
+  --color-primary: #a04c13;
+  --color-primary-fg: #ffffff;
+  --color-bg: #fff3e8;
+  --color-surface: #fffaf4;
+  --color-fg: #3d291c;
+  --color-fg-muted: #745842;
+  --color-border: #977452;
+  --color-ring: #a04c13;
+}
+
+:root[data-theme="dark"][data-palette="apricot"] {
+  --color-primary: #ffc08c;
+  --color-primary-fg: #45270f;
+  --color-bg: #281d16;
+  --color-surface: #38291f;
+  --color-fg: #fff3e7;
+  --color-fg-muted: #e7c5a6;
+  --color-border: #b99270;
+  --color-ring: #ffc08c;
+}

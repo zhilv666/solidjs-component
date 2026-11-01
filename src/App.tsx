@@ -8,6 +8,12 @@ import { demos } from "@/demo/registry";
 import { applyTheme, getPreferredTheme } from "@/theme/mode";
 import { AppearanceProvider } from "@/theme/appearance";
 import {
+  applyPalette,
+  getPreferredPalette,
+  isThemePalette,
+  paletteOptions,
+} from "@/theme/palette-mode";
+import {
   applyAppearance,
   getPreferredAppearance,
   isComponentAppearance,
@@ -27,6 +33,7 @@ const navigationClass =
 export default function App() {
   const [theme, setTheme] = createSignal(getPreferredTheme());
   const [appearance, setAppearance] = createSignal(getPreferredAppearance());
+  const [palette, setPalette] = createSignal(getPreferredPalette());
   const [sidebarOpen, setSidebarOpen] = createSignal(false);
   const [activeId, setActiveId] = createSignal(demos[0]?.id ?? "");
   const activeDemo = createMemo(() =>
@@ -35,6 +42,7 @@ export default function App() {
 
   createEffect(() => applyTheme(theme()));
   createEffect(() => applyAppearance(appearance()));
+  createEffect(() => applyPalette(palette()));
 
   return (
     <AppearanceProvider appearance={appearance()}>
@@ -56,6 +64,17 @@ export default function App() {
                 >
                   目录
                 </Sidebar.Trigger>
+                <div class="w-36">
+                  <Select
+                    id="palette-select"
+                    aria-label="配色主题"
+                    options={paletteOptions}
+                    value={palette()}
+                    onValueChange={(value) => {
+                      if (isThemePalette(value)) setPalette(value);
+                    }}
+                  />
+                </div>
                 <div class="w-40">
                   <Select
                     id="appearance-select"

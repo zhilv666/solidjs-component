@@ -234,3 +234,21 @@ test("the theme demo includes an inherited editable control and fixed appearance
   for (const appearance of ["default", "keycap", "mahjong"])
     assert.ok(html.includes(`data-demo-explicit="${appearance}"`));
 });
+
+test("the header adds an independent named palette Select before appearance and mode controls", () => {
+  const html = renderToString(App);
+  assert.match(html, /id="palette-select"[^>]*aria-label="配色主题"/);
+  assert.ok(
+    html.indexOf('id="palette-select"') <
+      html.indexOf('id="appearance-select"'),
+  );
+  assert.match(html, /默认蓝/);
+});
+
+test("the theme demo explains all palettes without replacing inherited or fixed controls", () => {
+  const html = renderToString(ThemeDemo);
+  for (const name of ["默认蓝", "樱花粉", "清新绿", "薰衣草紫", "暖杏橙"])
+    assert.ok(html.includes(name));
+  assert.ok(html.includes("配色、外观和明暗模式独立切换"));
+  assert.ok(html.includes('id="theme-preview-input"'));
+});

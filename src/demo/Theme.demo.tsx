@@ -31,8 +31,9 @@ export function ThemeDemo() {
           当前外观：{appearanceNames[appearance()]}
         </h3>
         <p class="text-md text-fg-muted">
-          在右上角选择外观主题。未指定 appearance 的组件跟随选择，输入内容保留；
-          明暗模式独立切换。Button 保留已确认的键帽与麻将变体。
+          右上角的配色、外观和明暗模式独立切换。配色包含默认蓝、樱花粉、清新绿、
+          薰衣草紫和暖杏橙；未指定 appearance 的组件跟随外观，输入内容保留。
+          Button 保留已确认的键帽与麻将变体，颜色跟随配色。
         </p>
         <Input
           id="theme-preview-input"

@@ -49,11 +49,21 @@ export function generateThemeCss(theme: ThemeTokens = tokens): string {
     ...variables("color", { ...theme.darkColor }),
     ...variables("color", derivedColors),
   ];
+  // Root-scoped palettes also reach portals. Derived state variables resolve on
+  // this same element, so appearance and light/dark remain independent.
+  const palettes = Object.entries(theme.palettes).flatMap(([name, palette]) => [
+    block(`:root[data-palette="${name}"]`, variables("color", palette.color)),
+    block(
+      `:root[data-theme="dark"][data-palette="${name}"]`,
+      variables("color", palette.darkColor),
+    ),
+  ]);
 
   return [
     "/* Generated from tokens.ts. Run pnpm theme:build to regenerate. */",
     block(":root", light),
     block('[data-theme="dark"]', dark),
+    ...palettes,
     "",
   ].join("\n\n");
 }
