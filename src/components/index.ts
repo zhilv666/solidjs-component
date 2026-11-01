@@ -111,3 +111,10 @@ export type {
   ToasterProps,
   ToastOptions,
 } from "./Toast";
+export { Tabs } from "./Tabs";
+export type {
+  TabsProps,
+  TabsListProps,
+  TabsTriggerProps,
+  TabsContentProps,
+} from "./Tabs";

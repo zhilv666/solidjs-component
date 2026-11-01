@@ -22,6 +22,7 @@ import { PopoverDemo } from "@/components/Popover/Popover.demo";
 import { DialogDemo } from "@/components/Dialog/Dialog.demo";
 import { DropdownMenuDemo } from "@/components/DropdownMenu/DropdownMenu.demo";
 import { ToastDemo } from "@/components/Toast/Toast.demo";
+import { TabsDemo } from "@/components/Tabs/Tabs.demo";
 
 export interface DemoEntry {
   readonly id: string;
@@ -165,6 +166,12 @@ export const demos: readonly DemoEntry[] = [
     description:
       "Kobalte 全局通知队列，支持三外观、三尺寸、键盘关闭与暂停计时。",
     component: ToastDemo,
+  },
+  {
+    id: "tabs",
+    name: "Tabs",
+    description: "Kobalte 标签页，支持三外观、三尺寸、方向键与手动激活。",
+    component: TabsDemo,
   },
   {
     id: "theme",

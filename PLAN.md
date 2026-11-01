@@ -233,6 +233,8 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 
 <!-- 格式：- [任务编号] 问题描述 / 需要我决定的事项 -->
 
+- [6.1] Tabs 三外观/三尺寸已实现，8 项新增测试与 typecheck/lint/check:tokens 通过；本次按用户要求保存为开发中提交，6.1 保持未完成，浏览器验收待续。当前已安装且公开最新版的 Kobalte 0.13.14 在显式初始值下，首次挂载的 Tabs.Content 缺少 aria-labelledby；绕过封装的原生组合同样复现，切换标签后关联才恢复。按 AGENTS.md 不手写 ARIA 的规则，等待用户确认是否允许封装层最小补齐标签关联，保留 Kobalte 键盘/焦点逻辑及现有依赖。
+
 - [5.4] 当前 Kobalte 0.13.14 的 MenuContentBase 在 onEscapeKeyDown 回调后无条件执行 context.close(true)，直接 preventDefault 不能取消关闭；受控 open 可以拒绝关闭请求。本轮保留库的键盘逻辑并说明限制，依赖升级或行为适配交给全库审计决定。
 
 - [2.1] 浏览器连接已恢复；SSR 测试使用独立临时缓存，开发服务运行测试后缓存不变、预览正常。新增阴影 token 后已重启开发服务，使 UnoCSS 重新加载主题映射。

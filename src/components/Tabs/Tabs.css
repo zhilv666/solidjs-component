@@ -1,0 +1,3 @@
+.solid-tabs-content:not([data-selected]) {
+  display: none;
+}
