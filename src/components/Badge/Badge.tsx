@@ -1,9 +1,11 @@
 import { mergeProps, splitProps, type JSX } from "solid-js";
 import clsx from "clsx";
+import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 
 export interface BadgeProps extends JSX.HTMLAttributes<HTMLSpanElement> {
   variant?: "solid" | "outline" | "neutral";
   size?: "sm" | "md" | "lg";
+  appearance?: ComponentAppearance;
 }
 
 const variants = {
@@ -19,12 +21,19 @@ const sizes = {
 
 export function Badge(props: BadgeProps) {
   const merged = mergeProps(
-    { variant: "solid", size: "md", class: "", children: undefined } as const,
+    {
+      variant: "solid",
+      size: "md",
+      appearance: "default",
+      class: "",
+      children: undefined,
+    } as const,
     props,
   );
   const [local, rest] = splitProps(merged, [
     "variant",
     "size",
+    "appearance",
     "class",
     "children",
   ]);
@@ -35,6 +44,7 @@ export function Badge(props: BadgeProps) {
         "inline-flex max-w-full min-w-0 items-center gap-1 break-words rounded-md border border-solid font-medium",
         variants[local.variant],
         sizes[local.size],
+        getAppearanceClasses(local.appearance),
         local.class,
       )}
     >

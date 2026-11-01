@@ -1,6 +1,7 @@
 import { createSignal, For } from "solid-js";
 import { Button } from "../Button";
 import { Badge } from "./Badge";
+import { AppearancePreview } from "../../demo/AppearancePreview";
 
 const variants = ["solid", "outline", "neutral"] as const;
 const sizes = ["sm", "md", "lg"] as const;
@@ -9,6 +10,24 @@ export function BadgeDemo() {
   const [count, setCount] = createSignal(0);
   return (
     <div class="space-y-8">
+      <AppearancePreview id="badge">
+        {(appearance, size) => (
+          <div class="flex flex-wrap items-center gap-3">
+            <For each={variants}>
+              {(variant) => (
+                <Badge
+                  id={`badge-${appearance}-${variant}-${size}`}
+                  appearance={appearance}
+                  variant={variant}
+                  size={size}
+                >
+                  {variant} · {size}
+                </Badge>
+              )}
+            </For>
+          </div>
+        )}
+      </AppearancePreview>
       <p class="text-md text-fg-muted">
         纯展示标签，不产生 Tab 停靠点，不模拟按钮。三种变体均使用现有
         token；正文保持至少 14px。

@@ -86,3 +86,56 @@ test("badge demo covers every variant and size with live numeric and wrapping ex
     html.includes('aria-live="polite"') && html.includes('aria-label="已完成"'),
   );
 });
+
+test("badge appearance preserves defaults and adds a noninteractive token base", () => {
+  assert.deepEqual(
+    classes(render()),
+    classes(render({ appearance: "default" })),
+  );
+  for (const appearance of ["keycap", "mahjong"]) {
+    const html = render({
+      appearance,
+      children: 0,
+      class: "w-full",
+      title: "Native title",
+    });
+    assert.ok(classes(html).includes(`shadow-${appearance}`));
+    assert.equal(classes(html).at(-1), "w-full");
+    assert.ok(html.endsWith(">0</span>"));
+    assert.doesNotMatch(
+      html,
+      /\s(?:appearance|role|tabindex)=|(?:hover|active):/,
+    );
+  }
+});
+
+test("badge appearance keeps every semantic color and size combination tokenized", async () => {
+  const names = new Set();
+  for (const appearance of ["default", "keycap", "mahjong"])
+    for (const variant of ["solid", "outline", "neutral"])
+      for (const size of ["sm", "md", "lg"]) {
+        const current = classes(render({ appearance, variant, size }));
+        assert.equal(
+          current.filter((name) => name.startsWith("bg-")).length,
+          1,
+        );
+        assert.ok(
+          !current.some((name) => /(?:hover|active):|animate/.test(name)),
+        );
+        for (const name of current) names.add(name);
+      }
+  const uno = await createGenerator(unoConfig);
+  const { css, matched } = await uno.generate([...names].join(" "));
+  for (const name of names)
+    assert.ok(matched.has(name), `Missing utility: ${name}`);
+  for (const appearance of ["keycap", "mahjong"])
+    assert.ok(css.includes(`var(--shadow-${appearance})`));
+});
+
+test("badge demo shows all appearance, variant and size combinations", () => {
+  const html = renderToString(() => BadgeDemo());
+  for (const appearance of ["default", "keycap", "mahjong"])
+    for (const variant of ["solid", "outline", "neutral"])
+      for (const size of ["sm", "md", "lg"])
+        assert.ok(html.includes(`id="badge-${appearance}-${variant}-${size}"`));
+});
