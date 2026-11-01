@@ -24,6 +24,7 @@ import { DropdownMenuDemo } from "@/components/DropdownMenu/DropdownMenu.demo";
 import { ToastDemo } from "@/components/Toast/Toast.demo";
 import { TabsDemo } from "@/components/Tabs/Tabs.demo";
 import { ListDemo } from "@/components/List/List.demo";
+import { PaginationDemo } from "@/components/Pagination/Pagination.demo";
 
 export interface DemoEntry {
   readonly id: string;
@@ -179,6 +180,12 @@ export const demos: readonly DemoEntry[] = [
     name: "List",
     description: "展示与选择列表，支持单选/多选、禁用项、键盘导航及操作插槽。",
     component: ListDemo,
+  },
+  {
+    id: "pagination",
+    name: "Pagination",
+    description: "Kobalte 分页，支持受控页码、边界禁用、省略号与三种外观。",
+    component: PaginationDemo,
   },
   {
     id: "theme",

@@ -1,0 +1,17 @@
+.solid-pagination-button[aria-current="page"] {
+  color: var(--color-primary-fg);
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.solid-pagination-button[aria-current="page"]:not(:disabled):hover:not(
+    :active
+  ) {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+.solid-pagination-button[aria-current="page"]:not(:disabled):active {
+  background-color: var(--color-primary-active);
+  border-color: var(--color-primary-active);
+}

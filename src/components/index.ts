@@ -125,3 +125,5 @@ export type {
   ListDisplayProps,
   ListSelectionProps,
 } from "./List";
+export { Pagination } from "./Pagination";
+export type { PaginationProps } from "./Pagination";
