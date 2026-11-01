@@ -37,6 +37,7 @@ export type {
   SidebarTriggerProps,
   SidebarToggleProps,
   SidebarCloseButtonProps,
+  SidebarItemProps,
   ContentProps,
   FooterProps,
   LayoutSize,

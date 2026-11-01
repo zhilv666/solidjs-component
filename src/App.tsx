@@ -5,6 +5,7 @@ import { getAppearanceClasses } from "@/components/appearance";
 import { Select } from "@/components/Select";
 import { Layout, Header, Sidebar, Content, Footer } from "@/components/Layout";
 import { demos } from "@/demo/registry";
+import { NavigationIcon } from "@/demo/NavigationIcon";
 import { applyTheme, getPreferredTheme } from "@/theme/mode";
 import { AppearanceProvider } from "@/theme/appearance";
 import {
@@ -27,8 +28,6 @@ const appearanceOptions = [
 
 const controlClass =
   "inline-flex h-10 items-center justify-center gap-2 rounded-md border px-3 text-md font-medium cursor-pointer transition-colors duration-token enabled:hover:not-active:bg-surface-hover enabled:active:bg-surface-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:cursor-not-allowed";
-const navigationClass =
-  "inline-flex h-10 w-full min-w-0 items-center justify-start gap-2 rounded-md border px-3 text-md font-medium text-left cursor-pointer transition-colors duration-token enabled:hover:not-active:bg-surface-hover enabled:active:bg-surface-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:cursor-not-allowed";
 
 export default function App() {
   const [theme, setTheme] = createSignal(getPreferredTheme());
@@ -109,38 +108,33 @@ export default function App() {
           </Header>
 
           <div class="mx-auto flex w-full min-h-0 max-w-7xl flex-1 gap-4 p-4 md:gap-6 md:p-6">
-            <Sidebar.Panel id="demo-sidebar" heading="组件目录" class="h-full">
-              <nav aria-label="组件目录" class="space-y-3">
-                <ul class="list-none space-y-2 p-0">
-                  <For each={demos}>
-                    {(entry) => (
-                      <li>
-                        <button
-                          type="button"
-                          class={clsx(
-                            navigationClass,
-                            getAppearanceClasses(appearance(), "native"),
-                            activeId() === entry.id
-                              ? "border-primary bg-surface-hover text-primary"
-                              : "border-border bg-surface text-fg",
-                          )}
-                          aria-current={
-                            activeId() === entry.id ? "page" : undefined
-                          }
-                          aria-controls="component-preview"
-                          onClick={() => {
-                            setActiveId(entry.id);
-                            setSidebarOpen(false);
-                          }}
-                        >
-                          {entry.name}
-                        </button>
-                      </li>
-                    )}
-                  </For>
-                </ul>
-              </nav>
-            </Sidebar.Panel>
+            <Sidebar.Panel
+              id="demo-sidebar"
+              heading="组件目录"
+              class="h-full"
+              navigation={
+                <nav aria-label="组件目录" class="space-y-3">
+                  <ul class="list-none space-y-2 p-0 pb-2">
+                    <For each={demos}>
+                      {(entry) => (
+                        <li>
+                          <Sidebar.Item
+                            label={entry.name}
+                            icon={<NavigationIcon name={entry.id} />}
+                            active={activeId() === entry.id}
+                            aria-controls="component-preview"
+                            onClick={() => {
+                              setActiveId(entry.id);
+                              setSidebarOpen(false);
+                            }}
+                          />
+                        </li>
+                      )}
+                    </For>
+                  </ul>
+                </nav>
+              }
+            />
 
             <Content id="component-preview" class="overflow-y-auto">
               <Show

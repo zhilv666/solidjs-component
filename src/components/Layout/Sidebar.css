@@ -1,3 +1,7 @@
 .solid-sidebar-body[data-closed] {
   display: none;
 }
+
+.solid-sidebar-item[data-collapsed] .solid-sidebar-item-label {
+  display: none;
+}

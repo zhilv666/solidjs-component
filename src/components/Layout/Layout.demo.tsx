@@ -1,12 +1,10 @@
 import { createSignal, For } from "solid-js";
-import clsx from "clsx";
 import { Button } from "../Button";
 import { Checkbox } from "../Checkbox";
 import { Input } from "../Input";
 import { Select } from "../Select";
-import { getAppearanceClasses } from "../appearance";
 import { AppearancePreview } from "@/demo/AppearancePreview";
-import { useAppearance } from "@/theme/appearance";
+import { NavigationIcon } from "@/demo/NavigationIcon";
 import {
   Layout,
   Header,
@@ -28,11 +26,8 @@ const navigation = [
   { id: "files", label: "文件", disabled: false },
   { id: "billing", label: "账单（禁用）", disabled: true },
 ] as const;
-const navigationBase =
-  "inline-flex min-h-10 w-full min-w-0 items-center justify-start rounded-md border border-solid px-3 py-2 text-md font-normal text-left cursor-pointer transition-colors duration-token enabled:hover:not-active:bg-surface-hover enabled:active:bg-surface-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:cursor-not-allowed";
 
 export function LayoutDemo() {
-  const appearance = useAppearance();
   const [size, setSize] = createSignal<LayoutSize>("md");
   const [collapsed, setCollapsed] = createSignal(false);
   const [open, setOpen] = createSignal(false);
@@ -54,7 +49,7 @@ export function LayoutDemo() {
         <p class="text-md text-fg-muted">
           Header / Sidebar / Content / Footer 可以独立使用，也可以通过 Layout
           继承尺寸与外观。
-          桌面折叠隐藏导航、保留内容节点；窄屏改为可滚动抽屉，Esc
+          桌面折叠保留图标导航与内容节点；窄屏显示图标和文字并改为可滚动抽屉，Esc
           关闭并返回触发器。 从右上角切换默认、键帽或麻将主题。
         </p>
         <div class="flex flex-wrap items-center gap-4">
@@ -147,43 +142,30 @@ export function LayoutDemo() {
                 heading="工作导航"
                 description="选择页面；抽屉模式下按 Esc 可关闭。"
                 class="h-full max-w-full md:h-56 lg:h-full"
-              >
-                <nav aria-label="工作区导航">
-                  <ul class="m-0 list-none space-y-3 p-0 pb-2">
-                    <For each={navigation}>
-                      {(entry) => (
-                        <li>
-                          <button
-                            type="button"
-                            disabled={entry.disabled}
-                            aria-current={
-                              page() === entry.id ? "page" : undefined
-                            }
-                            aria-controls="layout-working-content"
-                            class={clsx(
-                              navigationBase,
-                              page() === entry.id
-                                ? "border-primary bg-surface-hover text-primary"
-                                : "border-border bg-surface text-fg",
-                              getAppearanceClasses(
-                                appearance(),
-                                "native",
-                                entry.disabled,
-                              ),
-                            )}
-                            onClick={() => {
-                              setPage(entry.id);
-                              setOpen(false);
-                            }}
-                          >
-                            {entry.label}
-                          </button>
-                        </li>
-                      )}
-                    </For>
-                  </ul>
-                </nav>
-              </Sidebar.Panel>
+                navigation={
+                  <nav aria-label="工作区导航">
+                    <ul class="m-0 list-none space-y-3 p-0 pb-2">
+                      <For each={navigation}>
+                        {(entry) => (
+                          <li>
+                            <Sidebar.Item
+                              label={entry.label}
+                              icon={<NavigationIcon name={entry.id} />}
+                              disabled={entry.disabled}
+                              active={page() === entry.id}
+                              aria-controls="layout-working-content"
+                              onClick={() => {
+                                setPage(entry.id);
+                                setOpen(false);
+                              }}
+                            />
+                          </li>
+                        )}
+                      </For>
+                    </ul>
+                  </nav>
+                }
+              />
               <Content
                 id="layout-working-content"
                 as="section"
@@ -256,6 +238,24 @@ export function LayoutDemo() {
                         heading="Sidebar"
                         variant={variant}
                         class="max-w-full"
+                        navigation={
+                          <nav aria-label="示例图标导航" class="space-y-3 pb-2">
+                            <Sidebar.Item
+                              label="概览"
+                              icon={<NavigationIcon name="overview" />}
+                              active
+                            />
+                            <Sidebar.Item
+                              label="团队"
+                              icon={<NavigationIcon name="team" />}
+                            />
+                            <Sidebar.Item
+                              label="账单（禁用）"
+                              icon={<NavigationIcon name="billing" />}
+                              disabled
+                            />
+                          </nav>
+                        }
                       >
                         <p class="break-words text-md text-fg-muted">
                           静态导航内容 / Sidebar
@@ -281,7 +281,9 @@ export function LayoutDemo() {
         <p class="text-md text-fg-muted">
           整页 Content 默认是 main，嵌入样例使用 as="section" 避免嵌套 main。
           Sidebar.Trigger 打开移动抽屉，Sidebar.Toggle
-          控制桌面折叠，Sidebar.Panel 承载导航。 原生属性、事件、ref 与 class
+          控制桌面折叠；Sidebar.Panel 的 navigation 插槽保持可访问，普通
+          children 随折叠隐藏。Sidebar.Item 要求 label 和
+          icon，折叠时保留可访问名称。 原生属性、事件、ref 与 class
           保持透传；布局自身不创建额外焦点停靠点。
         </p>
       </section>

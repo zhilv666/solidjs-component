@@ -15,6 +15,7 @@ import {
   type DialogContentOptions,
 } from "@kobalte/core/dialog";
 import { createDisclosureState } from "@kobalte/core";
+import { Root as ButtonRoot } from "@kobalte/core/button";
 import {
   children as resolveChildren,
   createContext,
@@ -60,6 +61,8 @@ export interface SidebarPanelProps
   extends JSX.HTMLAttributes<HTMLElement>, DialogContentOptions {
   heading: string;
   description?: JSX.Element;
+  /** Navigation remains available as an icon rail when desktop details collapse. */
+  navigation?: JSX.Element;
   size?: LayoutSize;
   appearance?: ComponentAppearance;
   variant?: LayoutVariant;
@@ -76,6 +79,14 @@ export interface SidebarToggleProps extends SidebarTriggerProps {
 }
 export interface SidebarCloseButtonProps extends SidebarTriggerProps {
   "aria-label": string;
+}
+export interface SidebarItemProps extends SidebarTriggerProps {
+  /** Stable accessible name, including while the visual label is hidden. */
+  label: string;
+  icon: JSX.Element;
+  active?: boolean;
+  size?: LayoutSize;
+  appearance?: ComponentAppearance;
 }
 
 interface SidebarContextValue {
@@ -135,6 +146,97 @@ const buttonVariants = {
 } as const;
 const buttonBase =
   "inline-flex shrink-0 items-center justify-center gap-2 rounded-md font-medium cursor-pointer select-none transition-colors duration-token focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:cursor-not-allowed";
+const itemSizes = {
+  sm: "h-8 text-md",
+  md: "h-10 text-md",
+  lg: "h-12 text-lg",
+} as const;
+const itemIconSizes = { sm: "h-4 w-4", md: "h-5 w-5", lg: "h-6 w-6" } as const;
+const itemVariants = {
+  outline: {
+    idle: buttonVariants.outline,
+    active:
+      "border border-solid border-primary bg-surface-hover text-primary enabled:hover:not-active:bg-surface-hover enabled:active:border-primary-active enabled:active:bg-surface-active",
+  },
+  ghost: {
+    idle: buttonVariants.ghost,
+    active:
+      "border-0 bg-surface-hover text-primary enabled:hover:not-active:bg-surface-hover enabled:active:bg-surface-active",
+  },
+} as const;
+
+function SidebarItem(props: SidebarItemProps) {
+  const context = useSidebarContext();
+  const merged = mergeProps(
+    {
+      variant: "outline",
+      type: "button",
+      active: false,
+      disabled: false,
+      title: undefined,
+      class: "",
+      children: undefined,
+      "aria-label": undefined,
+      "aria-current": undefined,
+    } as const,
+    {
+      get size() {
+        return context.size();
+      },
+      get appearance() {
+        return context.appearance();
+      },
+    },
+    props,
+  );
+  const [local, rest] = splitProps(merged, [
+    "label",
+    "icon",
+    "active",
+    "variant",
+    "size",
+    "appearance",
+    "disabled",
+    "title",
+    "class",
+    "children",
+    "aria-label",
+    "aria-current",
+  ]);
+  return (
+    <ButtonRoot
+      {...rest}
+      disabled={local.disabled}
+      aria-label={local["aria-label"] ?? local.label}
+      aria-current={
+        local["aria-current"] ?? (local.active ? "page" : undefined)
+      }
+      title={local.title ?? local.label}
+      data-sidebar-item=""
+      data-collapsed={context.desktop() && context.collapsed() ? "" : undefined}
+      class={clsx(
+        "solid-sidebar-item inline-flex w-full min-w-0 shrink-0 items-center gap-2 rounded-md font-medium text-left cursor-pointer select-none transition-colors duration-token focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:cursor-not-allowed",
+        context.desktop() && context.collapsed()
+          ? "justify-center px-0"
+          : "justify-start px-3",
+        itemSizes[local.size],
+        itemVariants[local.variant][local.active ? "active" : "idle"],
+        getAppearanceClasses(local.appearance, "native", local.disabled),
+        local.class,
+      )}
+    >
+      <span
+        aria-hidden="true"
+        class={clsx("shrink-0", itemIconSizes[local.size])}
+      >
+        {local.icon}
+      </span>
+      <span class="solid-sidebar-item-label min-w-0 truncate">
+        {local.children ?? local.label}
+      </span>
+    </ButtonRoot>
+  );
+}
 
 function SidebarRoot(props: SidebarProps) {
   const merged = mergeProps(
@@ -333,6 +435,7 @@ function SidebarPanel(props: SidebarPanelProps) {
     {
       id: "sidebar-" + createUniqueId(),
       description: undefined,
+      navigation: undefined,
       variant: "outline",
       class: "",
       children: undefined,
@@ -351,6 +454,7 @@ function SidebarPanel(props: SidebarPanelProps) {
     "id",
     "heading",
     "description",
+    "navigation",
     "variant",
     "size",
     "appearance",
@@ -358,6 +462,7 @@ function SidebarPanel(props: SidebarPanelProps) {
     "children",
   ]);
   const contents = resolveChildren(() => local.children);
+  const navigation = resolveChildren(() => local.navigation);
   const panelClasses = () =>
     clsx(
       "flex min-h-0 min-w-0 shrink-0 flex-col gap-3 bg-surface text-fg font-normal",
@@ -413,6 +518,7 @@ function SidebarPanel(props: SidebarPanelProps) {
               </Show>
               <div class="min-h-0 min-w-0 flex-1 overflow-y-auto p-2">
                 {contents()}
+                {navigation()}
               </div>
             </DialogContent>
           </div>
@@ -428,7 +534,7 @@ function SidebarPanel(props: SidebarPanelProps) {
         class={clsx(
           panelClasses(),
           context.collapsed()
-            ? clsx(collapsedWidths[local.size], "p-2 text-md")
+            ? clsx(collapsedWidths[local.size], "py-2 text-md")
             : clsx(widths[local.size], padding[local.size]),
           local.class,
         )}
@@ -453,22 +559,30 @@ function SidebarPanel(props: SidebarPanelProps) {
             aria-label={context.collapsed() ? "展开侧栏" : "折叠侧栏"}
           />
         </div>
-        <CollapsibleContent
-          id={local.id + "-body"}
-          class="solid-sidebar-body min-h-0 min-w-0 flex-1 overflow-y-auto p-2"
+        <div
+          class={clsx(
+            "min-h-0 min-w-0 flex-1 overflow-y-auto",
+            context.collapsed() ? "p-1" : "p-2",
+          )}
         >
-          <Show
-            when={
-              local.description !== undefined &&
-              local.description !== null &&
-              local.description !== false &&
-              local.description !== ""
-            }
+          <CollapsibleContent
+            id={local.id + "-body"}
+            class="solid-sidebar-body min-h-0 min-w-0"
           >
-            <p class="mb-3 text-md text-fg-muted">{local.description}</p>
-          </Show>
-          {contents()}
-        </CollapsibleContent>
+            <Show
+              when={
+                local.description !== undefined &&
+                local.description !== null &&
+                local.description !== false &&
+                local.description !== ""
+              }
+            >
+              <p class="mb-3 text-md text-fg-muted">{local.description}</p>
+            </Show>
+            {contents()}
+          </CollapsibleContent>
+          {navigation()}
+        </div>
       </aside>
     </Show>
   );
@@ -480,4 +594,5 @@ export const Sidebar = Object.assign(SidebarRoot, {
   Toggle: SidebarToggle,
   Panel: SidebarPanel,
   CloseButton: SidebarCloseButton,
+  Item: SidebarItem,
 });

@@ -12,5 +12,6 @@ export type {
   SidebarTriggerProps,
   SidebarToggleProps,
   SidebarCloseButtonProps,
+  SidebarItemProps,
 } from "./Sidebar";
 export type { LayoutSize, LayoutVariant } from "./layout-context";
