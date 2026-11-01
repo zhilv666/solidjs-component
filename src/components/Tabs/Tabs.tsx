@@ -206,7 +206,7 @@ function TabsTrigger(props: TabsTriggerProps) {
         local.class,
       )}
     >
-      {local.children}
+      <span class="min-w-0 break-words">{local.children}</span>
     </TabsTriggerPrimitive>
   );
 }

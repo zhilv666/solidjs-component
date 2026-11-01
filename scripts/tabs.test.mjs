@@ -210,6 +210,22 @@ test("tabs content and trigger native style values remain available", () => {
   assert.match(html, /max-width:\s*var\(--panel-width\)/);
 });
 
+test("tabs trigger labels have a shrinkable flex child so long words can wrap on narrow screens", () => {
+  const label =
+    "VeryLongUnbrokenTabLabelForNarrowScreenWithoutHorizontalOverflow";
+  const html = render({}, { children: label, title: "Native trigger" });
+  assert.match(
+    html,
+    new RegExp(
+      `<button\\b[^>]*title="Native trigger"[^>]*><span class="min-w-0 break-words">${label}</span></button>`,
+    ),
+  );
+  assert.match(
+    render({}, { children: 0 }),
+    /<button\b[^>]*><span class="min-w-0 break-words">0<\/span><\/button>/,
+  );
+});
+
 test("tabs parts require their root and hide force-mounted inactive panels without hand-written keyboard or focus management", async () => {
   for (const part of ["List", "Trigger", "Content"])
     assert.throws(
