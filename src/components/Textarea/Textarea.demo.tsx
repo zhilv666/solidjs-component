@@ -1,6 +1,7 @@
 import { createSignal, For, Show } from "solid-js";
 import { Button } from "../Button";
 import { Textarea } from "./Textarea";
+import { AppearancePreview } from "../../demo/AppearancePreview";
 
 const sizes = ["sm", "md", "lg"] as const;
 const states = [
@@ -50,6 +51,47 @@ export function TextareaDemo() {
 
   return (
     <div class="space-y-8">
+      <AppearancePreview id="textarea">
+        {(appearance, size) => (
+          <div class="space-y-4">
+            <For each={states}>
+              {(state) => (
+                <div class="min-w-0 space-y-2">
+                  <label
+                    for={`textarea-${appearance}-${state.id}-${size}`}
+                    class="block text-md text-fg"
+                  >
+                    {state.label} · {size}
+                  </label>
+                  <Textarea
+                    id={`textarea-${appearance}-${state.id}-${size}`}
+                    appearance={appearance}
+                    size={size}
+                    disabled={state.disabled}
+                    invalid={state.invalid}
+                    readOnly={state.readOnly}
+                    defaultValue={state.value}
+                    placeholder="请输入多行文本 / Multiline text"
+                    aria-describedby={
+                      state.invalid
+                        ? `textarea-${appearance}-${state.id}-${size}-error`
+                        : undefined
+                    }
+                  />
+                  <Show when={state.invalid}>
+                    <p
+                      id={`textarea-${appearance}-${state.id}-${size}-error`}
+                      class="text-md text-danger"
+                    >
+                      内容校验未通过，请检查后重试。
+                    </p>
+                  </Show>
+                </div>
+              )}
+            </For>
+          </div>
+        )}
+      </AppearancePreview>
       <p class="text-md text-fg-muted">
         Enter 插入换行。默认可纵向调整大小；启用自动增高后由 Kobalte
         按内容计算高度，不做高度动画。

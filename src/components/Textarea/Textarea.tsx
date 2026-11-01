@@ -5,12 +5,14 @@ import {
 import { mergeProps, splitProps, type JSX } from "solid-js";
 import { isServer } from "solid-js/web";
 import clsx from "clsx";
+import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 
 export interface TextareaProps extends Omit<
   JSX.TextareaHTMLAttributes<HTMLTextAreaElement>,
   "children"
 > {
   size?: "sm" | "md" | "lg";
+  appearance?: ComponentAppearance;
   invalid?: boolean;
   autoResize?: boolean;
   defaultValue?: string;
@@ -45,6 +47,7 @@ export function Textarea(props: TextareaProps) {
   const merged = mergeProps(
     {
       size: "md",
+      appearance: "default",
       invalid: false,
       autoResize: false,
       disabled: false,
@@ -64,6 +67,7 @@ export function Textarea(props: TextareaProps) {
   );
   const [local, rest] = splitProps(merged, [
     "size",
+    "appearance",
     "invalid",
     "autoResize",
     "disabled",
@@ -134,6 +138,11 @@ export function Textarea(props: TextareaProps) {
           states[local.invalid ? "invalid" : "valid"],
           sizes[local.size],
           local.autoResize ? "resize-none" : "resize-y",
+          getAppearanceClasses(
+            local.appearance,
+            "native",
+            local.disabled || (local.readOnly ?? local.readonly),
+          ),
           local.class,
         )}
       />

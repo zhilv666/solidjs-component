@@ -213,3 +213,71 @@ test("textarea demo covers all sizes/states and native controlled/form examples"
   assert.ok(html.includes('data-demo="class-passthrough"'));
   assert.ok(html.includes("SolidJS\n组件库</textarea>"));
 });
+
+test("textarea appearance defaults preserve original classes, native content and class forwarding", () => {
+  assert.deepEqual(
+    classes(render()),
+    classes(render({ appearance: "default" })),
+  );
+  for (const appearance of ["keycap", "mahjong"]) {
+    const html = render({
+      appearance,
+      name: "notes",
+      defaultValue: "First\nSecond",
+      class: "max-w-md",
+    });
+    assert.equal(classes(html).at(-1), "max-w-md");
+    assert.ok(
+      html.includes("First\nSecond</textarea>") &&
+        html.includes('name="notes"'),
+    );
+    assert.doesNotMatch(html, /\sappearance=/);
+  }
+});
+test("textarea appearances keep validation/focus/resize and flatten unavailable controls", async () => {
+  const names = new Set();
+  for (const appearance of ["keycap", "mahjong"])
+    for (const size of ["sm", "md", "lg"])
+      for (const autoResize of [false, true])
+        for (const state of [
+          {},
+          { invalid: true },
+          { disabled: true },
+          { readOnly: true },
+          { readonly: true },
+        ]) {
+          const values = classes(
+            render({ appearance, size, autoResize, ...state }),
+          );
+          const unavailable =
+            state.disabled || state.readOnly || state.readonly;
+          assert.ok(
+            values.includes(unavailable ? "shadow-sm" : `shadow-${appearance}`),
+          );
+          assert.equal(
+            values.includes(`enabled:active:shadow-${appearance}-pressed`),
+            !unavailable,
+          );
+          assert.ok(
+            values.includes("focus-visible:ring-ring") &&
+              values.includes(autoResize ? "resize-none" : "resize-y"),
+          );
+          assert.ok(
+            values.includes(state.invalid ? "border-danger" : "border-border"),
+          );
+          for (const name of values) names.add(name);
+        }
+  const uno = await createGenerator(unoConfig),
+    { matched } = await uno.generate([...names].join(" "));
+  for (const name of names)
+    assert.ok(matched.has(name), `Missing utility: ${name}`);
+});
+test("textarea appearance demo covers every size and state", () => {
+  const html = renderToString(() => TextareaDemo());
+  for (const appearance of ["default", "keycap", "mahjong"])
+    for (const size of ["sm", "md", "lg"])
+      for (const state of ["default", "invalid", "disabled", "readonly"])
+        assert.ok(
+          html.includes(`id="textarea-${appearance}-${state}-${size}"`),
+        );
+});
