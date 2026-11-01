@@ -1,4 +1,5 @@
 import type { Component } from "solid-js";
+import { LayoutDemo } from "@/components/Layout/Layout.demo";
 import { ThemeDemo } from "./Theme.demo";
 import { ButtonDemo } from "@/components/Button/Button.demo";
 import { InputDemo } from "@/components/Input/Input.demo";
@@ -30,6 +31,13 @@ export interface DemoEntry {
 }
 
 export const demos: readonly DemoEntry[] = [
+  {
+    id: "layout",
+    name: "Layout / Sidebar",
+    description:
+      "Header、Sidebar、Content、Footer 组合布局，支持折叠、响应式抽屉与三种外观。",
+    component: LayoutDemo,
+  },
   {
     id: "button",
     name: "Button",

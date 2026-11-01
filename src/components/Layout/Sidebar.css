@@ -1,0 +1,3 @@
+.solid-sidebar-body[data-closed] {
+  display: none;
+}

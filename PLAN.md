@@ -190,10 +190,11 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 
 ## Phase 6：导航与数据
 
-- [ ] 6.0 Layout / Header / Sidebar / Content / Footer
+- [x] 6.0 Layout / Header / Sidebar / Content / Footer
   范围：按用户确认新增可组合语义布局，提供三尺寸、三外观；Sidebar 支持桌面折叠和基于 Kobalte Dialog 的窄屏抽屉，并接入 Demo 外壳。纯布局区域不模拟按钮或增加 Tab 停靠点。
   参考：Button、Card、Dialog、AppearanceProvider；依赖 1.7。
   验收：完整组合演示、折叠与抽屉受控/非受控行为、键盘焦点与 Esc、响应式窄屏、明暗可读、原生属性/class 透传和节点身份通过；不新增 token 或依赖，全部检查通过。
+  备注：语义布局、三外观/三尺寸/plain 与 outline 组合及 Demo 外壳已完成；Sidebar 的桌面折叠与移动展开状态独立，分别由 Kobalte Collapsible 和 Dialog 管理，导航节点在折叠、关闭与断点切换间保留。新增 14 项布局回归，262 项完整测试及 typecheck/完整 lint/check:tokens/生产构建通过；真实浏览器验收受控与非受控开关、单次回调、双向 Tab 循环与禁用跳过、Esc/遮罩/关闭按钮及导航关闭、焦点返回、长目录滚动、断点切换关闭模态并解锁滚动、节点身份与编辑值、两种按下底座无位移和静态布局外框。三外观/三尺寸及 18 个固定矩阵已检查，1280px、768px、390px 无横向溢出；工作区演示在 lg 以下纵向排列避免挤压内容。明暗文字通过 AA，明暗及窄屏截图已查看；未新增 token 或依赖，未修改 Button 或未完成 Tabs，未测试实际屏幕阅读器播报。
 
 - [ ] 6.1 Tabs
 - [ ] 6.2 Breadcrumb

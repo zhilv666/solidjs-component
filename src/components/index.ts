@@ -28,6 +28,20 @@ export { getAppearanceClasses } from "./appearance";
 export type { ComponentAppearance, AppearanceInteraction } from "./appearance";
 export { AppearanceProvider, useAppearance } from "../theme/appearance";
 export type { AppearanceProviderProps } from "../theme/appearance";
+export { Layout, Header, Sidebar, Content, Footer } from "./Layout";
+export type {
+  LayoutProps,
+  HeaderProps,
+  SidebarProps,
+  SidebarPanelProps,
+  SidebarTriggerProps,
+  SidebarToggleProps,
+  SidebarCloseButtonProps,
+  ContentProps,
+  FooterProps,
+  LayoutSize,
+  LayoutVariant,
+} from "./Layout";
 export { Spinner } from "./Spinner";
 export type { SpinnerProps } from "./Spinner";
 export { Skeleton } from "./Skeleton";
