@@ -32,3 +32,5 @@ export { Skeleton } from "./Skeleton";
 export type { SkeletonProps } from "./Skeleton";
 export { Avatar } from "./Avatar";
 export type { AvatarProps, AvatarLoadingStatus } from "./Avatar";
+export { Divider } from "./Divider";
+export type { DividerProps } from "./Divider";

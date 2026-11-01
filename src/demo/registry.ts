@@ -15,6 +15,7 @@ import { AlertDemo } from "@/components/Alert/Alert.demo";
 import { SpinnerDemo } from "@/components/Spinner/Spinner.demo";
 import { SkeletonDemo } from "@/components/Skeleton/Skeleton.demo";
 import { AvatarDemo } from "@/components/Avatar/Avatar.demo";
+import { DividerDemo } from "@/components/Divider/Divider.demo";
 
 export interface DemoEntry {
   readonly id: string;
@@ -113,6 +114,12 @@ export const demos: readonly DemoEntry[] = [
     name: "Avatar",
     description: "圆形与方形头像，支持三尺寸、三外观和图片加载回退。",
     component: AvatarDemo,
+  },
+  {
+    id: "divider",
+    name: "Divider",
+    description: "横向与竖向分隔，支持三线宽、三外观和装饰语义。",
+    component: DividerDemo,
   },
   {
     id: "theme",
