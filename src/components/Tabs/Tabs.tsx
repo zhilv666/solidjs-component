@@ -3,6 +3,7 @@ import {
   List as TabsListPrimitive,
   Trigger as TabsTriggerPrimitive,
   Content as TabsContentPrimitive,
+  useTabsContext as useTabsPrimitiveContext,
   type TabsRootOptions,
   type TabsTriggerOptions,
   type TabsContentOptions,
@@ -18,6 +19,11 @@ import {
 import clsx from "clsx";
 import { useAppearanceDefaults } from "../../theme/appearance";
 import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
+import {
+  createTabsIdRegistry,
+  createTabsPartRegistration,
+  type TabsIdRegistry,
+} from "./associations";
 import "./Tabs.css";
 
 export interface TabsProps
@@ -27,7 +33,10 @@ export interface TabsProps
   variant?: "outline" | "ghost";
   size?: "sm" | "md" | "lg";
   appearance?: ComponentAppearance;
-  /** Kobalte selection callback, named consistently with RadioGroup and Select. */
+  /**
+   * Kobalte selection callback, named consistently with other controls.
+   * Kobalte 0.13.14 can request the same value twice for Enter/Space.
+   */
   onValueChange?: (value: string) => void;
 }
 export type TabsListProps = JSX.HTMLAttributes<HTMLDivElement>;
@@ -50,6 +59,8 @@ interface TabsStyleContextValue {
   appearance: Accessor<ComponentAppearance>;
   orientation: Accessor<"horizontal" | "vertical">;
   disabled: Accessor<boolean>;
+  triggerIds: TabsIdRegistry;
+  contentIds: TabsIdRegistry;
 }
 const TabsStyleContext = createContext<TabsStyleContextValue>();
 function useTabsStyleContext() {
@@ -102,6 +113,8 @@ function TabsRoot(props: TabsProps) {
     "class",
     "children",
   ]);
+  const triggerIds = createTabsIdRegistry();
+  const contentIds = createTabsIdRegistry();
   return (
     <TabsStyleContext.Provider
       value={{
@@ -110,6 +123,8 @@ function TabsRoot(props: TabsProps) {
         appearance: () => local.appearance,
         orientation: () => local.orientation,
         disabled: () => local.disabled,
+        triggerIds,
+        contentIds,
       }}
     >
       <TabsRootPrimitive<"div">
@@ -163,8 +178,20 @@ function TabsTrigger(props: TabsTriggerProps) {
   );
   const [local, rest] = splitProps(merged, ["disabled", "class", "children"]);
   const context = useTabsStyleContext();
+  const primitiveContext = useTabsPrimitiveContext();
+  createTabsPartRegistration(
+    context.triggerIds,
+    () => merged.value,
+    () => merged.id ?? primitiveContext.generateTriggerId(merged.value),
+    primitiveContext.triggerIdsMap,
+  );
   return (
     <TabsTriggerPrimitive<"button">
+      aria-controls={
+        primitiveContext.listState().selectedKey() === merged.value
+          ? context.contentIds.get(merged.value)
+          : undefined
+      }
       {...rest}
       disabled={local.disabled}
       class={clsx(
@@ -191,8 +218,16 @@ function TabsContent(props: TabsContentProps) {
   );
   const [local, rest] = splitProps(merged, ["class", "children"]);
   const context = useTabsStyleContext();
+  const primitiveContext = useTabsPrimitiveContext();
+  createTabsPartRegistration(
+    context.contentIds,
+    () => merged.value,
+    () => merged.id ?? primitiveContext.generateContentId(merged.value),
+    primitiveContext.contentIdsMap,
+  );
   return (
     <TabsContentPrimitive<"div">
+      aria-labelledby={context.triggerIds.get(merged.value)}
       {...rest}
       class={clsx(
         "solid-tabs-content max-w-full min-w-0 flex-1 break-words rounded-md border border-solid border-border bg-surface text-fg font-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",

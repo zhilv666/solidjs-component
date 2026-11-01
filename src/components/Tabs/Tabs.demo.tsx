@@ -13,6 +13,7 @@ export function TabsDemo() {
   const [manual, setManual] = createSignal(false);
   const [vertical, setVertical] = createSignal(false);
   const [disabled, setDisabled] = createSignal(false);
+  const [customIds, setCustomIds] = createSignal(false);
   return (
     <div class="space-y-8">
       <AppearancePreview id="tabs">
@@ -96,9 +97,18 @@ export function TabsDemo() {
           >
             {disabled() ? "启用标签组" : "禁用标签组"}
           </Button>
+          <Button
+            id="tabs-toggle-ids"
+            variant="ghost"
+            aria-pressed={customIds()}
+            onClick={() => setCustomIds((current) => !current)}
+          >
+            {customIds() ? "恢复默认 ID" : "使用自定义 ID"}
+          </Button>
         </div>
         <Tabs
-          id="tabs-live"
+          id={customIds() ? "tabs-live-custom" : "tabs-live"}
+          data-tabs-live
           appearance="mahjong"
           value={value()}
           onValueChange={(next) => {
@@ -110,13 +120,22 @@ export function TabsDemo() {
           disabled={disabled()}
         >
           <Tabs.List aria-label="账户设置">
-            <Tabs.Trigger value="account">账户</Tabs.Trigger>
+            <Tabs.Trigger
+              id={customIds() ? "tabs-account-custom" : undefined}
+              value="account"
+            >
+              账户
+            </Tabs.Trigger>
             <Tabs.Trigger value="disabled" disabled>
               禁用
             </Tabs.Trigger>
             <Tabs.Trigger value="security">安全</Tabs.Trigger>
           </Tabs.List>
-          <Tabs.Content value="account" forceMount>
+          <Tabs.Content
+            id={customIds() ? "tabs-account-panel-custom" : undefined}
+            value="account"
+            forceMount
+          >
             <div class="space-y-3">
               <label for="tabs-name" class="block text-md font-medium">
                 账户昵称
@@ -128,7 +147,8 @@ export function TabsDemo() {
                 appearance="mahjong"
               />
               <p class="text-md text-fg-muted">
-                forceMount 保留输入节点；非活动面板隐藏且不参与 Tab。
+                forceMount 保留输入节点；非活动面板隐藏且不参与 Tab。 切换自定义
+                ID 时，标签与面板的关联同步更新。
               </p>
             </div>
           </Tabs.Content>
