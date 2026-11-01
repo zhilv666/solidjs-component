@@ -1,5 +1,6 @@
 import { mergeProps, splitProps, type JSX } from "solid-js";
 import clsx from "clsx";
+import { useAppearanceDefaults } from "../../theme/appearance";
 import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 
 export interface SpinnerProps extends Omit<
@@ -33,6 +34,7 @@ export function Spinner(props: SpinnerProps) {
       "aria-live": "polite",
       "aria-busy": true,
     } as const,
+    useAppearanceDefaults(),
     props,
   );
   const [local, rest] = splitProps(merged, [

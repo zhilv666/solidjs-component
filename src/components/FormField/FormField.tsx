@@ -13,6 +13,7 @@ import {
   type JSX,
 } from "solid-js";
 import clsx from "clsx";
+import { useAppearanceDefaults } from "../../theme/appearance";
 import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 
 export interface FormFieldControlProps {
@@ -71,6 +72,7 @@ export function FormField(props: FormFieldProps) {
       onChange: undefined,
       class: "",
     } as const,
+    useAppearanceDefaults(),
     props,
   );
   const [local, rest] = splitProps(merged, [

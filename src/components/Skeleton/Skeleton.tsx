@@ -1,5 +1,6 @@
 import { mergeProps, splitProps, type JSX } from "solid-js";
 import clsx from "clsx";
+import { useAppearanceDefaults } from "../../theme/appearance";
 import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 
 export interface SkeletonProps extends Omit<
@@ -27,6 +28,7 @@ export function Skeleton(props: SkeletonProps) {
       children: undefined,
       "aria-hidden": true,
     } as const,
+    useAppearanceDefaults(),
     props,
   );
   const [local, rest] = splitProps(merged, [

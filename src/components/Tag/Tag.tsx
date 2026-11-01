@@ -1,6 +1,7 @@
 import { Root as ButtonRoot } from "@kobalte/core/button";
 import { mergeProps, Show, splitProps, type JSX } from "solid-js";
 import clsx from "clsx";
+import { useAppearanceDefaults } from "../../theme/appearance";
 import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 import "./Tag.css";
 
@@ -57,6 +58,7 @@ export function Tag(props: TagProps) {
       class: "",
       children: undefined,
     } as const,
+    useAppearanceDefaults(),
     props,
   );
   const [local, rest] = splitProps(merged, [

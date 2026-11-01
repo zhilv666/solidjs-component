@@ -1,5 +1,6 @@
 import { mergeProps, splitProps, type JSX } from "solid-js";
 import clsx from "clsx";
+import { useAppearanceDefaults } from "../../theme/appearance";
 import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 
 export interface CardProps extends JSX.HTMLAttributes<HTMLElement> {
@@ -28,6 +29,7 @@ export function Card(props: CardProps) {
       class: "",
       children: undefined,
     } as const,
+    useAppearanceDefaults(),
     props,
   );
   const [local, rest] = splitProps(merged, [

@@ -83,6 +83,12 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
   验收：明暗切换后所有 token 正确变化。
   备注：采用主题函数与 Solid 信号，默认跟随系统并保存用户选择；17 项测试及 typecheck/lint/check:tokens/build 通过，浏览器视觉与键盘验收按用户选择留到 Button 关卡。
 
+- [x] **1.7 外观主题 Select**
+  范围：在右上角明暗切换旁放置现有 Kobalte Select，选择默认 / 键帽 / 麻将；提供响应式 AppearanceProvider，为未显式指定 appearance 的已完成组件提供默认外观，并独立保存选择。显式外观对比与 Button 已确认实现保留，不处理未完成的 Tabs。
+  参考：Button、Select、共享 appearance、theme/mode。
+  验收：三种外观即时切换，控件身份与编辑值保留；刷新恢复选择，存储不可用时仍能切换；明暗独立、键盘与窄屏可用，原回归测试及全部检查通过。
+  备注：顶部 Kobalte Select、响应式 AppearanceProvider 与独立存储已完成，20 个已完成组件继承默认外观，显式覆盖与原默认 class 保留；Button 实现/API/原断言及未完成 Tabs 未改。248 项完整测试（含 33 项新增主题测试）及 typecheck/完整 lint/check:tokens/生产构建通过；真实浏览器验收三外观即时切换、编辑值与节点身份、固定对比、方向键/End/Enter/Esc 焦点返回、明暗独立、刷新恢复、存储受限与 390px 下拉布局。明暗及窄屏三张截图已查看，重新加载后的控制台无错误或警告；不新增 token 或依赖。
+
 ---
 
 ## Phase 2：标准样例 🛑
@@ -183,6 +189,11 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 ---
 
 ## Phase 6：导航与数据
+
+- [ ] 6.0 Layout / Header / Sidebar / Content / Footer
+  范围：按用户确认新增可组合语义布局，提供三尺寸、三外观；Sidebar 支持桌面折叠和基于 Kobalte Dialog 的窄屏抽屉，并接入 Demo 外壳。纯布局区域不模拟按钮或增加 Tab 停靠点。
+  参考：Button、Card、Dialog、AppearanceProvider；依赖 1.7。
+  验收：完整组合演示、折叠与抽屉受控/非受控行为、键盘焦点与 Esc、响应式窄屏、明暗可读、原生属性/class 透传和节点身份通过；不新增 token 或依赖，全部检查通过。
 
 - [ ] 6.1 Tabs
 - [ ] 6.2 Breadcrumb

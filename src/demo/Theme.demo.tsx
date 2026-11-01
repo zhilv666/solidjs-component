@@ -1,6 +1,17 @@
 import { For } from "solid-js";
 import clsx from "clsx";
 import { tokens } from "@/theme/tokens";
+import { useAppearance } from "@/theme/appearance";
+import { Input } from "@/components/Input";
+import { Badge } from "@/components/Badge";
+import { Card } from "@/components/Card";
+
+const appearanceNames = {
+  default: "默认",
+  keycap: "键帽",
+  mahjong: "麻将",
+} as const;
+const appearances = ["default", "keycap", "mahjong"] as const;
 
 const swatches = [
   {
@@ -12,8 +23,38 @@ const swatches = [
 ] as const;
 
 export function ThemeDemo() {
+  const appearance = useAppearance();
   return (
     <div class="space-y-6">
+      <Card class="space-y-4" aria-labelledby="theme-preview-heading">
+        <h3 id="theme-preview-heading" class="text-md font-medium">
+          当前外观：{appearanceNames[appearance()]}
+        </h3>
+        <p class="text-md text-fg-muted">
+          在右上角选择外观主题。未指定 appearance 的组件跟随选择，输入内容保留；
+          明暗模式独立切换。Button 保留已确认的键帽与麻将变体。
+        </p>
+        <Input
+          id="theme-preview-input"
+          aria-label="主题预览输入"
+          defaultValue="切换主题后，这段内容仍会保留。"
+        />
+        <Badge data-demo="inherited-appearance">继承当前主题</Badge>
+      </Card>
+      <section class="space-y-3" aria-labelledby="theme-explicit-heading">
+        <h3 id="theme-explicit-heading" class="text-md font-medium">
+          显式外观不受主题切换影响
+        </h3>
+        <div class="grid gap-6 sm:grid-cols-3">
+          <For each={appearances}>
+            {(value) => (
+              <Card appearance={value} data-demo-explicit={value}>
+                {appearanceNames[value]} · 固定外观
+              </Card>
+            )}
+          </For>
+        </div>
+      </section>
       <div class="grid gap-3 sm:grid-cols-3">
         <For each={swatches}>
           {(swatch) => (

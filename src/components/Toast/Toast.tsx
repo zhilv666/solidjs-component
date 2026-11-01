@@ -21,6 +21,7 @@ import {
 } from "solid-js";
 import { Portal } from "solid-js/web";
 import clsx from "clsx";
+import { useAppearance, useAppearanceDefaults } from "../../theme/appearance";
 import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 
 export interface ToastProps
@@ -114,6 +115,7 @@ const closeVariants = {
 
 function ToastRoot(props: ToastProps) {
   const region = useContext(ToastRegionStyleContext);
+  const appearance = useAppearance();
   const merged = mergeProps(
     {
       variant: "info",
@@ -121,7 +123,7 @@ function ToastRoot(props: ToastProps) {
         return region?.size() ?? "md";
       },
       get appearance() {
-        return region?.appearance() ?? "default";
+        return region?.appearance() ?? appearance();
       },
       priority: "high",
       persistent: false,
@@ -175,6 +177,7 @@ function ToastRegion(props: ToastRegionProps) {
       class: "",
       children: undefined,
     } as const,
+    useAppearanceDefaults(),
     props,
   );
   const [local, rest] = splitProps(merged, [

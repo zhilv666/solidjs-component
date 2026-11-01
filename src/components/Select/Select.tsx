@@ -23,6 +23,7 @@ import {
   type JSX,
 } from "solid-js";
 import clsx from "clsx";
+import { useAppearanceDefaults } from "../../theme/appearance";
 import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 import "./Select.css";
 
@@ -152,6 +153,7 @@ export function Select(props: SelectProps) {
       children: undefined,
       "aria-invalid": undefined,
     } as const,
+    useAppearanceDefaults(),
     props,
   );
   const [local, rest] = splitProps(merged, [

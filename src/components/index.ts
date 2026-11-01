@@ -26,6 +26,8 @@ export { Alert } from "./Alert";
 export type { AlertProps } from "./Alert";
 export { getAppearanceClasses } from "./appearance";
 export type { ComponentAppearance, AppearanceInteraction } from "./appearance";
+export { AppearanceProvider, useAppearance } from "../theme/appearance";
+export type { AppearanceProviderProps } from "../theme/appearance";
 export { Spinner } from "./Spinner";
 export type { SpinnerProps } from "./Spinner";
 export { Skeleton } from "./Skeleton";

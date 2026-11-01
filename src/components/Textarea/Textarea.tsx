@@ -5,6 +5,7 @@ import {
 import { mergeProps, splitProps, type JSX } from "solid-js";
 import { isServer } from "solid-js/web";
 import clsx from "clsx";
+import { useAppearanceDefaults } from "../../theme/appearance";
 import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 
 export interface TextareaProps extends Omit<
@@ -63,6 +64,7 @@ export function Textarea(props: TextareaProps) {
       class: "",
       "aria-invalid": undefined,
     } as const,
+    useAppearanceDefaults(),
     props,
   );
   const [local, rest] = splitProps(merged, [

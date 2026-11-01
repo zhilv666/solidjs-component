@@ -4,6 +4,7 @@ import {
 } from "@kobalte/core/text-field";
 import { mergeProps, Show, splitProps, type JSX } from "solid-js";
 import clsx from "clsx";
+import { useAppearanceDefaults } from "../../theme/appearance";
 import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 
 export interface InputProps extends Omit<
@@ -72,6 +73,7 @@ export function Input(props: InputProps) {
       class: "",
       "aria-invalid": undefined,
     } as const,
+    useAppearanceDefaults(),
     props,
   );
   const [local, rest] = splitProps(merged, [

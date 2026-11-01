@@ -8,6 +8,7 @@ import {
   type JSX,
 } from "solid-js";
 import clsx from "clsx";
+import { useAppearanceDefaults } from "../../theme/appearance";
 import type { ComponentAppearance } from "../appearance";
 
 export interface RadioGroupProps extends Omit<
@@ -67,6 +68,7 @@ export function RadioGroup(props: RadioGroupProps) {
       children: undefined,
       "aria-invalid": undefined,
     } as const,
+    useAppearanceDefaults(),
     props,
   );
   const [local, rest] = splitProps(merged, [

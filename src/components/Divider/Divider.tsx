@@ -1,6 +1,7 @@
 import { Root as SeparatorRoot } from "@kobalte/core/separator";
 import { mergeProps, splitProps, type JSX } from "solid-js";
 import clsx from "clsx";
+import { useAppearanceDefaults } from "../../theme/appearance";
 import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 
 export interface DividerProps extends Omit<
@@ -36,6 +37,7 @@ export function Divider(props: DividerProps) {
       class: "",
       children: undefined,
     } as const,
+    useAppearanceDefaults(),
     props,
   );
   const [local, rest] = splitProps(merged, [

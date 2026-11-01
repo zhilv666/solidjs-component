@@ -7,6 +7,7 @@ import {
 } from "@kobalte/core/switch";
 import { mergeProps, Show, splitProps, type JSX } from "solid-js";
 import clsx from "clsx";
+import { useAppearanceDefaults } from "../../theme/appearance";
 import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 
 export interface SwitchProps extends Omit<
@@ -98,6 +99,7 @@ export function Switch(props: SwitchProps) {
       children: undefined,
       "aria-invalid": undefined,
     } as const,
+    useAppearanceDefaults(),
     props,
   );
   const [local, rest] = splitProps(merged, [

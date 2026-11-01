@@ -18,6 +18,7 @@ import {
   type JSX,
 } from "solid-js";
 import clsx from "clsx";
+import { useAppearanceDefaults } from "../../theme/appearance";
 import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 
 export interface PopoverProps extends PopoverRootProps {
@@ -83,6 +84,7 @@ function PopoverRoot(props: PopoverProps) {
       fitViewport: true,
       children: undefined,
     } as const,
+    useAppearanceDefaults(),
     props,
   );
   const [local, rest] = splitProps(merged, ["size", "appearance", "children"]);
