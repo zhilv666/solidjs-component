@@ -51,3 +51,14 @@ export type {
   PopoverCloseButtonProps,
   PopoverPortalProps,
 } from "./Popover";
+export { Dialog } from "./Dialog";
+export type {
+  DialogProps,
+  DialogTriggerProps,
+  DialogContentProps,
+  DialogOverlayProps,
+  DialogTitleProps,
+  DialogDescriptionProps,
+  DialogCloseButtonProps,
+  DialogPortalProps,
+} from "./Dialog";

@@ -18,6 +18,7 @@ import { AvatarDemo } from "@/components/Avatar/Avatar.demo";
 import { DividerDemo } from "@/components/Divider/Divider.demo";
 import { TooltipDemo } from "@/components/Tooltip/Tooltip.demo";
 import { PopoverDemo } from "@/components/Popover/Popover.demo";
+import { DialogDemo } from "@/components/Dialog/Dialog.demo";
 
 export interface DemoEntry {
   readonly id: string;
@@ -134,6 +135,13 @@ export const demos: readonly DemoEntry[] = [
     name: "Popover",
     description: "Kobalte 可交互弹层，支持三外观、三尺寸、标题说明与模态选项。",
     component: PopoverDemo,
+  },
+  {
+    id: "dialog",
+    name: "Dialog",
+    description:
+      "Kobalte 模态对话框，支持三外观、三尺寸、标题说明与视口内滚动。",
+    component: DialogDemo,
   },
   {
     id: "theme",
