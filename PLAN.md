@@ -169,7 +169,8 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 
 > 全部基于 Kobalte，注意 Portal、焦点陷阱、Esc 关闭。
 
-- [ ] 5.1 Tooltip
+- [x] 5.1 Tooltip
+  备注：基于 Kobalte 的 Root/Trigger/Portal/Content 组合，Root 提供三尺寸/三外观，触发器提供 outline/ghost，提示层同步底座且仅承载非交互说明。支持受控/非受控展开、Kobalte 定位/延迟/关闭选项和原生属性/ref/class/style；Root disabled 与原生控件禁用独立，按钮默认 type=button，类型只接受 Kobalte 支持的 button/submit/reset。175 项测试及 typecheck/lint/check:tokens/生产构建通过；真实浏览器验收 54 个矩阵、39 个 Tab 停靠点、聚焦关联/悬停与安全区/移出关闭/Esc 焦点保留、鼠标按下无位移、Enter/空格单次激活、禁用切换、固定受控值/可阻止 Esc、展开时动态外观/尺寸/内容/style 与触发器/弹层身份、明暗及 390px 长说明布局。最低状态对比度 11.22:1，七张弹层截图已查看；移动验收等待滚动布局稳定后重新聚焦，保留 Kobalte 的滚动关闭行为。已导出并注册，未新增 token、依赖或修改已完成组件；未进行实际屏幕阅读器朗读测试。
 - [ ] 5.2 Popover
 - [ ] 5.3 Dialog（含 `Dialog.Title` / `Dialog.Description`）
 - [ ] 5.4 DropdownMenu

@@ -34,3 +34,10 @@ export { Avatar } from "./Avatar";
 export type { AvatarProps, AvatarLoadingStatus } from "./Avatar";
 export { Divider } from "./Divider";
 export type { DividerProps } from "./Divider";
+export { Tooltip } from "./Tooltip";
+export type {
+  TooltipProps,
+  TooltipTriggerProps,
+  TooltipContentProps,
+  TooltipPortalProps,
+} from "./Tooltip";

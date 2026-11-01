@@ -16,6 +16,7 @@ import { SpinnerDemo } from "@/components/Spinner/Spinner.demo";
 import { SkeletonDemo } from "@/components/Skeleton/Skeleton.demo";
 import { AvatarDemo } from "@/components/Avatar/Avatar.demo";
 import { DividerDemo } from "@/components/Divider/Divider.demo";
+import { TooltipDemo } from "@/components/Tooltip/Tooltip.demo";
 
 export interface DemoEntry {
   readonly id: string;
@@ -120,6 +121,12 @@ export const demos: readonly DemoEntry[] = [
     name: "Divider",
     description: "横向与竖向分隔，支持三线宽、三外观和装饰语义。",
     component: DividerDemo,
+  },
+  {
+    id: "tooltip",
+    name: "Tooltip",
+    description: "Kobalte 焦点/悬停提示，支持三外观、三尺寸与 Portal。",
+    component: TooltipDemo,
   },
   {
     id: "theme",
