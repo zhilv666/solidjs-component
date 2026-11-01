@@ -114,3 +114,57 @@ test("card demo covers all variants/sizes, semantic composition and a narrow-scr
       html.includes("计数：0"),
   );
 });
+
+test("card appearance preserves default variant classes and avoids competing elevated shadows", () => {
+  for (const variant of ["outline", "elevated"]) {
+    assert.deepEqual(
+      classes(render({ variant })),
+      classes(render({ variant, appearance: "default" })),
+    );
+    for (const appearance of ["keycap", "mahjong"]) {
+      const html = render({
+        variant,
+        appearance,
+        children: 0,
+        class: "w-full",
+      });
+      const names = classes(html);
+      assert.ok(names.includes(`shadow-${appearance}`));
+      assert.ok(!names.includes("shadow-sm"));
+      assert.equal(names.at(-1), "w-full");
+      assert.ok(html.endsWith(">0</section>"));
+      assert.doesNotMatch(
+        html,
+        /\s(?:appearance|role|tabindex)=|(?:hover|active):/,
+      );
+    }
+  }
+});
+
+test("all card appearance, variant and size combinations use approved utilities", async () => {
+  const names = new Set();
+  for (const appearance of ["default", "keycap", "mahjong"])
+    for (const variant of ["outline", "elevated"])
+      for (const size of ["sm", "md", "lg"])
+        for (const name of classes(render({ appearance, variant, size })))
+          names.add(name);
+  const uno = await createGenerator(unoConfig);
+  const { css, matched } = await uno.generate([...names].join(" "));
+  for (const name of names)
+    assert.ok(matched.has(name), `Missing utility: ${name}`);
+  for (const appearance of ["keycap", "mahjong"])
+    assert.ok(css.includes(`var(--shadow-${appearance})`));
+});
+
+test("card demo shows every appearance, variant and size with semantic names", () => {
+  const html = renderToString(() => CardDemo());
+  for (const appearance of ["default", "keycap", "mahjong"])
+    for (const variant of ["outline", "elevated"])
+      for (const size of ["sm", "md", "lg"]) {
+        const id = `card-${appearance}-${variant}-${size}`;
+        assert.ok(
+          html.includes(`id="${id}"`) &&
+            html.includes(`aria-labelledby="${id}-title"`),
+        );
+      }
+});

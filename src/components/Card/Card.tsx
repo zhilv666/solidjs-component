@@ -1,9 +1,11 @@
 import { mergeProps, splitProps, type JSX } from "solid-js";
 import clsx from "clsx";
+import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 
 export interface CardProps extends JSX.HTMLAttributes<HTMLElement> {
   variant?: "outline" | "elevated";
   size?: "sm" | "md" | "lg";
+  appearance?: ComponentAppearance;
 }
 
 const variants = {
@@ -19,12 +21,19 @@ const sizes = {
 /** A display-only section; interactive actions belong in its children. */
 export function Card(props: CardProps) {
   const merged = mergeProps(
-    { variant: "outline", size: "md", class: "", children: undefined } as const,
+    {
+      variant: "outline",
+      size: "md",
+      appearance: "default",
+      class: "",
+      children: undefined,
+    } as const,
     props,
   );
   const [local, rest] = splitProps(merged, [
     "variant",
     "size",
+    "appearance",
     "class",
     "children",
   ]);
@@ -33,8 +42,11 @@ export function Card(props: CardProps) {
       {...rest}
       class={clsx(
         "max-w-full min-w-0 break-words rounded-md border border-solid border-border text-fg font-normal",
-        variants[local.variant],
+        local.appearance === "default"
+          ? variants[local.variant]
+          : variants.outline,
         sizes[local.size],
+        getAppearanceClasses(local.appearance),
         local.class,
       )}
     >

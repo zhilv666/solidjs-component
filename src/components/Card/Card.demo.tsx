@@ -2,6 +2,7 @@ import { createSignal, For, Show } from "solid-js";
 import { Badge } from "../Badge";
 import { Button } from "../Button";
 import { Card } from "./Card";
+import { AppearancePreview } from "../../demo/AppearancePreview";
 
 const variants = ["outline", "elevated"] as const;
 const sizes = ["sm", "md", "lg"] as const;
@@ -13,6 +14,33 @@ export function CardDemo() {
   const [count, setCount] = createSignal(0);
   return (
     <div class="space-y-8">
+      <AppearancePreview id="card">
+        {(appearance, cardSize) => (
+          <div class="space-y-4">
+            <For each={variants}>
+              {(item) => (
+                <Card
+                  id={`card-${appearance}-${item}-${cardSize}`}
+                  appearance={appearance}
+                  variant={item}
+                  size={cardSize}
+                  aria-labelledby={`card-${appearance}-${item}-${cardSize}-title`}
+                  class="space-y-3"
+                >
+                  <h4
+                    id={`card-${appearance}-${item}-${cardSize}-title`}
+                    class="font-medium"
+                  >
+                    {item} · {cardSize}
+                  </h4>
+                  <p>中英文内容 / SolidJS components</p>
+                  <p class="text-fg-muted">展示外框，内部操作保持独立。</p>
+                </Card>
+              )}
+            </For>
+          </div>
+        )}
+      </AppearancePreview>
       <p class="text-md text-fg-muted">
         Card 是非交互的 section 容器，不额外占用 Tab 停靠点。outline
         保持清晰边框，elevated 仅增加 shadow-sm；尺寸控制内边距与正文字号。
