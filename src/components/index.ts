@@ -41,3 +41,13 @@ export type {
   TooltipContentProps,
   TooltipPortalProps,
 } from "./Tooltip";
+export { Popover } from "./Popover";
+export type {
+  PopoverProps,
+  PopoverTriggerProps,
+  PopoverContentProps,
+  PopoverTitleProps,
+  PopoverDescriptionProps,
+  PopoverCloseButtonProps,
+  PopoverPortalProps,
+} from "./Popover";

@@ -17,6 +17,7 @@ import { SkeletonDemo } from "@/components/Skeleton/Skeleton.demo";
 import { AvatarDemo } from "@/components/Avatar/Avatar.demo";
 import { DividerDemo } from "@/components/Divider/Divider.demo";
 import { TooltipDemo } from "@/components/Tooltip/Tooltip.demo";
+import { PopoverDemo } from "@/components/Popover/Popover.demo";
 
 export interface DemoEntry {
   readonly id: string;
@@ -127,6 +128,12 @@ export const demos: readonly DemoEntry[] = [
     name: "Tooltip",
     description: "Kobalte 焦点/悬停提示，支持三外观、三尺寸与 Portal。",
     component: TooltipDemo,
+  },
+  {
+    id: "popover",
+    name: "Popover",
+    description: "Kobalte 可交互弹层，支持三外观、三尺寸、标题说明与模态选项。",
+    component: PopoverDemo,
   },
   {
     id: "theme",
