@@ -47,7 +47,10 @@ export default function App() {
     <AppearanceProvider appearance={appearance()}>
       <Sidebar open={sidebarOpen()} onOpenChange={setSidebarOpen}>
         <Layout class="h-screen" variant="plain">
-          <Header variant="plain" class="border-b border-border">
+          <Header
+            variant="plain"
+            class="border-0 border-b-2 border-solid border-border"
+          >
             <div class="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-4">
               <div class="space-y-1">
                 <p class="text-md text-fg-muted">SolidJS Component Library</p>
@@ -159,7 +162,11 @@ export default function App() {
               </Show>
             </Content>
           </div>
-          <Footer size="sm" variant="plain" class="border-t border-border">
+          <Footer
+            size="sm"
+            variant="plain"
+            class="border-0 border-t-2 border-solid border-border"
+          >
             <p class="mx-auto max-w-7xl text-md text-fg-muted">
               SolidJS · Kobalte · 默认 / 键帽 / 麻将外观
             </p>

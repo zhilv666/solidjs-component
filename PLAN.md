@@ -208,6 +208,12 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
   验收：三尺寸/三外观的折叠图标可见、可命名、可键盘操作；选中与禁用状态、长目录滚动、移动抽屉和断点切换正常，原测试及全部检查通过。
   备注：新增基于 Kobalte Button 的 Sidebar.Item、必填 label/icon 与独立 navigation 插槽；普通详情保留原 Collapsible 隐藏行为，图标/文字节点不重建。组件目录、工作区与 18 个矩阵接入继承 token 颜色的 SVG 图标。7 项新增回归及 49 项布局/外观相关测试、typecheck/完整 lint/check:tokens/生产构建通过；真实浏览器验证 24 项折叠目录、三尺寸/三外观、Tab/Enter/空格、禁用跳过、选中状态、清晰焦点环、导航/输入节点与值保留、麻将按下底座无位移、移动完整标签与双向 Tab 循环、导航选择/Esc 关闭及焦点返回、断点回桌面解锁滚动。1280px 与 390px 无横向溢出，截图已查看；原断言及 Button/Tabs 实现保留，不新增 token 或依赖。
 
+- [x] 6.0b Header / Footer 分界
+  范围：复用现有 border/background token 增强上下布局边界，覆盖 Demo 外壳与布局演示，不改变 Button 或其他组件。
+  参考：Layout、Layout.demo、App；依赖 6.0。
+  验收：五配色明暗模式、三外观及窄屏可清楚分辨 Header/内容/Footer，保留布局语义与原生属性，原测试及全部检查通过。
+  备注：定位到外壳遗漏 border-solid，原实际边框为 0px；外壳、工作区与 18 个固定矩阵补齐现有 border token 的 2px 实线。plain 重置非分界边缘，保留 outline 的既有外框，不改布局组件 API。新增 4 项边界回归，验证原路径修复前失败、修复后通过；293 项整库测试及 typecheck/完整 lint/check:tokens/生产构建通过，原断言保留。真实浏览器核对 30 种配色/明暗/外观组合的分界，最低对比度 3.94:1；320px、390px、768px、1280px 无横向溢出，plain 无额外边框，抽屉、节点保留与键盘焦点再次通过。明暗及窄屏截图已查看，刷新后的控制台无警告或错误；未新增 token、依赖或修改 Button/Tabs。
+
 - [ ] 6.1 Tabs
 - [ ] 6.2 Breadcrumb
 - [ ] 6.3 Pagination

@@ -15,6 +15,14 @@ import {
 } from "./index";
 
 const variants = ["plain", "outline"] as const;
+const headerBoundaries = {
+  plain: "border-0 border-b-2 border-solid border-border",
+  outline: "border-b-2 border-solid border-border",
+} as const;
+const footerBoundaries = {
+  plain: "border-0 border-t-2 border-solid border-border",
+  outline: "border-t-2 border-solid border-border",
+} as const;
 const sizeOptions = [
   { value: "sm", label: "sm · 紧凑" },
   { value: "md", label: "md · 默认" },
@@ -124,7 +132,7 @@ export function LayoutDemo() {
             }}
             disabled={disabled()}
           >
-            <Header variant="plain">
+            <Header variant="plain" class={headerBoundaries.plain}>
               <div class="flex flex-wrap items-center justify-between gap-3">
                 <h4 class="text-lg font-medium">项目工作区</h4>
                 <Sidebar.Trigger
@@ -196,7 +204,7 @@ export function LayoutDemo() {
                 </output>
               </Content>
             </div>
-            <Footer variant="plain">
+            <Footer variant="plain" class={footerBoundaries.plain}>
               <div class="flex flex-wrap items-center justify-between gap-3">
                 <p id="layout-state" class="break-words text-md text-fg-muted">
                   折叠：{String(collapsed())} · 抽屉：{String(open())} ·
@@ -231,7 +239,9 @@ export function LayoutDemo() {
                   data-layout-size={currentSize}
                   data-layout-appearance={value}
                 >
-                  <Header variant={variant}>Header · {variant}</Header>
+                  <Header variant={variant} class={headerBoundaries[variant]}>
+                    Header · {variant}
+                  </Header>
                   <Sidebar mode="desktop" defaultCollapsed>
                     <div class="flex min-w-0 flex-col gap-3">
                       <Sidebar.Panel
@@ -266,7 +276,9 @@ export function LayoutDemo() {
                       </Content>
                     </div>
                   </Sidebar>
-                  <Footer variant={variant}>Footer · {currentSize}</Footer>
+                  <Footer variant={variant} class={footerBoundaries[variant]}>
+                    Footer · {currentSize}
+                  </Footer>
                 </Layout>
               )}
             </For>
