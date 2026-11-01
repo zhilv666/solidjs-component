@@ -23,6 +23,7 @@ import {
   type JSX,
 } from "solid-js";
 import clsx from "clsx";
+import { getAppearanceClasses, type ComponentAppearance } from "../appearance";
 import "./Select.css";
 
 export interface SelectOption {
@@ -38,6 +39,7 @@ export interface SelectProps extends Omit<
 > {
   options: readonly SelectOption[];
   size?: "sm" | "md" | "lg";
+  appearance?: ComponentAppearance;
   value?: string | null;
   defaultValue?: string;
   placeholder?: string;
@@ -130,6 +132,7 @@ export function Select(props: SelectProps) {
   const merged = mergeProps(
     {
       size: "md",
+      appearance: "default",
       value: undefined,
       defaultValue: undefined,
       placeholder: "请选择 / Select an option",
@@ -154,6 +157,7 @@ export function Select(props: SelectProps) {
   const [local, rest] = splitProps(merged, [
     "options",
     "size",
+    "appearance",
     "value",
     "defaultValue",
     "placeholder",
@@ -250,6 +254,7 @@ export function Select(props: SelectProps) {
           "inline-flex w-full min-w-0 items-center justify-between gap-2 rounded-md border border-solid bg-bg text-fg font-normal text-left transition-colors duration-token enabled:hover:not-active:bg-surface-hover enabled:active:bg-surface-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:cursor-not-allowed",
           states[local.invalid ? "invalid" : "valid"],
           sizes[local.size],
+          getAppearanceClasses(local.appearance, "native", local.disabled),
           local.class,
         )}
       >
@@ -268,7 +273,11 @@ export function Select(props: SelectProps) {
       />
       <SelectPortal>
         <SelectContent
-          class="min-w-0 overflow-y-auto rounded-md border border-solid border-border bg-surface text-fg shadow-md"
+          class={clsx(
+            "min-w-0 overflow-y-auto rounded-md border border-solid border-border bg-surface text-fg",
+            local.appearance === "default" && "shadow-md",
+            getAppearanceClasses(local.appearance, "display", local.disabled),
+          )}
           style={{
             width: "var(--kb-popper-anchor-width)",
             "max-width": "var(--kb-popper-content-available-width)",

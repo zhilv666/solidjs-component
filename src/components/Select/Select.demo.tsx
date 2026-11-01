@@ -1,6 +1,7 @@
 import { createSignal, For, Show } from "solid-js";
 import { Button } from "../Button";
 import { Select, type SelectOption } from "./Select";
+import { AppearancePreview } from "../../demo/AppearancePreview";
 
 const sizes = ["sm", "md", "lg"] as const;
 const options: readonly SelectOption[] = [
@@ -49,6 +50,42 @@ export function SelectDemo() {
 
   return (
     <div class="space-y-8">
+      <AppearancePreview id="select">
+        {(appearance, size) => (
+          <div class="space-y-4">
+            <For each={states}>
+              {(state) => (
+                <div class="min-w-0 space-y-2">
+                  <Select
+                    id={`select-${appearance}-${state.id}-${size}`}
+                    appearance={appearance}
+                    size={size}
+                    options={options}
+                    defaultValue={state.value}
+                    invalid={state.invalid}
+                    disabled={state.disabled}
+                    aria-describedby={
+                      state.invalid
+                        ? `select-${appearance}-${state.id}-${size}-error`
+                        : undefined
+                    }
+                  >
+                    {state.label} · {size}
+                  </Select>
+                  <Show when={state.invalid}>
+                    <p
+                      id={`select-${appearance}-${state.id}-${size}-error`}
+                      class="text-md text-danger"
+                    >
+                      请选择一个框架。
+                    </p>
+                  </Show>
+                </div>
+              )}
+            </For>
+          </div>
+        )}
+      </AppearancePreview>
       <p class="text-md text-fg-muted">
         Tab 聚焦，Enter / 空格 / 上下方向键展开；列表内方向键导航，Enter
         选择，Esc 关闭。

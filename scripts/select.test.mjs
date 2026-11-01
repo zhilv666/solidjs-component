@@ -212,3 +212,70 @@ test("select demo covers all sizes, states, native form and edge cases", () => {
     assert.ok(html.includes(`id="${id}"`));
   assert.ok(html.includes('type="submit"') && html.includes('type="reset"'));
 });
+
+test("select appearance keeps default trigger classes and preserves native form forwarding", () => {
+  assert.deepEqual(
+    classes(render()),
+    classes(render({ appearance: "default" })),
+  );
+  for (const appearance of ["keycap", "mahjong"]) {
+    const html = render({
+      appearance,
+      name: "framework",
+      defaultValue: "solid",
+      class: "w-full",
+    });
+    assert.ok(trigger(html).includes(`shadow-${appearance}`));
+    assert.ok(
+      trigger(html).includes(`enabled:active:shadow-${appearance}-pressed`),
+    );
+    assert.doesNotMatch(trigger(html) + native(html), /\sappearance=/);
+    assert.ok(native(html).includes('name="framework"'));
+    assert.equal(
+      trigger(html)
+        .match(/class="([^"]*)"/)[1]
+        .trim()
+        .split(/\s+/)
+        .at(-1),
+      "w-full",
+    );
+    const unavailable = classes(render({ appearance, disabled: true }));
+    assert.ok(unavailable.includes("shadow-sm"));
+    assert.ok(!unavailable.some((name) => /keycap|mahjong/.test(name)));
+  }
+});
+
+test("select appearance maps generate token shadows without conflicting popover defaults", async () => {
+  const names = new Set();
+  for (const appearance of ["default", "keycap", "mahjong"])
+    for (const size of ["sm", "md", "lg"])
+      for (const invalid of [false, true])
+        for (const disabled of [false, true])
+          for (const name of classes(
+            render({ appearance, size, invalid, disabled }),
+          ))
+            names.add(name);
+  const uno = await createGenerator(unoConfig);
+  const { css, matched } = await uno.generate([...names].join(" "));
+  for (const name of names)
+    assert.ok(matched.has(name), `Missing utility: ${name}`);
+  for (const appearance of ["keycap", "mahjong"])
+    assert.ok(css.includes(`var(--shadow-${appearance})`));
+  const source = await readFile(
+    new URL("../src/components/Select/Select.tsx", import.meta.url),
+    "utf8",
+  );
+  assert.ok(source.includes('local.appearance === "default" && "shadow-md"'));
+  assert.match(
+    source,
+    /getAppearanceClasses\(local\.appearance, "display", local\.disabled\)/,
+  );
+});
+
+test("select demo shows every appearance, size and original selection state", () => {
+  const html = renderToString(() => SelectDemo());
+  for (const appearance of ["default", "keycap", "mahjong"])
+    for (const size of ["sm", "md", "lg"])
+      for (const state of ["empty", "selected", "invalid", "disabled"])
+        assert.ok(html.includes(`id="select-${appearance}-${state}-${size}"`));
+});
