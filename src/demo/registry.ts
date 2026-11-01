@@ -13,6 +13,7 @@ import { TagDemo } from "@/components/Tag/Tag.demo";
 import { CardDemo } from "@/components/Card/Card.demo";
 import { AlertDemo } from "@/components/Alert/Alert.demo";
 import { SpinnerDemo } from "@/components/Spinner/Spinner.demo";
+import { SkeletonDemo } from "@/components/Skeleton/Skeleton.demo";
 
 export interface DemoEntry {
   readonly id: string;
@@ -99,6 +100,12 @@ export const demos: readonly DemoEntry[] = [
     name: "Spinner",
     description: "3 种外观、3 种尺寸，加载图形旋转并支持减少动态效果。",
     component: SpinnerDemo,
+  },
+  {
+    id: "skeleton",
+    name: "Skeleton",
+    description: "行与块的静态占位，支持三尺寸、三外观和无障碍加载组合。",
+    component: SkeletonDemo,
   },
   {
     id: "theme",

@@ -28,3 +28,5 @@ export { getAppearanceClasses } from "./appearance";
 export type { ComponentAppearance, AppearanceInteraction } from "./appearance";
 export { Spinner } from "./Spinner";
 export type { SpinnerProps } from "./Spinner";
+export { Skeleton } from "./Skeleton";
+export type { SkeletonProps } from "./Skeleton";
