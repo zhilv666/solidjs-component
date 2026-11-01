@@ -109,6 +109,15 @@ export function findTokenViolations(source, fileName) {
         )
       )
         continue;
+      // Only the approved Spinner may animate, and its duration is token-mapped.
+      if (
+        rule === "non-token-transition" &&
+        /(?:^|[/\\])Spinner[/\\]Spinner\.tsx$/.test(fileName) &&
+        (match[0] === "animate-spinner" ||
+          (match[0] === "animate-none" &&
+            source.slice(0, match.index).endsWith("motion-reduce:")))
+      )
+        continue;
       report(rule, match[0], match.index);
     }
   }

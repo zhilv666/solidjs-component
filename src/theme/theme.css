@@ -55,6 +55,7 @@
     0 1px 0 var(--color-surface-active), 0 2px 0 var(--color-success),
     0 3px 0 var(--color-border), var(--shadow-md);
   --transition-duration: 150ms;
+  --animation-spin-duration: 1000ms;
 }
 
 [data-theme="dark"] {

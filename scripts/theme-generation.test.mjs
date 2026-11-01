@@ -99,3 +99,20 @@ test("generated stylesheet stays in sync with tokens and formatting", async () =
   });
   assert.equal(await readFile(output, "utf8"), expected);
 });
+
+test("spinner animation duration is the approved configurable token", () => {
+  assert.equal(tokens.animation.spinDuration, "1000ms");
+  const original = generateThemeCss();
+  assert.ok(original.includes("--animation-spin-duration: 1000ms;"));
+  const changed = {
+    ...tokens,
+    animation: { ...tokens.animation, spinDuration: "2000ms" },
+  };
+  assert.equal(
+    generateThemeCss(changed),
+    original.replace(
+      "--animation-spin-duration: 1000ms;",
+      "--animation-spin-duration: 2000ms;",
+    ),
+  );
+});

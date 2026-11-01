@@ -42,6 +42,7 @@ export function generateThemeCss(theme: ThemeTokens = tokens): string {
     ...variables("font-weight", theme.font.weight),
     ...variables("shadow", theme.shadow),
     ...variables("transition", theme.transition),
+    ...variables("animation", theme.animation),
   ];
   const dark = [
     "color-scheme: dark;",

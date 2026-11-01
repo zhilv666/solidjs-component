@@ -47,6 +47,9 @@ export interface ThemeTokens {
   readonly transition: {
     readonly duration: string;
   };
+  readonly animation: {
+    readonly spinDuration: string;
+  };
 }
 
 export const tokens = {
@@ -109,5 +112,8 @@ export const tokens = {
   },
   transition: {
     duration: "150ms",
+  },
+  animation: {
+    spinDuration: "1000ms",
   },
 } as const satisfies ThemeTokens;

@@ -130,8 +130,9 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 - [x] 4.4a 共享键帽/麻将外观基础
   范围：记录用户的全组件外观授权，复用现有四个阴影 token，提供 ComponentAppearance 类型、展示/原生控件/隐藏输入控件的状态样式和可复用 demo 对比区。默认外观不变，Button 既有实现与测试冻结；不新增依赖。
   备注：共享外观类型、三类交互阴影映射和 3 外观 × 3 尺寸 demo 对比区已完成；113 项测试及 typecheck/lint/check:tokens/build 通过。为共享 .ts 文件添加精确 UnoCSS 扫描与单文件标记，生产 CSS 已确认包含 peer-active 按下规则；真实浏览器验收鼠标/Enter/空格单次激活、两种底座收短且无位移、隐藏输入框键盘按下、禁用扁平、明暗和 390px 窄屏，截图已查看。未新增 token、依赖或修改 Button 实现与断言。
-- [ ] 4.5 Spinner
+- [x] 4.5 Spinner
   追加验收：用户已允许旋转动画和 animation.spinDuration=1000ms；支持减少动态效果。默认/键帽/麻将三种外观的外框保持静止，只有内部加载图形旋转。
+  备注：纯展示加载指示器提供 primary/neutral、三尺寸与三外观，支持原生属性/ref/class、可读状态标签和装饰用 ARIA 覆盖；新增批准的动画 token 与 UnoCSS 映射。token 检查仅对 Spinner 的 token 旋转/减少动态效果停转开放精确规则，原违规断言保留并追加拒绝其他动画/硬编码时长的测试。120 项测试及 typecheck/lint/check:tokens/build 通过；真实浏览器验证 18 个矩阵、内圈旋转/外框静止、减少动态效果停转、Enter/空格切换且不抢焦点、响应式外观/尺寸/标签/class 和节点身份保留、默认外观恢复、明暗及 390px 窄屏。图形最低对比度 6.42:1，截图已查看；无额外依赖、Tab 停靠点或 Button 改动，未测试实际屏幕阅读器播报。
 - [ ] 4.5a Input 键帽/麻将外观
 - [ ] 4.5b Textarea 键帽/麻将外观
 - [ ] 4.5c Checkbox 键帽/麻将外观

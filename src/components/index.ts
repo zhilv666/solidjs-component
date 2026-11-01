@@ -26,3 +26,5 @@ export { Alert } from "./Alert";
 export type { AlertProps } from "./Alert";
 export { getAppearanceClasses } from "./appearance";
 export type { ComponentAppearance, AppearanceInteraction } from "./appearance";
+export { Spinner } from "./Spinner";
+export type { SpinnerProps } from "./Spinner";

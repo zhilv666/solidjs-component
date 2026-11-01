@@ -55,5 +55,11 @@ export default defineConfig({
       DEFAULT: "var(--transition-duration)",
       token: "var(--transition-duration)",
     },
+    animation: {
+      keyframes: { spinner: "{to{transform:rotate(360deg)}}" },
+      durations: { spinner: "var(--animation-spin-duration)" },
+      timingFns: { spinner: "linear" },
+      counts: { spinner: "infinite" },
+    },
   }),
 });

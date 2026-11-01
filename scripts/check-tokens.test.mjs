@@ -73,6 +73,35 @@ test("a nearby reason exempts only radii and fake or empty annotations do not", 
   }
 });
 
+test("only Spinner permits its tokenized animation and reduced-motion stop utility", () => {
+  const file = "src/components/Spinner/Spinner.tsx";
+  const approved = '<svg class="animate-spinner motion-reduce:animate-none" />';
+  assert.deepEqual(findTokenViolations(approved, file), []);
+  assert.ok(findTokenViolations(approved, "Other.tsx").length > 0);
+  for (const utility of [
+    "animate-spin",
+    "animate-pulse",
+    "animate-spinner-fast",
+    "animate-none",
+    "motion-safe:animate-none",
+    "duration-1000",
+    "transition-transform",
+  ]) {
+    assert.ok(
+      findTokenViolations(`<svg class="${utility}" />`, file).some(
+        (violation) => violation.rule === "non-token-transition",
+      ),
+      `Unexpected animation allowance: ${utility}`,
+    );
+  }
+  assert.ok(
+    findTokenViolations(
+      '<svg style={{ "animation-duration": "1000ms" }} />',
+      file,
+    ).some((violation) => violation.rule === "inline-style-literal"),
+  );
+});
+
 test("CLI scans nested files and exits nonzero with a located diagnostic", async () => {
   const directory = await mkdtemp(join(tmpdir(), "solid-token-check-"));
   const nested = join(directory, "Nested");
