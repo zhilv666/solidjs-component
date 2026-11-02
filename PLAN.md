@@ -12,9 +12,9 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 
 - 选择、排序与本地分页均支持受控/非受控状态；暂不加入远程数据或虚拟滚动。
 - 像素是独立的第四种 appearance，不替换现有配色；仅允许最小新增像素阴影、按下阴影和直角（0px）token。保留原有三种外观以及 Button 已确认的实现、API 与原测试断言，不新增依赖或字体/动画 token。
-- README 以实际可用 API 与组件为准；当前是 private Vite 演示应用，不能声称已有 npm 包、类型制品或 library mode。
+- README 以实际可用 API 与组件为准；7.2 初次完成时仅为 private Vite 演示应用，7.3 完成后提供本地浏览器 ESM、类型和 CSS 制品，仍未发布 npm 包。
 
-续接：上方追加任务已完成并本地提交。按原会话的完整 PLAN 目标继续逐项处理 **6.2 Breadcrumb → 7.1 全库审计 → 7.3 库模式打包**；审计中的不一致项先交用户决定，保留本地提交、不推送与不合并的约定。
+续接结果：**6.2 Breadcrumb → 7.1 全库审计 → 7.3 库模式打包** 均已逐项验收，完整 PLAN 已完成；保留本地提交、不推送与不合并的约定。已确认的 API 差异及实际验收边界见 AUDIT.md、README 与各任务备注。
 
 ---
 
@@ -264,7 +264,10 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
   参考：package.json、tokens、theme 生成/偏好、components/index、demo/registry、实际组件 API、PLAN；依赖本轮 1.9。
   验收：命令/路径/导出/示例与实际仓库一致，包含增强 List/Table 与像素配置、限制及未完成任务；文档格式与全部检查通过。
   备注：中文 README 已覆盖实际环境与命令、本地源码引用、完整组件清单、五配色/明暗/四外观，以及 FormField/List/Table/Layout/Toast 示例和受控状态边界。5 个 strict TSX 示例、15 个本地链接、36 个运行时导出及 13 个 UnoCSS 类已独立核对；386 项整库测试及 typecheck/完整 lint/check:tokens/生产构建通过。明确 Button 冻结、Kobalte 已知交互限制和未做实际屏幕阅读器朗读验收；当前仅为 private demo，Breadcrumb/全库审计/library mode 仍未完成。未修改组件、token 或依赖。
-- [ ] 7.3 **库模式打包**：Vite library mode，输出 ESM + 类型声明，`solid-js` 作为 peerDependency。
+- [x] 7.3 **库模式打包**：Vite library mode，输出 ESM + 类型声明，`solid-js` 作为 peerDependency。
+  范围：保留 dist/ 演示构建，新增 dist-lib/ 浏览器 ESM、独立 CSS 与可移植声明；配置包入口、CSS sideEffects 与本地 pack，Kobalte/clsx 保持普通依赖并 external，不新增依赖或修改组件实现。
+  验收：公共运行时导出完整，Bundler/NodeNext 的独立消费者类型可用，实际本地 tarball 和消费项目的构建/交互/样式通过，Solid 不重复内嵌；三项检查、完整回归与两种构建通过，文档如实记录 private/浏览器制品及依赖声明边界。
+  备注：独立 src/index.ts 入口、Vite library mode、dist-lib/ 的浏览器 ESM/完整 CSS 与 TypeScript 声明已完成；声明移除 CSS/虚拟模块并把内部引用转换为相对 .js 路径，37 个公共运行时导出保留。Solid 移到 peer/dev 分类，Kobalte/clsx 保持依赖并 external，锁文件仅移动分类，无新依赖或组件改动。4 项制品回归、398 项整库测试及 typecheck/完整 lint/check:tokens、演示和库构建通过，两类输出的哈希证明互不清空。实际 pnpm pack 已在无 UnoCSS/仓库别名的独立 Vite 项目离线安装，生产构建与 Bundler/NodeNext 类型检查通过；依赖树只有一个 Solid 版本，浏览器验证受控输入/回调、外观切换与节点/值保留、Select 禁用跳过、Dialog 双向焦点循环与 Escape、菜单、列表、Tabs、Breadcrumb、Table 选择/排序/分页、通知、2px 聚焦环及减少动态效果。40 种配色/明暗/外观与实际弹层共 1,760 次文字采样通过，最低 5.686:1，字号至少 14px、字重仅 400/500；320/390/768/1280px 无页面横向溢出，320px 表格溢出时才可聚焦，原生方向键往返横滚通过，三张截图已查看，产品控制台无错误/警告。Kobalte 0.13.14 的 Dialog 声明在 skipLibCheck=false 时自身有 27 个 TS2693，直接依赖与本库消费者诊断完全一致，无新增声明错误；沿用项目 skipLibCheck=true 并在 README 说明，不修改依赖或弱化原检查。制品仍 private，未提供 CJS/SSR/hydration、发布、推送或合并；未做实际屏幕阅读器朗读验收。
 
 ---
 

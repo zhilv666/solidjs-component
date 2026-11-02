@@ -3,6 +3,22 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "main": "./dist-lib/index.js",
+  "module": "./dist-lib/index.js",
+  "types": "./dist-lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist-lib/types/index.d.ts",
+      "import": "./dist-lib/index.js"
+    },
+    "./style.css": "./dist-lib/style.css"
+  },
+  "files": [
+    "dist-lib"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "packageManager": "pnpm@12.15.0",
   "engines": {
     "node": ">=22.18.0"
@@ -10,6 +26,7 @@
   "scripts": {
     "dev": "pnpm theme:build && vite",
     "build": "pnpm theme:build && pnpm typecheck && vite build",
+    "build:lib": "pnpm theme:build && pnpm typecheck && vite build --mode library && node scripts/build-types.mjs",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0 && pnpm format:check",
@@ -21,7 +38,9 @@
   },
   "dependencies": {
     "@kobalte/core": "^0.13.14",
-    "clsx": "^2.1.1",
+    "clsx": "^2.1.1"
+  },
+  "peerDependencies": {
     "solid-js": "^1.9.18"
   },
   "devDependencies": {
@@ -30,6 +49,7 @@
     "eslint": "^10.13.0",
     "eslint-plugin-solid": "^0.18.1",
     "prettier": "^3.9.10",
+    "solid-js": "^1.9.18",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.72.1",
     "unocss": "^66.12.0",

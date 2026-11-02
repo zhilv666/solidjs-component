@@ -1,5 +1,6 @@
 node_modules/
 dist/
+dist-lib/
 .tmp/
 pnpm-lock.yaml
 AGENTS.md

@@ -2,7 +2,7 @@
 
 基于 SolidJS、TypeScript strict、Vite、UnoCSS、Kobalte 和 clsx 的自用组件库。视觉配置集中在主题 token 中，复杂交互、键盘导航和焦点管理由 Kobalte 提供。
 
-当前仓库是 `private` 的 Vite 演示应用，可在仓库内直接引用组件源码；尚未发布 npm 包，也没有 Vite library mode、独立 ESM 组件制品或类型声明包。
+仓库保留 `private` 状态，提供 Vite 演示应用和本地库构建。库制品包括浏览器 ESM、类型声明和独立 CSS，可通过本地 tarball 在其他 SolidJS 项目中使用；尚未发布 npm 包。
 
 ## 运行与检查
 
@@ -20,22 +20,70 @@ pnpm dev
 
 访问终端打印的地址，默认通常为 `http://localhost:5173`。端口被占用时，以 Vite 的实际输出为准。
 
-| 命令                | 用途                                                |
-| ------------------- | --------------------------------------------------- |
-| `pnpm typecheck`    | strict 类型检查，不输出文件                         |
-| `pnpm lint`         | ESLint 零警告检查及 Prettier 格式检查               |
-| `pnpm check:tokens` | 检查组件中的硬编码视觉值、任意值及未授权样式        |
-| `pnpm test`         | Node 内置测试，包括组件 SSR、主题生成与 UnoCSS 回归 |
-| `pnpm theme:build`  | 从 token 重新生成主题 CSS                           |
-| `pnpm build`        | 生成主题、检查类型并构建演示应用到 `dist/`          |
-| `pnpm preview`      | 本地预览已构建的演示应用                            |
-| `pnpm format`       | 格式化仓库文件                                      |
+| 命令                | 用途                                                   |
+| ------------------- | ------------------------------------------------------ |
+| `pnpm typecheck`    | strict 类型检查，不输出文件                            |
+| `pnpm lint`         | ESLint 零警告检查及 Prettier 格式检查                  |
+| `pnpm check:tokens` | 检查组件中的硬编码视觉值、任意值及未授权样式           |
+| `pnpm test`         | Node 内置测试，包括组件 SSR、主题生成与 UnoCSS 回归    |
+| `pnpm theme:build`  | 从 token 重新生成主题 CSS                              |
+| `pnpm build`        | 生成主题、检查类型并构建演示应用到 `dist/`             |
+| `pnpm build:lib`    | 生成主题、检查类型并输出 ESM、CSS 与类型到 `dist-lib/` |
+| `pnpm preview`      | 本地预览已构建的演示应用                               |
+| `pnpm format`       | 格式化仓库文件                                         |
 
-`dev` 和 `build` 会先生成主题；`build` 不代替 lint、token 检查或测试。组件测试使用独立临时 Vite 缓存，不占用演示服务的缓存。
+`dev`、`build` 和 `build:lib` 会先生成主题；构建不代替 lint、token 检查或测试。组件与库制品测试使用独立临时 Vite 缓存，不占用演示服务的缓存。`dist/` 与 `dist-lib/` 分开输出，两种构建不会清空对方制品。
+
+## 库构建与本地使用
+
+运行 `pnpm build:lib` 后生成：
+
+| 文件                        | 用途                                                |
+| --------------------------- | --------------------------------------------------- |
+| `dist-lib/index.js`         | 从包根入口导入的浏览器 ESM                          |
+| `dist-lib/style.css`        | 从 `solidjs-component/style.css` 导入的完整组件样式 |
+| `dist-lib/types/index.d.ts` | 包根类型入口，附带所需的组件与主题声明              |
+
+公共构建入口是 [src/index.ts](src/index.ts)。声明由现有 TypeScript 工具生成，内部别名转换为相对 `.js` 引用，不要求消费者配置 `@/` 或加载 UnoCSS 虚拟模块。
+
+在仓库根目录打出本地安装包：
+
+```sh
+pnpm build:lib
+pnpm pack --pack-destination .tmp/library-pack
+```
+
+在另一个已有 SolidJS + Vite 的项目中运行 `pnpm add <tarball 的路径>`，例如安装上一步生成的 `solidjs-component-0.0.0.tgz`。消费项目的 `solid-js` 需要满足 peerDependency `^1.9.18`；Kobalte 和 clsx 保持普通依赖，三者在库 ESM 中均为外部引用，避免库内重复打包 Solid。
+
+在消费项目的应用入口引入一次 CSS，再使用组件：
+
+```tsx
+import { AppearanceProvider, Button, Card, Input } from "solidjs-component";
+import "solidjs-component/style.css";
+
+export function LocalLibraryExample() {
+  return (
+    <AppearanceProvider appearance="pixel">
+      <Card>
+        <Input aria-label="名称" defaultValue="SolidJS" />
+        <Button variant="mahjong">保存</Button>
+      </Card>
+    </AppearanceProvider>
+  );
+}
+```
+
+CSS 已包含主题变量、基础 reset、UnoCSS 生成的组件类及组件专用样式，消费端无需为这些样式安装 UnoCSS。基础 reset 会作用于整个页面；外部自定义 class 的样式仍由消费项目提供。要修改本库的 token 配置，在源码仓库修改后重新构建与打包。
+
+库入口不初始化演示应用的偏好存储。消费项目通过根元素的 `data-theme="light" / "dark"`、`data-palette` 设置配色和明暗，通过 AppearanceProvider 设置外观；未设置时使用默认浅色配色与默认外观。
+
+制品是预编译的浏览器 ESM，使用支持 ESM 的打包工具消费；当前没有 CJS、SSR 或 hydration 专用制品。Bundler 与 NodeNext 的消费者类型已验证，但这不代表 Node.js 可以直接渲染浏览器组件。
+
+类型检查沿用本项目的 `strict: true` 和 `skipLibCheck: true`。将后者设为 false 时，Kobalte 0.13.14 的 Dialog 声明自身会出现 27 个 TS2693 错误，单独引用 Kobalte 也会复现；库制品回归检查完整声明，并与该直接依赖基线比较，未新增错误。未修改依赖声明或降低仓库现有检查规则。
 
 ## 源码与已实现组件
 
-入口 [src/main.tsx](src/main.tsx) 已加载主题、基础样式及 `virtual:uno.css`。组件及其 Props 类型从 [src/components/index.ts](src/components/index.ts) 导出，`@/` 指向 `src/`。
+演示入口 [src/main.tsx](src/main.tsx) 已加载主题、基础样式及 `virtual:uno.css`。组件及其 Props 类型从 [src/components/index.ts](src/components/index.ts) 导出，`@/` 指向 `src/`；库入口转发相同公共 API。
 
 - 基础与表单：Button、Input、Textarea、Checkbox、Radio、RadioGroup、Switch、Select、FormField。
 - 展示与反馈：Badge、Tag、Card、Alert、Spinner、Skeleton、Avatar、Divider。
@@ -46,11 +94,11 @@ pnpm dev
 
 各组件目录中的 `Xxx.demo.tsx` 覆盖变体、尺寸、状态及外观；演示在 [registry.ts](src/demo/registry.ts) 注册。复杂浮层采用组合 API，例如 `Dialog.Trigger / Portal / Overlay / Content / Title / Description / CloseButton`，完整用法见对应 demo 与导出的 Props。
 
-下方示例用于本仓库的 `.tsx` 文件，不是已发布包的安装示例。移植到其他项目时，还需带上主题生成、UnoCSS 配置、基础样式及组件 CSS。
+下方完整示例使用本仓库的 `@/components` 别名。安装本地制品后，可将组件导入路径替换为 `solidjs-component`，并按上文加载 CSS；示例没有对应的已发布 npm 包。
 
 ## 主题与外观
 
-右上角的三个控制维度相互独立：
+演示右上角的三个控制维度相互独立：
 
 | 维度 | 可选值                                                                                  | 偏好存储键                     |
 | ---- | --------------------------------------------------------------------------------------- | ------------------------------ |
@@ -332,12 +380,12 @@ export function NotificationExample() {
 
 `toast(options)` 与 `toast.show(options)` 返回数字 ID，`toast.dismiss(id)` 关闭指定项，`toast.clear()` 清空所有区域。命名区域的 Toaster `regionId` 与调用参数 `region` 必须匹配。Tag 的 `closable` 则要求 `closeLabel` 与 `onClose`，由调用方实际移除标签。
 
-## 已知边界与后续任务
+## 已知边界与验收
 
 - 当前锁定的 Kobalte 0.13.14 中，Tabs 的 Enter/空格可能因 keydown 与原生 click 请求同值两次；相关选择行为保留，回调中的业务副作用应自行避免重复。
 - DropdownMenu.Content 的 `onEscapeKeyDown` 中直接 `preventDefault()` 不能阻止该版本请求关闭；可以使用受控 `open` 拒绝关闭请求。封装未替换库的键盘或焦点逻辑。
 - Select 当前是单选，不提供搜索或多选；List/Table 不提供远程数据与虚拟滚动。
 - 已进行类型、lint、token、回归、浏览器键盘、对比度与窄屏检查；尚未进行实际屏幕阅读器朗读验收，不宣称完整无障碍认证。
-- 全库一致性审计已完成，API 差异、采样结果与验收边界见 [AUDIT.md](AUDIT.md)；library mode 打包仍未完成，见 [PLAN.md](PLAN.md)。
+- 全库一致性审计已完成，API 差异、采样结果与验收边界见 [AUDIT.md](AUDIT.md)；库模式的制品与消费者验收记录见 [PLAN.md](PLAN.md)。
 
 开发前阅读 [AGENTS.md](AGENTS.md) 与 PLAN，按一次一个任务执行。新组件以 Button 为样例，使用 `mergeProps / splitProps`、`class` 和 token 样式，不解构 props、不新增未授权依赖，不删除或弱化现有检查。

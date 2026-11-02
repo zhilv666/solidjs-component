@@ -3,7 +3,7 @@ import solid from "eslint-plugin-solid";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["node_modules/**", "dist/**", ".tmp/**"] },
+  { ignores: ["node_modules/**", "dist/**", "dist-lib/**", ".tmp/**"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
