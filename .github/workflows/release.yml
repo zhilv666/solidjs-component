@@ -1,0 +1,64 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Validate and package
+    uses: ./.github/workflows/ci.yml
+
+  publish:
+    name: Publish GitHub Release
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout full history and tags
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Download checked package
+        uses: actions/download-artifact@v8.0.2
+        with:
+          name: library-package
+          path: release-assets
+
+      - name: Generate checksums
+        working-directory: release-assets
+        run: sha256sum *.tgz > SHA256SUMS.txt
+
+      - name: Generate release notes
+        run: |
+          bash scripts/release-notes.sh \
+            -t "${GITHUB_REF_NAME}" \
+            -r "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}" \
+            -o release-notes.md
+
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          title="${GITHUB_REPOSITORY##*/} ${GITHUB_REF_NAME}"
+          if gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1; then
+            gh release upload "${GITHUB_REF_NAME}" release-assets/* --clobber
+            gh release edit "${GITHUB_REF_NAME}" \
+              --title "$title" --notes-file release-notes.md
+          else
+            gh release create "${GITHUB_REF_NAME}" release-assets/* \
+              --verify-tag --title "$title" --notes-file release-notes.md
+          fi

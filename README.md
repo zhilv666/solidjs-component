@@ -2,7 +2,7 @@
 
 基于 SolidJS、TypeScript strict、Vite、UnoCSS、Kobalte 和 clsx 的自用组件库。视觉配置集中在主题 token 中，复杂交互、键盘导航和焦点管理由 Kobalte 提供。
 
-仓库保留 `private` 状态，提供 Vite 演示应用和本地库构建。库制品包括浏览器 ESM、类型声明和独立 CSS，可通过本地 tarball 在其他 SolidJS 项目中使用；尚未发布 npm 包。
+源码托管在 [GitHub](https://github.com/zhilv666/solidjs-component)，提供 Vite 演示应用和库构建。库制品包括浏览器 ESM、类型声明和独立 CSS，可通过 tarball 在其他 SolidJS 项目中使用。`package.json` 保留 `private: true`，用于限制 npm 发布，不影响 GitHub Release 附件。
 
 ## 运行与检查
 
@@ -80,6 +80,31 @@ CSS 已包含主题变量、基础 reset、UnoCSS 生成的组件类及组件专
 制品是预编译的浏览器 ESM，使用支持 ESM 的打包工具消费；当前没有 CJS、SSR 或 hydration 专用制品。Bundler 与 NodeNext 的消费者类型已验证，但这不代表 Node.js 可以直接渲染浏览器组件。
 
 类型检查沿用本项目的 `strict: true` 和 `skipLibCheck: true`。将后者设为 false 时，Kobalte 0.13.14 的 Dialog 声明自身会出现 27 个 TS2693 错误，单独引用 Kobalte 也会复现；库制品回归检查完整声明，并与该直接依赖基线比较，未新增错误。未修改依赖声明或降低仓库现有检查规则。
+
+## GitHub 检查与发布
+
+[CI 工作流](.github/workflows/ci.yml) 在推送 `main`、提交到 `main` 的 PR 或手动运行时执行：锁文件安装、typecheck、完整 lint/格式检查、token 检查、全部测试、演示与库构建。成功后提供 `library-package` 和 `demo-build` 两个 Actions 制品，保留 14 天；构建还会验证生成的主题 CSS 没有偏离已提交版本。
+
+[.gitattributes](.gitattributes) 统一文本检出为 LF，与 Prettier 和生成 CSS 的换行规则一致，避免 Windows Git 自动转为 CRLF 后检查失败。
+
+[Release 工作流](.github/workflows/release.yml) 在推送正式 `vX.Y.Z` 标签时复用同一套检查，要求标签版本与 `package.json` 的 `version` 一致。检查通过后，下载已验证的 `.tgz`、生成 `SHA256SUMS.txt`，并创建或更新普通 GitHub Release。重跑同一个标签会更新说明与附件。
+
+发布说明使用 [release-notes.sh](scripts/release-notes.sh)，按最近的较低、可达正式版本到当前标签的非合并提交生成 Features、Fixes、Documentation、Other Changes；首次发布包含全部可达非合并提交。CI 使用内置 `github.token`，只在发布 job 开放 `contents: write`，无需额外配置发布凭据。
+
+需要发版时，在 `main` 更新版本、提交并推送，再创建对应的附注标签。例如首次 `v0.0.1`：
+
+```sh
+git switch main
+git pull --ff-only
+pnpm version 0.0.1 --no-git-tag-version
+git add package.json
+git commit -m "🔧 chore(release): 准备 v0.0.1"
+git push origin main
+git tag -a v0.0.1 HEAD -m "release: v0.0.1"
+git push origin refs/tags/v0.0.1
+```
+
+从 [Releases](https://github.com/zhilv666/solidjs-component/releases) 下载版本对应的 `.tgz`，然后运行 `pnpm add <tgz 路径>`；CSS 与组件导入方式同上。`demo-build` 用于下载演示构建，访问演示页仍需部署静态站点。
 
 ## 源码与已实现组件
 
