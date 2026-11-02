@@ -25,6 +25,7 @@ import { ToastDemo } from "@/components/Toast/Toast.demo";
 import { TabsDemo } from "@/components/Tabs/Tabs.demo";
 import { ListDemo } from "@/components/List/List.demo";
 import { PaginationDemo } from "@/components/Pagination/Pagination.demo";
+import { BreadcrumbDemo } from "@/components/Breadcrumb/Breadcrumb.demo";
 import { TableDemo } from "@/components/Table/Table.demo";
 
 export interface DemoEntry {
@@ -181,6 +182,12 @@ export const demos: readonly DemoEntry[] = [
     name: "List",
     description: "展示与选择列表，支持单选/多选、禁用项、键盘导航及操作插槽。",
     component: ListDemo,
+  },
+  {
+    id: "breadcrumb",
+    name: "Breadcrumb",
+    description: "Kobalte 面包屑，支持当前页、禁用链接、四种外观与长路径换行。",
+    component: BreadcrumbDemo,
   },
   {
     id: "pagination",

@@ -14,6 +14,8 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 - 像素是独立的第四种 appearance，不替换现有配色；仅允许最小新增像素阴影、按下阴影和直角（0px）token。保留原有三种外观以及 Button 已确认的实现、API 与原测试断言，不新增依赖或字体/动画 token。
 - README 以实际可用 API 与组件为准；当前是 private Vite 演示应用，不能声称已有 npm 包、类型制品或 library mode。
 
+续接：上方追加任务已完成并本地提交。按原会话的完整 PLAN 目标继续逐项处理 **6.2 Breadcrumb → 7.1 全库审计 → 7.3 库模式打包**；审计中的不一致项先交用户决定，保留本地提交、不推送与不合并的约定。
+
 ---
 
 ## Phase 0：项目初始化
@@ -235,7 +237,11 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
   参考：Button、Select、共享 appearance、Kobalte Listbox；依赖已完成 6.1。
   验收：单选/多选、禁用跳过、方向键/Home/End/首字母定位、受控拒绝与动态状态正常；外部 class/原生属性透传，demo 覆盖变体/尺寸/空态与长内容，明暗、清晰焦点、窄屏与节点身份通过；导出/注册与全部检查通过，无新依赖或 token。
   备注：展示 ul/li 与 Kobalte 单选/多选列表、两变体/三尺寸/三外观、图标/描述/展示操作插槽及空态已完成；选择模式在类型层面禁止操作插槽。采用 Kobalte 的公开 polymorphic surface 按集合 key 渲染，重排、禁用与全局外观切换保留节点，不替换选择/键盘/焦点管理。10 项新增回归、319 项整库测试及 typecheck/完整 lint/check:tokens/生产构建通过；浏览器验证方向键/Home/End/首字母定位、空格/Enter、Ctrl+A、禁用无回调、受控空值拒绝、操作按钮及 2px 焦点环，两种底座按下收短且无位移。30 种配色/明暗/外观组合名称关联有效，文字最低对比度 5.84:1；320/390/768/1280px 无横向溢出，明暗和窄屏截图已查看。单选方向键同步选择，首字母仅移动焦点，沿用 Kobalte 行为；List 不生成原生表单字段。未新增 token、依赖或修改已完成组件，未测试实际屏幕阅读器朗读。
-- [ ] 6.2 Breadcrumb
+- [x] 6.2 Breadcrumb
+  范围：基于 Kobalte Breadcrumbs 的 Root/List/Item/Link/Separator 组合，plain/outline、三尺寸与四外观；支持当前页、单项/整组禁用、自定义分隔符、原生链接属性和绑定事件。
+  参考：Button、共享 appearance、Kobalte Breadcrumbs/Link、Pagination；依赖已完成主题外观基础。
+  验收：语义 nav/ol/li、当前页和装饰分隔符、禁用跳过与原生 Enter 导航正常；默认继承/显式覆盖、动态属性与节点身份、长路径换行、明暗可读、外部 class/原生属性透传及全部检查通过，无新依赖或 token。
+  备注：Kobalte Root/Link/Separator 与语义 ol/li 组合、两变体/三尺寸/四外观、单项/整组禁用及完整演示已完成并导出注册。8 项新增回归、394 项整库测试及 typecheck/完整 lint/check:tokens/生产构建通过；浏览器验证 Tab/Shift+Tab/Enter、原生 hash 导航、普通/绑定回调单次请求、禁用与当前页无请求、2px 焦点环、全局切换/显式覆盖与节点和导航状态保留。五配色明暗与四外观的 880 次常规/悬停/按下采样最低文字对比度 4.93:1；按下底座收短且无位移，禁用/当前页与导航外框静止。320/390/768/1280px 页面、内容区和长路径无横向溢出，四张截图已查看，刷新后产品控制台无警告或错误。原生属性/class 与布尔 aria-current 透传保留；未新增 token、依赖或修改 Button，未进行实际屏幕阅读器朗读验收。
 - [x] 6.3 Pagination
   范围：基于 Kobalte Pagination 的页码、前后页、省略号，受控/非受控页码、禁用状态，三尺寸与三外观；为 Table 本地分页提供复用导航。
   参考：Button、共享 appearance、Kobalte Pagination；依赖本轮 6.1a。

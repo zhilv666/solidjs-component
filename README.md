@@ -40,7 +40,7 @@ pnpm dev
 - 基础与表单：Button、Input、Textarea、Checkbox、Radio、RadioGroup、Switch、Select、FormField。
 - 展示与反馈：Badge、Tag、Card、Alert、Spinner、Skeleton、Avatar、Divider。
 - 浮层与通知：Tooltip、Popover、Dialog、DropdownMenu、Toast、Toaster，以及全局 `toast` 方法。
-- 导航与数据：Tabs、List、Pagination、Table。
+- 导航与数据：Tabs、Breadcrumb、List、Pagination、Table。
 - 布局：Layout、Header、Sidebar、Content、Footer。
 - 主题工具：AppearanceProvider、useAppearance、getAppearanceClasses。
 
@@ -108,6 +108,32 @@ Button 是冻结的标准样例，不接收 `appearance`：`solid / outline / da
 运行 `pnpm theme:build` 更新 CSS；新增 token 名称或修改 UnoCSS 映射后，重启开发服务。新增 token、依赖或扩大设计例外需遵守 [AGENTS.md](AGENTS.md)。
 
 直角仅作用于像素标记表面，包括 Avatar 的外框；其他外观的圆形 Avatar 与内部必要圆形图形保留原样。禁用/只读控件不产生按下阴影，纯展示底座保持静止；Tag 只在直属关闭按钮按下时收短。Spinner 仅旋转内部图形，并在减少动态效果偏好下停止。
+
+## Breadcrumb：路径导航
+
+`Breadcrumb` 基于 Kobalte Breadcrumbs，使用 `List / Item / Link / Separator` 组合。`variant` 为 `plain / outline`，默认 `plain`；提供三尺寸与四外观，当前页和禁用链接不参与 Tab 导航。
+
+```tsx
+import { Breadcrumb } from "@/components";
+
+export function BreadcrumbExample() {
+  return (
+    <Breadcrumb aria-label="文档路径" separator="›">
+      <Breadcrumb.List>
+        <Breadcrumb.Item>
+          <Breadcrumb.Link href="/">首页</Breadcrumb.Link>
+          <Breadcrumb.Separator />
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <Breadcrumb.Link current>文档</Breadcrumb.Link>
+        </Breadcrumb.Item>
+      </Breadcrumb.List>
+    </Breadcrumb>
+  );
+}
+```
+
+原生 `href / target / rel / onClick` 属性保留，可在点击回调中对接应用路由；不内置路由依赖。`current` 由调用方设置，并由 Kobalte 提供 `aria-current="page"` 与移除链接目的地。分隔符默认隐藏于无障碍树，长路径可换行。
 
 ## List：展示与选择
 
@@ -312,6 +338,6 @@ export function NotificationExample() {
 - DropdownMenu.Content 的 `onEscapeKeyDown` 中直接 `preventDefault()` 不能阻止该版本请求关闭；可以使用受控 `open` 拒绝关闭请求。封装未替换库的键盘或焦点逻辑。
 - Select 当前是单选，不提供搜索或多选；List/Table 不提供远程数据与虚拟滚动。
 - 已进行类型、lint、token、回归、浏览器键盘、对比度与窄屏检查；尚未进行实际屏幕阅读器朗读验收，不宣称完整无障碍认证。
-- Breadcrumb、全库一致性审计与 library mode 打包仍未完成，见 [PLAN.md](PLAN.md)。本轮追加的 List、Pagination、Table、像素外观和 README 不等于整个计划完成。
+- 全库一致性审计与 library mode 打包仍未完成，见 [PLAN.md](PLAN.md)。组件开发完成不等于整个计划完成。
 
 开发前阅读 [AGENTS.md](AGENTS.md) 与 PLAN，按一次一个任务执行。新组件以 Button 为样例，使用 `mergeProps / splitProps`、`class` 和 token 样式，不解构 props、不新增未授权依赖，不删除或弱化现有检查。

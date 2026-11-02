@@ -127,6 +127,14 @@ export type {
 } from "./List";
 export { Pagination } from "./Pagination";
 export type { PaginationProps } from "./Pagination";
+export { Breadcrumb } from "./Breadcrumb";
+export type {
+  BreadcrumbProps,
+  BreadcrumbListProps,
+  BreadcrumbItemProps,
+  BreadcrumbLinkProps,
+  BreadcrumbSeparatorProps,
+} from "./Breadcrumb";
 export { Table } from "./Table";
 export type {
   TableProps,
