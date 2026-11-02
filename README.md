@@ -53,7 +53,7 @@ pnpm build:lib
 pnpm pack --pack-destination .tmp/library-pack
 ```
 
-在另一个已有 SolidJS + Vite 的项目中运行 `pnpm add <tarball 的路径>`，例如安装上一步生成的 `solidjs-component-0.0.0.tgz`。消费项目的 `solid-js` 需要满足 peerDependency `^1.9.18`；Kobalte 和 clsx 保持普通依赖，三者在库 ESM 中均为外部引用，避免库内重复打包 Solid。
+在另一个已有 SolidJS + Vite 的项目中运行 `pnpm add <tarball 的路径>`，例如安装上一步生成的 `solidjs-component-0.0.1.tgz`。消费项目的 `solid-js` 需要满足 peerDependency `^1.9.18`；Kobalte 和 clsx 保持普通依赖，三者在库 ESM 中均为外部引用，避免库内重复打包 Solid。
 
 在消费项目的应用入口引入一次 CSS，再使用组件：
 
