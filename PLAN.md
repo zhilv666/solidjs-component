@@ -281,11 +281,11 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
   验收：main/PR 检查和构建制品可用，正式版本标签通过版本匹配与完整检查后，使用内置 token 幂等发布分类说明、tgz 和 SHA256 校验；本地回归、三项检查与两类构建通过，工作流语法和 GitHub 实际 CI 通过，变更合并推送到 main。
   备注：可复用 CI、标签 Release、分类说明脚本及 5 项说明回归已完成；403 项本地测试、typecheck/完整 lint/check:tokens、两种构建和本地 pack 通过，actionlint 1.7.12 与标签版本/格式验证通过，README 的 21 个本地链接有效，版本更新命令已在含项目锁文件的独立仓库验证。Windows 的全局 core.autocrlf=true 曾在合并检出时转换为 CRLF，已固定 LF 并以真实检出和 Git 对象一致性复核；组件实现、token 与原断言没有提交差异。配置提交 41fe0ca 已合并推送到 main，GitHub CI 41408040493 全部检查、两种构建、pack 和两个制品上传均成功；两个工作流已启用。实际下载 library-package 并核对 GitHub 的 SHA256、根目录 tgz 布局及 70 个包条目，ESM/CSS/类型入口、版本与 peer 信息正确。当前版本仍为 0.0.0/private，首个 GitHub Release 等待对应版本标签触发，本轮没有创建发版标签。
 
-- [ ] 8.2 **首个版本标签与自动 Release**
+- [x] 8.2 **首个版本标签与自动 Release**
   范围：同步 package.json 的版本为 0.0.1 与 README 包文件名，提交后为固定提交创建附注标签 v0.0.1，仅推送该标签并验证自动 GitHub Release；沿用此前提交、推送和发布授权。
   参考：package.json、README、CI/Release 工作流、git-tag/SKILL.md；依赖已完成 8.1。
   验收：三项本地检查通过，标签与包版本及目标提交一致，远端 Release 工作流成功，发布说明与 tgz、SHA256SUMS.txt 附件完整且校验一致。
-  备注：按 git-tag 的首次发布约定选用 v0.0.1，保留 private: true；三项本地检查和标签版本校验通过，等待版本提交、标签推送和实际 Release 验收。
+  备注：三项本地检查和标签版本校验通过；版本提交 f4705d047da69b98902858c5f766a9f6aea5a234 与附注标签 v0.0.1 已推送，远端标签实际提交一致。main CI 41410844621 和 Release 41410860968 均成功，完整检查、测试、两种构建、打包和发布完成。[首个普通 GitHub Release](https://github.com/zhilv666/solidjs-component/releases/tag/v0.0.1) 的四类说明覆盖全部 68 个可达非合并提交；实际下载 tgz 和 SHA256SUMS.txt，核对 GitHub digest 与发布校验一致，包版本为 0.0.1/private，70 个条目包含 ESM、CSS 与类型入口。验收记录在发布后单独提交，保持已发布标签指向原版本提交。
 
 ---
 
