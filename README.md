@@ -338,6 +338,6 @@ export function NotificationExample() {
 - DropdownMenu.Content 的 `onEscapeKeyDown` 中直接 `preventDefault()` 不能阻止该版本请求关闭；可以使用受控 `open` 拒绝关闭请求。封装未替换库的键盘或焦点逻辑。
 - Select 当前是单选，不提供搜索或多选；List/Table 不提供远程数据与虚拟滚动。
 - 已进行类型、lint、token、回归、浏览器键盘、对比度与窄屏检查；尚未进行实际屏幕阅读器朗读验收，不宣称完整无障碍认证。
-- 全库一致性审计与 library mode 打包仍未完成，见 [PLAN.md](PLAN.md)。组件开发完成不等于整个计划完成。
+- 全库一致性审计已完成，API 差异、采样结果与验收边界见 [AUDIT.md](AUDIT.md)；library mode 打包仍未完成，见 [PLAN.md](PLAN.md)。
 
 开发前阅读 [AGENTS.md](AGENTS.md) 与 PLAN，按一次一个任务执行。新组件以 Button 为样例，使用 `mergeProps / splitProps`、`class` 和 token 样式，不解构 props、不新增未授权依赖，不删除或弱化现有检查。
