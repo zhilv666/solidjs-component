@@ -275,11 +275,11 @@ SolidJS 自用组件库的开发计划。agent 按顺序执行，**一次只做�
 
 用户已创建 `https://github.com/zhilv666/solidjs-component`，并授权合并、提交与推送，以及自动打包和 GitHub Release 发布；本轮授权覆盖之前仅本地提交的限制。原组件分支已快进合并到 `main` 并推送，保留原提交历史。
 
-- [ ] 8.1 **GitHub 检查与自动发布**
+- [x] 8.1 **GitHub 检查与自动发布**
   范围：新增可复用 CI 与版本标签 Release 工作流，安装用户指定 git-release 的说明脚本及回归；用 .gitattributes 固定 LF 检出以保留原格式和生成 CSS 一致性检查，沿用现有依赖、检查和构建，更新 README，保留 package.json 的 private 与当前版本。
   参考：package.json、库构建、用户指定 git-release/SKILL.md 及脚本/模板；依赖已完成 7.3。
   验收：main/PR 检查和构建制品可用，正式版本标签通过版本匹配与完整检查后，使用内置 token 幂等发布分类说明、tgz 和 SHA256 校验；本地回归、三项检查与两类构建通过，工作流语法和 GitHub 实际 CI 通过，变更合并推送到 main。
-  备注：可复用 CI、标签 Release、分类说明脚本及 5 项说明回归已完成；403 项本地测试、typecheck/完整 lint/check:tokens、两种构建和本地 pack 通过，actionlint 1.7.12 与标签版本/格式验证通过，README 的 21 个本地链接有效。Windows 的全局 core.autocrlf=true 曾在合并检出时转换为 CRLF，已固定 LF 并以真实检出和 Git 对象一致性复核；组件实现、token 与原断言没有提交差异。GitHub 实际 CI 待推送后验收，当前尚未创建版本标签。
+  备注：可复用 CI、标签 Release、分类说明脚本及 5 项说明回归已完成；403 项本地测试、typecheck/完整 lint/check:tokens、两种构建和本地 pack 通过，actionlint 1.7.12 与标签版本/格式验证通过，README 的 21 个本地链接有效，版本更新命令已在含项目锁文件的独立仓库验证。Windows 的全局 core.autocrlf=true 曾在合并检出时转换为 CRLF，已固定 LF 并以真实检出和 Git 对象一致性复核；组件实现、token 与原断言没有提交差异。配置提交 41fe0ca 已合并推送到 main，GitHub CI 41408040493 全部检查、两种构建、pack 和两个制品上传均成功；两个工作流已启用。实际下载 library-package 并核对 GitHub 的 SHA256、根目录 tgz 布局及 70 个包条目，ESM/CSS/类型入口、版本与 peer 信息正确。当前版本仍为 0.0.0/private，首个 GitHub Release 等待对应版本标签触发，本轮没有创建发版标签。
 
 ---
 
